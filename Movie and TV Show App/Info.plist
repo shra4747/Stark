@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>JostBlack.otf</string>
+		<string>JostBlackItalic.otf</string>
+		<string>JostBold.otf</string>
+		<string>Jost BoldItalic.otf</string>
+		<string>JostBook.otf</string>
+		<string>JostBookItalic.otf</string>
+		<string>JostHairline.otf</string>
+		<string>JostHairlineItalic.otf</string>
+		<string>JostHeavy.otf</string>
+		<string>JostHeavyItalic.otf</string>
+		<string>JostLight.otf</string>
+		<string>JostLightItalic.otf</string>
+		<string>JostMedium.otf</string>
+		<string>JostSemi.otf</string>
+		<string>JostSemiItalic.otf</string>
+		<string>JostThin.otf</string>
+		<string>JostThinItalic.otf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

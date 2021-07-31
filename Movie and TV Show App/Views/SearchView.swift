@@ -12,33 +12,50 @@ struct SearchView: View {
     @StateObject var viewModel = SearchViewModel()
     
     var body: some View {
-        VStack {
-            TextField("Query", text: $viewModel.query).textFieldStyle(RoundedBorderTextFieldStyle()).padding(5)
-            
-            Button(action: {
-                viewModel.search()
-            }) {
-                Text("Search")
-            }
-            
-            Carousel(cardWidth: 300, spacing: 10) {
-                ForEach(0..<viewModel.results.count, id: \.self) { i in
-                    if let model = viewModel.results[i] as? SearchModel.Movie {
-                        CarouselCard {
-                            Image(uiImage: model.poster_path?.loadImage() ?? UIImage()).resizable().frame(width: 300, height: 430).cornerRadius(30)
-                        }
-                    }
-                    else if let model = viewModel.results[i] as? SearchModel.TVShow {
-                        CarouselCard {
-                            Image(uiImage: model.poster_path.loadImage()).resizable().frame(width: 300, height: 430).cornerRadius(30)
+        NavigationView {
+            VStack {
+                TextField("Query", text: $viewModel.query).textFieldStyle(RoundedBorderTextFieldStyle()).padding(5)
+                
+                Button(action: {
+                    viewModel.selectedType = .movie
+                    viewModel.search()
+                }) {
+                    Text("Search")
+                }
+                
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(viewModel.movies, id: \.self) { movie in
+                            NavigationLink(
+                                destination: MovieDetailView(id: movie.id),
+                                label: {
+                                    VStack(alignment: .leading) {
+                                        Image(uiImage: movie.poster_path?.loadImage() ?? UIImage())
+                                            .scaledToFill()
+                                            .frame(width: 296, height: 440)
+                                            .cornerRadius(18)
+                                            .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
+                                        Text(movie.title)
+                                            .font(.custom("Avenir", size: 22))
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                            .frame(width: 290)
+                                        
+                                        Text(viewModel.returnGenresText(for: movie.genres))
+                                            .font(.custom("Avenir", size: 11))
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Color(hex: "777777"))
+                                            .frame(width: 290)
+                                    }
+                                })
                         }
                     }
                 }
-            }
-
+            }.navigationBarHidden(true)
         }
     }
 }
+
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
@@ -46,22 +63,4 @@ struct SearchView_Previews: PreviewProvider {
     }
 }
 
-extension String {
-    func loadImage() -> UIImage {
-        
-        do {
-            guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(self)") else {
-                return UIImage()
-            }
-            
-            let data: Data = try Data(contentsOf: url)
-            
-            return UIImage(data: data) ?? UIImage()
-        } catch {
-            
-        }
-        
-        return UIImage()
-    }
-}
 

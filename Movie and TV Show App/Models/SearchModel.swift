@@ -7,20 +7,19 @@
 
 import Foundation
 
-struct SearchModel: Codable {
+struct SearchModel: Codable, Hashable {
     let page: Int
     let results: [Result]
     let total_results: Int
     let total_pages: Int
     
-    struct Result: Codable {
-        let media_type: String
+    struct Result: Codable, Hashable {
         let id: Int
     }
 }
 
 extension SearchModel {
-    struct Movie: Codable {
+    struct Movie: Codable, Hashable {
         let backdrop_path: String?
         let genres: [Genre]
         let id: Int
@@ -32,8 +31,8 @@ extension SearchModel {
         let title: String
     }
     
-    struct TVShow: Codable {
-        let backdrop_path: String
+    struct TVShow: Codable, Hashable {
+        let backdrop_path: String?
         let genres: [Genre]
         let id: Int
         let name: String
@@ -44,33 +43,33 @@ extension SearchModel {
         let status: String
     }
     
-    struct Genre: Codable {
+    struct Genre: Codable, Hashable {
         let id: Int
         let name: String
     }
     
-    struct Video: Codable {
+    struct Video: Codable, Hashable {
         let results: [VideoInfo]
         
-        struct VideoInfo: Codable {
+        struct VideoInfo: Codable, Hashable {
             let name: String
             let key: String
             let site: String
             let type: String
-            let official: String
+            let official: Bool
             let id: String
         }
     }
     
-    struct Credits: Codable {
+    struct Credits: Codable, Hashable {
         let cast: [Cast]
         
-        struct Cast: Codable {
+        struct Cast: Codable, Hashable {
             let id: Int
             let known_for_department: String
             let name: String
-            let profile_path: String
-            let cast_id: String
+            let profile_path: String?
+            let cast_id: Int
             let character: String
             let order: Int
         }
@@ -87,9 +86,9 @@ extension SearchModel {
 
 extension SearchModel {
     class APILinks {
-        static let MultiSearch = "https://api.themoviedb.org/3/search/multi?api_key={APIKEY}&query={QUERY}&page=1"
-        
         class Movie {
+            static let MovieSearch = "https://api.themoviedb.org/3/search/movie?api_key={APIKEY}&query={QUERY}&page=1"
+
             static let MovieInfo = "https://api.themoviedb.org/3/movie/{MOVIEID}?api_key={APIKEY}"
             
             static let MovieCredits = "https://api.themoviedb.org/3/movie/{MOVIEID}/credits?api_key={APIKEY}"
@@ -100,6 +99,8 @@ extension SearchModel {
         }
         
         class TVShow {
+            static let TVShowSearch = "https://api.themoviedb.org/3/search/tv?api_key={APIKEY}&page=1&query={QUERY}"
+
             static let TVShowInfo = "https://api.themoviedb.org/3/tv/{TVID}?api_key={APIKEY}"
             
             static let TVShowCredits = "https://api.themoviedb.org/3/tv/{TVID}/season/{SEASONID}/credits?api_key={APIKEY}"
@@ -108,6 +109,10 @@ extension SearchModel {
             
             static let TVShowVideos = "https://api.themoviedb.org/3/tv/{TVID}/videos?api_key={APIKEY}"
         }
+    }
+    
+    enum MediaType {
+        case movie, show
     }
 }
 

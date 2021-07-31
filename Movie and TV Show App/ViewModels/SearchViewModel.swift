@@ -9,11 +9,28 @@ import Foundation
 import SwiftUI
 
 class SearchViewModel: ObservableObject {
+    
     var query = ""
-    @Published var results: [Any] = []
+    var selectedType: SearchModel.MediaType = .movie
+    
+    @Published var movies: [SearchModel.Movie] = []
+    @Published var shows: [SearchModel.TVShow] = []
+    
     
     func search() {
-        var url = SearchModel.APILinks.MultiSearch
+        
+        self.movies.removeAll()
+        self.shows.removeAll()
+        
+        var url: String
+        
+        switch selectedType {
+        case .movie:
+            url = SearchModel.APILinks.Movie.MovieSearch
+        case .show:
+            url = SearchModel.APILinks.TVShow.TVShowSearch
+        }
+        
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
         let request = URLRequest(url: URL(string: url)!)
@@ -26,11 +43,11 @@ class SearchViewModel: ObservableObject {
                 let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
                 
                 for result in searchResult.results {
-                    if result.media_type == "tv" {
-                        self.getTVShowInfo(result.id)
-                    }
-                    else if result.media_type == "movie" {
+                    switch self.selectedType {
+                    case .movie:
                         self.getMovieInfo(result.id)
+                    case .show:
+                        self.getTVShowInfo(result.id)
                     }
                 }
             }
@@ -51,8 +68,7 @@ class SearchViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
                 DispatchQueue.main.async {
-                    self.results.removeAll()
-                    self.results.append(response)
+                    self.movies.append(response)
                 }
             }
         }.resume()
@@ -71,10 +87,20 @@ class SearchViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)                
                 DispatchQueue.main.async {
-                    self.results.removeAll()
-                    self.results.append(response)
+                    self.shows.append(response)
                 }
             }
         }.resume()
+    }
+    
+    func returnGenresText(for genres: [SearchModel.Genre]) -> String {
+        
+        var arrGenres: [String] = []
+        
+        for genre in genres {
+            arrGenres.append(genre.name)
+        }
+        
+        return arrGenres.joined(separator: ", ")
     }
 }
