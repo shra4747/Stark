@@ -27,7 +27,7 @@ struct SearchView: View {
                     HStack {
                         ForEach(viewModel.movies, id: \.self) { movie in
                             NavigationLink(
-                                destination: MovieDetailView(id: movie.id),
+                                destination: MovieDetailView(id: movie.id).navigationBarHidden(true),
                                 label: {
                                     VStack(alignment: .leading) {
                                         Image(uiImage: movie.poster_path?.loadImage() ?? UIImage())

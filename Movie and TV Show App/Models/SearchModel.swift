@@ -26,7 +26,7 @@ extension SearchModel {
         let overview: String
         let poster_path: String?
         let release_date: String
-        let runtime: Int
+        let runtime: Int?
         let status: String
         let title: String
     }

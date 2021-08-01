@@ -10,7 +10,11 @@ import SwiftUI
 import UIKit
 
 class MovieDetailViewModel: ObservableObject {
+    
     var id = 0
+    
+    @Published var isLoading = true
+    
     @Published var backdropImage = UIImage()
     @Published var title = ""
     @Published var genres = ""
@@ -37,11 +41,12 @@ class MovieDetailViewModel: ObservableObject {
                     self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage()
                     self.title = response.title
                     self.genres = self.returnGenresText(for: response.genres)
-                    self.runtime = "\(response.runtime)"
+                    self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview
-                    self.getCast()
-                    self.getSimilarMovies()
                     self.getTrailer()
+                    self.getSimilarMovies()
+                    self.getCast()
+                    self.isLoading = false
                 }
             }
         }.resume()

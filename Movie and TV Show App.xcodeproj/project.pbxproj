@@ -20,6 +20,7 @@
 		DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */; };
 		DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */; };
 		DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */; };
+		DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerView.swift; sourceTree = "<group>"; };
+		DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */,
+				DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */,
 				DC852E6626B5962700D7BB14 /* HexExtension.swift */,
 			);
 			path = Extensions;
@@ -205,6 +208,7 @@
 				DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */,
 				DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */,
 				DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */,
+				DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */,
 				DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */,
 				DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */,
 				DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */,

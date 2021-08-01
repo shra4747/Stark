@@ -30,8 +30,11 @@ struct MovieDetailView: View {
                             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                             .edgesIgnoringSafeArea(.bottom)
                             .foregroundColor(.white)
+                        Circle()
+                            .frame(width: 75, height: 75)
+                            .shadow(radius: 10)
+                            .offset(y: -32)
                         ScrollView(.vertical, showsIndicators: false) {
-                            
                             VStack(alignment: .leading, spacing: -10) {
                                 HStack {
                                     VStack(alignment: .leading) {
@@ -40,14 +43,17 @@ struct MovieDetailView: View {
                                             .fontWeight(.heavy)
                                             .padding(.horizontal)
                                             .padding(.top)
+                                            .padding(.leading)
                                         Text(viewModel.genres)
                                             .font(.custom("Avenir", size: 18))
                                             .fontWeight(.medium)
+                                            .padding(.leading)
                                             .padding(.leading)
                                             .foregroundColor(.init(hex: "777777"))
                                         Text(viewModel.getRuntime())
                                             .font(.custom("Avenir", size: 16))
                                             .fontWeight(.medium)
+                                            .padding(.leading)
                                             .padding(.leading)
                                             .foregroundColor(.init(hex: "5A5A5A"))
                                     }
@@ -55,16 +61,18 @@ struct MovieDetailView: View {
                                 }
                                 VStack {
                                     Text(viewModel.overview)
-                                        .font(.custom("Avenir", size: 17))
+                                        .font(.custom("Avenir", size: 16))
                                         .bold()
                                         .fontWeight(.medium)
                                         .foregroundColor(.init(hex: "383838"))
                                         .padding()
+                                        .padding(.leading)
                                 }
                                 TrailerView(trailerYTLink: viewModel.trailerLink)
                                     .frame(width: 330, height: 190)
                                     .cornerRadius(18)
                                     .padding()
+                                    .padding(.leading)
                                     .shadow(radius: 10)
                                 
                                 Rectangle()
@@ -78,9 +86,10 @@ struct MovieDetailView: View {
                                         .fontWeight(.bold)
                                         .padding(.horizontal)
                                         .padding(.top)
+                                        .padding(.leading)
                                     
                                     ScrollView(.horizontal, showsIndicators: false) {
-                                        LazyHStack(spacing: 35) {
+                                        HStack(spacing: 35) {
                                             ForEach(viewModel.similarMovies, id: \.self) { movie in
                                                 NavigationLink(
                                                     destination: MovieDetailView(id: movie.id).navigationBarHidden(true),
@@ -91,18 +100,20 @@ struct MovieDetailView: View {
                                                                     .scaleEffect(0.55)
                                                                     .frame(width: 250, height: 370)
                                                                     .cornerRadius(18)
-                                                                    .shadow(radius: 5)
-                                                            }
+                                                                    .shadow(radius: 5).id(UUID())
+                                                            }.id(UUID())
                                                             Text(movie.title)
                                                                 .font(.custom("Avenir", size: 23))
                                                                 .fontWeight(.bold)
-                                                                .foregroundColor(.black)
-                                                        }.frame(width: 250, height: 400)
+                                                                .foregroundColor(.black).id(UUID())
+                                                        }.frame(width: 250, height: 400).id(UUID())
                                                 })
                                             }
                                         }
-                                    }.frame(minHeight: 410)
+                                    }
+                                    .frame(minHeight: 410)
                                     .padding()
+                                    .padding(.leading)
                                 }
                                 
                                 Rectangle()
@@ -116,9 +127,10 @@ struct MovieDetailView: View {
                                         .fontWeight(.bold)
                                         .padding(.horizontal)
                                         .padding(.top)
+                                        .padding(.leading)
                                     
                                     ScrollView(.horizontal, showsIndicators: false) {
-                                        LazyHStack(alignment: .top) {
+                                        HStack(alignment: .top) {
                                             ForEach(viewModel.cast, id: \.self) { castmate in
                                                 VStack(alignment: .center) {
                                                     Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage())
@@ -126,26 +138,29 @@ struct MovieDetailView: View {
                                                         .frame(width: 150, height: 150)
                                                         .aspectRatio(contentMode: .fit)
                                                         .shadow(radius: 5)
-                                                        .cornerRadius(18)
+                                                        .cornerRadius(18).id(UUID())
                                                     Text(castmate.name)
                                                         .font(.custom("Avenir", size: 16))
                                                         .fontWeight(.medium)
                                                         .foregroundColor(.init(hex: "262626"))
                                                         .multilineTextAlignment(.center)
-                                                        .frame(width: 140)
+                                                        .frame(width: 140).id(UUID())
                                                     Text(castmate.character)
                                                         .font(.custom("Avenir", size: 15))
                                                         .fontWeight(.light)
                                                         .multilineTextAlignment(.center)
-                                                        .frame(width: 140)
+                                                        .frame(width: 140).id(UUID())
                                                 }
                                             }
                                         }
-                                    }.padding()
+                                    }
+                                    .padding()
+                                    .padding(.leading)
                                 }
                             }
                         }.cornerRadius(40)
                         .padding(.top, 5)
+                        .padding(.horizontal)
                     }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                 }
                 
@@ -161,6 +176,13 @@ struct MovieDetailView: View {
                             .foregroundColor(Color(.systemGray))
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                
+                if viewModel.isLoading {
+                    ZStack {
+                        Color.white
+                        ActivityIndicator(isAnimating: $viewModel.isLoading)
+                    }
+                }
                 
             }
             .navigationBarHidden(true)
