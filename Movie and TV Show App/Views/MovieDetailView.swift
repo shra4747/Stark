@@ -36,6 +36,7 @@ struct MovieDetailView: View {
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                                 .edgesIgnoringSafeArea(.bottom)
                                 .foregroundColor(.white)
+                                .shadow(radius: 4, x: 0, y: -4)
                             
 
                         }
@@ -89,27 +90,56 @@ struct MovieDetailView: View {
                                         .padding()
                                         .foregroundColor(.gray)
                                     
-                                    VStack(alignment: .leading) {
-                                        Text("Stream")
-                                            .font(.custom("Avenir", size: 25))
-                                            .fontWeight(.bold)
-                                            .padding(.horizontal)
-                                            .padding(.top)
-                                            .padding(.leading)
-                                        
-                                        ScrollView(.horizontal, showsIndicators: false) {
-                                            HStack(alignment: .top, spacing: 30) {
-                                                ForEach(viewModel.watchProviders[0].flatrate ?? [], id: \.self) { provider in
-                                                    Image(uiImage: provider.logo_path.loadImage())
-                                                        .resizable()
-                                                        .frame(width: 70, height: 70)
-                                                        .cornerRadius(18)
-                                                        .shadow(radius: 3)
-                                                }
+                                    if viewModel.watchProviders.count > 0 {
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text("Stream")
+                                                .font(.custom("Avenir", size: 25))
+                                                .fontWeight(.bold)
+                                                .padding(.horizontal)
+                                                .padding(.top)
+                                                .padding(.leading)
+                                            
+                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                HStack(alignment: .top, spacing: 17) {
+                                                    ForEach(viewModel.watchProviders[0].flatrate ?? [], id: \.self) { provider in
+                                                        Image(uiImage: provider.logo_path.loadImage())
+                                                            .resizable()
+                                                            .frame(width: 70, height: 70)
+                                                            .cornerRadius(18)
+                                                            .shadow(radius: 3)
+                                                    }
+                                                }.frame(height: 75).padding(.leading).padding(.leading).padding(.trailing)
                                             }
-                                        }
-                                    }.padding(.bottom)
-
+                                        }.padding(.bottom)
+                                    }
+                                    
+                                    if viewModel.watchProviders.count > 0 {
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text("Rent or Buy")
+                                                .font(.custom("Avenir", size: 25))
+                                                .fontWeight(.bold)
+                                                .padding(.horizontal)
+                                                .padding(.top)
+                                                .padding(.leading)
+                                            
+                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                HStack(alignment: .top, spacing: 17) {
+                                                    ForEach(viewModel.watchProviders[0].buy ?? [], id: \.self) { provider in
+                                                        Image(uiImage: provider.logo_path.loadImage())
+                                                            .resizable()
+                                                            .frame(width: 70, height: 70)
+                                                            .cornerRadius(18)
+                                                            .shadow(radius: 3)
+                                                    }
+                                                }.frame(height: 75).padding(.leading).padding(.leading).padding(.trailing)
+                                            }
+                                        }.padding(.bottom)
+                                    }
+                                    
+                                    Rectangle()
+                                        .frame(width: UIScreen.main.bounds.width - 20, height: 1, alignment: .center)
+                                        .padding()
+                                        .foregroundColor(.gray)
                                     
                                     VStack(alignment: .leading) {
                                         Text("Similar Movies")
@@ -271,7 +301,7 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView(id: 102899, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
+        MovieDetailView(id: 566525, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
     }
 }
 

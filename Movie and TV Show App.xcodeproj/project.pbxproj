@@ -24,6 +24,7 @@
 		DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */; };
 		DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */; };
 		DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */; };
+		DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */; };
 		DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
 		DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerView.swift; sourceTree = "<group>"; };
+		DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailViewModel.swift; sourceTree = "<group>"; };
 		DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +121,7 @@
 			children = (
 				DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */,
 				DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */,
+				DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */,
 				DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */,
 				DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */,
 			);
@@ -213,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */,
 				DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */,
 				DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */,
 				DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */,
