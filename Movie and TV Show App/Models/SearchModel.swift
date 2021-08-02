@@ -75,13 +75,21 @@ extension SearchModel {
         }
     }
     
-//    struct WatchProviders {
-//        let results: [Provider]
-//
-//        struct Provider {
-//
-//        }
-//    }
+    struct WatchProviders: Codable, Hashable {
+        let id: Int
+        let results: [String: Options]
+
+        struct Options: Codable, Hashable {
+            let buy: [Provider]?
+            let rent: [Provider]?
+            let flatrate: [Provider]?
+        }
+        
+        struct Provider: Codable, Hashable {
+            let logo_path: String
+            let provider_name: String
+        }
+    }
 }
 
 extension SearchModel {
@@ -96,6 +104,8 @@ extension SearchModel {
             static let SimilarMovies = "https://api.themoviedb.org/3/movie/{MOVIEID}/similar?api_key={APIKEY}&page=1"
             
             static let MovieVideos = "https://api.themoviedb.org/3/movie/{MOVIEID}/videos?api_key={APIKEY}"
+            
+            static let MovieWatchProviders = "https://api.themoviedb.org/3/movie/{MOVIEID}/watch/providers?api_key={APIKEY}"
         }
         
         class TVShow {
@@ -116,3 +126,9 @@ extension SearchModel {
     }
 }
 
+extension SearchModel {
+    struct EmptyModel {
+        static let Movie = SearchModel.Movie(backdrop_path: "", genres: [], id: 0, overview: "", poster_path: "", release_date: "", runtime: 0, status: "", title: "")
+        static let TVShow = SearchModel.TVShow(backdrop_path: "", genres: [], id: 0, name: "", number_of_episodes: 0, number_of_seasons: 0, overview: "", poster_path: "", status: "")
+    }
+}

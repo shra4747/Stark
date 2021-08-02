@@ -23,6 +23,7 @@ class MovieDetailViewModel: ObservableObject {
     @Published var trailerLink = ""
     @Published var similarMovies: [SearchModel.Movie] = []
     @Published var cast: [SearchModel.Credits.Cast] = []
+    @Published var watchProviders: [SearchModel.WatchProviders.Options] = []
     
     func getMovieInfo() {
         var url = SearchModel.APILinks.Movie.MovieInfo
@@ -43,10 +44,12 @@ class MovieDetailViewModel: ObservableObject {
                     self.genres = self.returnGenresText(for: response.genres)
                     self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview
-                    self.getTrailer()
                     self.getSimilarMovies()
+                    self.getTrailer()
+                    self.getWatchProviders()
                     self.getCast()
                     self.isLoading = false
+
                 }
             }
         }.resume()
@@ -154,6 +157,33 @@ class MovieDetailViewModel: ObservableObject {
                     }
                     
                     self.trailerLink = "https://www.youtube.com/embed/\(key)"
+                }
+            }
+        }.resume()
+    }
+    
+    func getWatchProviders() {
+        var url = SearchModel.APILinks.Movie.MovieWatchProviders
+        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+        url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
+        
+        let request = URLRequest(url: URL(string: url)!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let response = try! JSONDecoder().decode(SearchModel.WatchProviders.self, from: data!)
+                print(response)
+                
+                DispatchQueue.main.async {
+                    for country in response.results {
+                        if country.key == "US" {
+                            self.watchProviders.append(country.value)
+                        }
+                    }
+                    
                 }
             }
         }.resume()

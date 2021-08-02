@@ -11,6 +11,7 @@ struct SearchView: View {
     
     @StateObject var viewModel = SearchViewModel()
     
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -24,14 +25,14 @@ struct SearchView: View {
                 }
                 
                 ScrollView(.horizontal) {
-                    HStack {
+                    HStack(spacing: 30) {
                         ForEach(viewModel.movies, id: \.self) { movie in
                             NavigationLink(
-                                destination: MovieDetailView(id: movie.id).navigationBarHidden(true),
+                                destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
                                 label: {
                                     VStack(alignment: .leading) {
                                         Image(uiImage: movie.poster_path?.loadImage() ?? UIImage())
-                                            .scaledToFill()
+                                            .scaleEffect(0.65)
                                             .frame(width: 296, height: 440)
                                             .cornerRadius(18)
                                             .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
@@ -42,7 +43,7 @@ struct SearchView: View {
                                             .frame(width: 290)
                                         
                                         Text(viewModel.returnGenresText(for: movie.genres))
-                                            .font(.custom("Avenir", size: 11))
+                                            .font(.custom("Avenir", size: 16))
                                             .fontWeight(.medium)
                                             .foregroundColor(Color(hex: "777777"))
                                             .frame(width: 290)
@@ -50,7 +51,7 @@ struct SearchView: View {
                                 })
                         }
                     }
-                }
+                }.padding()
             }.navigationBarHidden(true)
         }
     }

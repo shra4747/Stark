@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
+		DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
 		DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */; };
 		DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */; };
 		DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */; };
@@ -15,6 +17,8 @@
 		DC31C16526B1DFF400AD58C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC31C16326B1DFF400AD58C6 /* LaunchScreen.storyboard */; };
 		DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17126B1EB0900AD58C6 /* SearchModel.swift */; };
 		DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */; };
+		DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */; };
+		DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */; };
 		DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E6626B5962700D7BB14 /* HexExtension.swift */; };
 		DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */; };
 		DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */; };
@@ -24,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonView.swift; sourceTree = "<group>"; };
+		DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonViewModel.swift; sourceTree = "<group>"; };
 		DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie and TV Show App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +40,8 @@
 		DC31C16626B1DFF400AD58C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC31C17126B1EB0900AD58C6 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedView.swift; sourceTree = "<group>"; };
+		DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedViewModel.swift; sourceTree = "<group>"; };
 		DC852E6626B5962700D7BB14 /* HexExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexExtension.swift; sourceTree = "<group>"; };
 		DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadImageExtension.swift; path = "/Users/shravanp/Coding/Swift/Movie and TV Show App/Movie and TV Show App/Extensions/LoadImageExtension.swift"; sourceTree = "<absolute>"; };
 		DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
@@ -98,8 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
-				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
 				DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */,
+				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
+				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
+				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -109,6 +119,8 @@
 			children = (
 				DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */,
 				DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */,
+				DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */,
+				DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -201,6 +213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */,
+				DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */,
 				DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */,
 				DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */,
 				DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */,
@@ -210,7 +224,9 @@
 				DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */,
 				DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */,
 				DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */,
+				DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */,
 				DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */,
+				DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */,
 				DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
