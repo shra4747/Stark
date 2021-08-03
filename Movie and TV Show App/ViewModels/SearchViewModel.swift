@@ -11,11 +11,10 @@ import SwiftUI
 class SearchViewModel: ObservableObject {
     
     var query = ""
-    var selectedType: SearchModel.MediaType = .movie
+    @Published var selectedType: SearchModel.MediaType = .movie
     
     @Published var movies: [SearchModel.Movie] = []
     @Published var shows: [SearchModel.TVShow] = []
-    
     
     func search() {
         

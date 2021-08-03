@@ -175,7 +175,6 @@ class MovieDetailViewModel: ObservableObject {
             }
             else {
                 let response = try! JSONDecoder().decode(SearchModel.WatchProviders.self, from: data!)
-                print(response)
                 
                 DispatchQueue.main.async {
                     for country in response.results {

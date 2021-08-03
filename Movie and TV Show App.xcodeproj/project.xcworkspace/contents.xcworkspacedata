@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/shravanp/Coding/Swift/Movie and TV Show App/Movie and TV Show App/Extensions/LoadImageExtension.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/shravanp/Coding/Swift/Movie and TV Show App/Movie and TV Show App/Extensions/Jost Fonts">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>

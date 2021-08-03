@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC14B55B26B8D78C00D4AF44 /* ACarousel in Frameworks */ = {isa = PBXBuildFile; productRef = DC14B55A26B8D78C00D4AF44 /* ACarousel */; };
 		DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
 		DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
 		DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 		DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */; };
 		DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */; };
 		DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */; };
+		DC9183C126B86C8500CE5877 /* TVShowDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */; };
 		DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,7 @@
 		DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerView.swift; sourceTree = "<group>"; };
 		DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailViewModel.swift; sourceTree = "<group>"; };
+		DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailView.swift; sourceTree = "<group>"; };
 		DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC14B55B26B8D78C00D4AF44 /* ACarousel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +113,7 @@
 			children = (
 				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
 				DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */,
+				DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */,
 				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
 				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
 				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
@@ -162,6 +167,9 @@
 			dependencies = (
 			);
 			name = "Movie and TV Show App";
+			packageProductDependencies = (
+				DC14B55A26B8D78C00D4AF44 /* ACarousel */,
+			);
 			productName = "Movie and TV Show App";
 			productReference = DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */;
 			productType = "com.apple.product-type.application";
@@ -189,6 +197,9 @@
 				Base,
 			);
 			mainGroup = DC31C14C26B1DFEA00AD58C6;
+			packageReferences = (
+				DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */,
+			);
 			productRefGroup = DC31C15626B1DFEA00AD58C6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -229,6 +240,7 @@
 				DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */,
 				DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */,
 				DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */,
+				DC9183C126B86C8500CE5877 /* TVShowDetailView.swift in Sources */,
 				DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */,
 				DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */,
 				DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */,
@@ -429,6 +441,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JWAutumn/ACarousel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DC14B55A26B8D78C00D4AF44 /* ACarousel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */;
+			productName = ACarousel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC31C14D26B1DFEA00AD58C6 /* Project object */;
 }

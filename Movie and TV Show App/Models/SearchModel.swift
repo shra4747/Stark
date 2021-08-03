@@ -69,7 +69,6 @@ extension SearchModel {
             let known_for_department: String
             let name: String
             let profile_path: String?
-            let cast_id: Int
             let character: String
             let order: Int
         }
@@ -113,16 +112,24 @@ extension SearchModel {
 
             static let TVShowInfo = "https://api.themoviedb.org/3/tv/{TVID}?api_key={APIKEY}"
             
-            static let TVShowCredits = "https://api.themoviedb.org/3/tv/{TVID}/season/{SEASONID}/credits?api_key={APIKEY}"
+            static let TVShowCredits = "https://api.themoviedb.org/3/tv/{TVID}/season/1/credits?api_key={APIKEY}"
             
             static let SimilarTVShows = "https://api.themoviedb.org/3/tv/{TVID}/similar?api_key={APIKEY}&page=1"
             
             static let TVShowVideos = "https://api.themoviedb.org/3/tv/{TVID}/videos?api_key={APIKEY}"
+            
+            static let TVShowWatchProviders = "https://api.themoviedb.org/3/tv/{TVID}/watch/providers?api_key={APIKEY}"
+            
+            static let TVShowEpisodesInSeason = "https://api.themoviedb.org/3/tv/{TVID}/season/{SEASONID}?api_key={APIKEY}"
         }
     }
     
-    enum MediaType {
+    enum MediaType: String, Identifiable, CaseIterable {
         case movie, show
+        
+        var displayName: String { rawValue.capitalized }
+        
+        var id: String { self.rawValue }
     }
 }
 
@@ -130,5 +137,24 @@ extension SearchModel {
     struct EmptyModel {
         static let Movie = SearchModel.Movie(backdrop_path: "", genres: [], id: 0, overview: "", poster_path: "", release_date: "", runtime: 0, status: "", title: "")
         static let TVShow = SearchModel.TVShow(backdrop_path: "", genres: [], id: 0, name: "", number_of_episodes: 0, number_of_seasons: 0, overview: "", poster_path: "", status: "")
+    }
+}
+
+extension SearchModel.TVShow {
+    struct Season: Codable, Hashable {
+        let air_date: String
+        let name: String
+        let overview: String
+        let poster_path: String
+        let season_number: Int
+        let episodes: [Episode]
+        
+        struct Episode: Codable, Hashable {
+            let air_date: String
+            let episode_number: Int
+            let name: String
+            let overview: String
+            let still_path: String
+        }
     }
 }

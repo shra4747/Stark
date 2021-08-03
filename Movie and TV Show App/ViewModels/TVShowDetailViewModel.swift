@@ -23,6 +23,7 @@ class TVShowDetailViewModel: ObservableObject {
     @Published var similarShows: [SearchModel.TVShow] = []
     @Published var cast: [SearchModel.Credits.Cast] = []
     @Published var watchProviders: [SearchModel.WatchProviders.Options] = []
+    @Published var episodes: [SearchModel.TVShow.Season.Episode] = []
     
     func getShowInfo() {
         var url = SearchModel.APILinks.TVShow.TVShowInfo
@@ -45,6 +46,10 @@ class TVShowDetailViewModel: ObservableObject {
                     self.overview = response.overview
                     self.getSimilarShows()
                     self.getTrailer()
+                    self.getCast()
+                    self.getWatchProviders()
+                    self.getEpisodes(season: 1)
+                    self.isLoading = false
                 }
             }
         }.resume()
@@ -141,6 +146,78 @@ class TVShowDetailViewModel: ObservableObject {
                     }
                     
                     self.trailerLink = "https://www.youtube.com/embed/\(key)"
+                }
+            }
+        }.resume()
+    }
+    
+    func getWatchProviders() {
+        var url = SearchModel.APILinks.TVShow.TVShowWatchProviders
+        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+        url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
+        
+        let request = URLRequest(url: URL(string: url)!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let response = try! JSONDecoder().decode(SearchModel.WatchProviders.self, from: data!)
+                
+                DispatchQueue.main.async {
+                    for country in response.results {
+                        if country.key == "US" {
+                            self.watchProviders.append(country.value)
+                        }
+                    }
+                    
+                }
+            }
+        }.resume()
+    }
+    
+    func getCast() {
+        var url = SearchModel.APILinks.TVShow.TVShowCredits
+        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+        url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
+        print(url)
+        let request = URLRequest(url: URL(string: url)!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let response = try! JSONDecoder().decode(SearchModel.Credits.self, from: data!)
+                DispatchQueue.main.async {
+                    for castmate in response.cast {
+                        self.cast.append(castmate)
+                    }
+                }
+            }
+        }.resume()
+    }
+    
+    func getEpisodes(season: Int) {
+        var url = SearchModel.APILinks.TVShow.TVShowEpisodesInSeason
+        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+        url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
+        url = url.replacingOccurrences(of: "{SEASONID}", with: "\(season)")
+        
+        let request = URLRequest(url: URL(string: url)!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let response = try! JSONDecoder().decode(SearchModel.TVShow.Season.self, from: data!)
+                
+                DispatchQueue.main.async {
+                    for episode in response.episodes {
+                        self.episodes.append(episode)
+                    }
                 }
             }
         }.resume()
