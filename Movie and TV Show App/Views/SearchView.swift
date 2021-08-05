@@ -16,7 +16,7 @@ struct SearchView: View {
         NavigationView {
             ZStack {
                 Rectangle()
-                    .foregroundColor(.init(hex: "#EBEBEB"))
+                    .foregroundColor(.init(hex: "EBEBEB"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
                 VStack {
