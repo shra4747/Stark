@@ -124,7 +124,7 @@ extension SearchModel {
         }
     }
     
-    enum MediaType: String, Identifiable, CaseIterable {
+    enum MediaType: String, Identifiable, CaseIterable, Codable {
         case movie, show
         
         var displayName: String { rawValue.capitalized }

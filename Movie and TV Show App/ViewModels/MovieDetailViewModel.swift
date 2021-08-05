@@ -14,11 +14,12 @@ class MovieDetailViewModel: ObservableObject {
     var id = 0
     
     @Published var isLoading = true
-    
+    var poster_path = ""
     @Published var backdropImage = UIImage()
     @Published var title = ""
     @Published var genres = ""
     @Published var runtime = ""
+    var release_date = ""
     @Published var overview = ""
     @Published var trailerLink = ""
     @Published var similarMovies: [SearchModel.Movie] = []
@@ -39,8 +40,10 @@ class MovieDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage()
+                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    self.poster_path = response.poster_path ?? ""
                     self.title = response.title
+                    self.release_date = response.release_date
                     self.genres = self.returnGenresText(for: response.genres)
                     self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview

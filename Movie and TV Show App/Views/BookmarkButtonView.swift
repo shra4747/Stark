@@ -10,6 +10,11 @@ import SwiftUI
 struct BookmarkButtonView: View {
     
     @State var id: Int
+    @State var poster_path: String
+    @State var title: String
+    @State var media_Type: SearchModel.MediaType
+    @State var release_date: String
+    
     @StateObject var viewModel = BookmarkButtonViewModel()
     
     var body: some View {
@@ -27,6 +32,10 @@ struct BookmarkButtonView: View {
             }
         }.onAppear {
             viewModel.id = id
+            viewModel.poster_path = poster_path
+            viewModel.title = title
+            viewModel.media_type = media_Type
+            viewModel.release_Date = release_date
             viewModel.changeStateOnAppear()
         }
     }

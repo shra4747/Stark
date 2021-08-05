@@ -18,7 +18,7 @@ extension String {
             
             let data: Data = try Data(contentsOf: url)
             
-            return UIImage(data: data) ?? UIImage()
+            return UIImage(data: data) ?? UIImage(imageLiteralResourceName: "questionmark")
         } catch {
             
         }

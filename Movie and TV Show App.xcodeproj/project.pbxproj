@@ -28,6 +28,9 @@
 		DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */; };
 		DC9183C126B86C8500CE5877 /* TVShowDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */; };
 		DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */; };
+		DCD167CC26BA16B90050EF72 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */; };
+		DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */; };
+		DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +56,9 @@
 		DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailViewModel.swift; sourceTree = "<group>"; };
 		DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailView.swift; sourceTree = "<group>"; };
 		DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorExtension.swift; sourceTree = "<group>"; };
+		DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
+		DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedDetailView.swift; sourceTree = "<group>"; };
+		DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
 				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
 				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
+				DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +136,7 @@
 				DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */,
 				DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */,
 				DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */,
+				DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				DC31C17126B1EB0900AD58C6 /* SearchModel.swift */,
+				DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -228,16 +237,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */,
+				DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */,
 				DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */,
 				DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */,
 				DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */,
 				DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */,
 				DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */,
 				DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */,
+				DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */,
 				DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */,
 				DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */,
 				DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */,
 				DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */,
+				DCD167CC26BA16B90050EF72 /* BookmarkModel.swift in Sources */,
 				DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */,
 				DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */,
 				DC9183C126B86C8500CE5877 /* TVShowDetailView.swift in Sources */,

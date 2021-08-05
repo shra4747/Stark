@@ -247,7 +247,7 @@ struct TVShowDetailView: View {
                                                 HStack(alignment: .top) {
                                                     ForEach(viewModel.cast, id: \.self) { castmate in
                                                         VStack(alignment: .center) {
-                                                            Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage())
+                                                            Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
                                                                 .scaleEffect(0.3)
                                                                 .frame(width: 150, height: 150)
                                                                 .aspectRatio(contentMode: .fit)
@@ -274,7 +274,10 @@ struct TVShowDetailView: View {
                             .padding(.top, 5)
                             .padding(.horizontal)
                             
-                            BookmarkButtonView(id: id).offset(y: -50)
+                            if viewModel.name != "" {
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "").offset(y: -50)
+                            }
+                            
                         }
                     }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                 }
@@ -295,7 +298,7 @@ struct TVShowDetailView: View {
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
                 NavigationLink(
-                    destination: BookmarkedView(),
+                    destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater),
                     label: {
                         ZStack {
                             Circle()
@@ -325,12 +328,13 @@ struct TVShowDetailView: View {
                 if isGivingData {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
+                    viewModel.poster_path = givingShow.poster_path
                     viewModel.getTrailer()
                     viewModel.getSimilarShows()
                     viewModel.getCast()
                     viewModel.getWatchProviders()
                     viewModel.getEpisodes(season: 1)
-                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? UIImage()
+                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
                     viewModel.name = givingShow.name
                     viewModel.genres = viewModel.returnGenresText(for: givingShow.genres)
                     viewModel.number_of_seasons = "\(givingShow.number_of_seasons)"

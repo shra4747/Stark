@@ -12,10 +12,12 @@ struct BookmarkedView: View {
     @StateObject var viewModel = BookmarkedViewModel()
     
     var body: some View {
-        VStack {
-            ForEach(viewModel.TESTsms, id: \.self) { movie in
-                Text("\(movie)")
-            }
+        List(viewModel.groups, id: \.self) { group in
+//            NavigationLink(
+//                destination: BookmarkedDetailView(),
+//                label: {
+//                    Text(group.name)
+//                })
         }.onAppear {
             viewModel.load()
         }

@@ -9,13 +9,15 @@ import Foundation
 import SwiftUI
 
 class BookmarkedViewModel: ObservableObject {
-    @Published var TESTsms: [Int] = []
-    
+    @Published var groups: [BookmarkGroupModel] = []
+
     func load() {
-        guard let savedMovies = UserDefaults.standard.value(forKey: "TESTsm") as? [Int] else {
+        guard let savedGroups = UserDefaults.standard.value(forKey: "groups") as? [BookmarkGroupModel] else {
+            UserDefaults.standard.set(BookmarkModelDefaultGroups.defaultGroups, forKey: "groups")
+            self.load()
             return
         }
         
-        self.TESTsms = savedMovies
+        self.groups = savedGroups
     }
 }

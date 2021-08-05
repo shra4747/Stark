@@ -13,7 +13,7 @@ class TVShowDetailViewModel: ObservableObject {
     var id = 0
     
     @Published var isLoading = true
-    
+    var poster_path = ""
     @Published var backdropImage = UIImage()
     @Published var name = ""
     @Published var genres = ""
@@ -39,7 +39,8 @@ class TVShowDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage()
+                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    self.poster_path = response.poster_path
                     self.name = response.name
                     self.genres = self.returnGenresText(for: response.genres)
                     self.number_of_seasons = "\(response.number_of_seasons)"

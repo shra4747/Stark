@@ -157,7 +157,7 @@ struct MovieDetailView: View {
                                                         label: {
                                                             VStack(alignment: .leading) {
                                                                 VStack {
-                                                                    Image(uiImage: movie.poster_path?.loadImage() ?? UIImage())
+                                                                    Image(uiImage: movie.poster_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
                                                                         .scaleEffect(0.55)
                                                                         .frame(width: 250, height: 370)
                                                                         .cornerRadius(18)
@@ -195,7 +195,7 @@ struct MovieDetailView: View {
                                             HStack(alignment: .top) {
                                                 ForEach(viewModel.cast, id: \.self) { castmate in
                                                     VStack(alignment: .center) {
-                                                        Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage())
+                                                        Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
                                                             .scaleEffect(0.3)
                                                             .frame(width: 150, height: 150)
                                                             .aspectRatio(contentMode: .fit)
@@ -221,7 +221,9 @@ struct MovieDetailView: View {
                             .padding(.top, 5)
                             .padding(.horizontal)
                             
-                            BookmarkButtonView(id: id).offset(y: -50)
+                            if viewModel.title != "" {
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.title, media_Type: .movie, release_date: viewModel.release_date).offset(y: -50)
+                            }
                         }
                     }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                 }
@@ -242,7 +244,7 @@ struct MovieDetailView: View {
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
                 NavigationLink(
-                    destination: BookmarkedView(),
+                    destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater),
                     label: {
                         ZStack {
                             Circle()
@@ -268,15 +270,16 @@ struct MovieDetailView: View {
                     return
                 }
                 
-                print(id)
                 if isGivingData {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
+                    viewModel.poster_path = givingMovie.poster_path ?? ""
+                    viewModel.release_date = givingMovie.release_date
                     viewModel.getTrailer()
                     viewModel.getSimilarMovies()
                     viewModel.getCast()
                     viewModel.getWatchProviders()
-                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? UIImage()
+                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
                     viewModel.title = givingMovie.title
                     viewModel.genres = viewModel.returnGenresText(for: givingMovie.genres)
                     viewModel.runtime = "\(givingMovie.runtime ?? 0)"
