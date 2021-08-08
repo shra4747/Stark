@@ -247,7 +247,7 @@ struct TVShowDetailView: View {
                                                 HStack(alignment: .top) {
                                                     ForEach(viewModel.cast, id: \.self) { castmate in
                                                         VStack(alignment: .center) {
-                                                            Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
+                                                            Image(uiImage: castmate.profile_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                                 .scaleEffect(0.3)
                                                                 .frame(width: 150, height: 150)
                                                                 .aspectRatio(contentMode: .fit)
@@ -334,7 +334,7 @@ struct TVShowDetailView: View {
                     viewModel.getCast()
                     viewModel.getWatchProviders()
                     viewModel.getEpisodes(season: 1)
-                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     viewModel.name = givingShow.name
                     viewModel.genres = viewModel.returnGenresText(for: givingShow.genres)
                     viewModel.number_of_seasons = "\(givingShow.number_of_seasons)"

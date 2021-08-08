@@ -40,7 +40,7 @@ class MovieDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     self.poster_path = response.poster_path ?? ""
                     self.title = response.title
                     self.release_date = response.release_date

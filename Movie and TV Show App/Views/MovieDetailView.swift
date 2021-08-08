@@ -157,7 +157,7 @@ struct MovieDetailView: View {
                                                         label: {
                                                             VStack(alignment: .leading) {
                                                                 VStack {
-                                                                    Image(uiImage: movie.poster_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
+                                                                    Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                                         .scaleEffect(0.55)
                                                                         .frame(width: 250, height: 370)
                                                                         .cornerRadius(18)
@@ -195,7 +195,7 @@ struct MovieDetailView: View {
                                             HStack(alignment: .top) {
                                                 ForEach(viewModel.cast, id: \.self) { castmate in
                                                     VStack(alignment: .center) {
-                                                        Image(uiImage: castmate.profile_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
+                                                        Image(uiImage: castmate.profile_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                             .scaleEffect(0.3)
                                                             .frame(width: 150, height: 150)
                                                             .aspectRatio(contentMode: .fit)
@@ -279,7 +279,7 @@ struct MovieDetailView: View {
                     viewModel.getSimilarMovies()
                     viewModel.getCast()
                     viewModel.getWatchProviders()
-                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     viewModel.title = givingMovie.title
                     viewModel.genres = viewModel.returnGenresText(for: givingMovie.genres)
                     viewModel.runtime = "\(givingMovie.runtime ?? 0)"

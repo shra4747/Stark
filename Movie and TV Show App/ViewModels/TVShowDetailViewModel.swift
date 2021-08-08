@@ -39,7 +39,7 @@ class TVShowDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark")
+                    self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     self.poster_path = response.poster_path
                     self.name = response.name
                     self.genres = self.returnGenresText(for: response.genres)

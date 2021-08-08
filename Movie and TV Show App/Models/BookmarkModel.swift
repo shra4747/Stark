@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct BookmarkModel: Codable, Hashable {
     let id: Int
@@ -17,13 +18,15 @@ struct BookmarkModel: Codable, Hashable {
 
 struct BookmarkGroupModel: Codable, Hashable {
     let name: String
-    let id: Int
+    let icon: String
+    let gradient: [Color]
+    let id: String
 }
 
 class BookmarkModelDefaultGroups {
-    static let watchLater = BookmarkGroupModel(name: "Watch Later", id: 001)
+    static let watchLater = BookmarkGroupModel(name: "Watch Later", icon: "clock.arrow.2.circlepath", gradient: [.blue, .purple], id: "001")
     
-    static let countdown = BookmarkGroupModel(name: "Countdown", id: 002)
+    static let countdown = BookmarkGroupModel(name: "Countdown", icon: "clock", gradient: [.red, .orange], id: "002")
     
     static let defaultGroups = [watchLater, countdown]
 }

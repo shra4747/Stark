@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC14B55B26B8D78C00D4AF44 /* ACarousel in Frameworks */ = {isa = PBXBuildFile; productRef = DC14B55A26B8D78C00D4AF44 /* ACarousel */; };
 		DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
 		DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
+		DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */; };
+		DC201F1326BF2FEA001A214C /* ChooseIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F1226BF2FEA001A214C /* ChooseIconView.swift */; };
 		DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */; };
 		DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */; };
 		DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */; };
@@ -20,6 +21,7 @@
 		DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */; };
 		DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */; };
 		DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */; };
+		DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */; };
 		DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E6626B5962700D7BB14 /* HexExtension.swift */; };
 		DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */; };
 		DC852E7F26B59C2A00D7BB14 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */; };
@@ -31,12 +33,16 @@
 		DCD167CC26BA16B90050EF72 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */; };
 		DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */; };
 		DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */; };
+		DCEACA7426BCD96500E6E196 /* AddNewGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEACA7326BCD96500E6E196 /* AddNewGroupView.swift */; };
+		DCEACA7726BCD97200E6E196 /* AddNewGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEACA7626BCD97200E6E196 /* AddNewGroupViewModel.swift */; };
 		DCF2E46226BB870000B44842 /* CustomCornerRadiusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonView.swift; sourceTree = "<group>"; };
 		DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonViewModel.swift; sourceTree = "<group>"; };
+		DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextFieldExtension.swift; sourceTree = "<group>"; };
+		DC201F1226BF2FEA001A214C /* ChooseIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseIconView.swift; sourceTree = "<group>"; };
 		DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie and TV Show App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +55,7 @@
 		DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedView.swift; sourceTree = "<group>"; };
 		DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedViewModel.swift; sourceTree = "<group>"; };
+		DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodableExtension.swift; sourceTree = "<group>"; };
 		DC852E6626B5962700D7BB14 /* HexExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexExtension.swift; sourceTree = "<group>"; };
 		DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadImageExtension.swift; path = "/Users/shravanp/Coding/Swift/Movie and TV Show App/Movie and TV Show App/Extensions/LoadImageExtension.swift"; sourceTree = "<absolute>"; };
 		DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
@@ -60,6 +67,8 @@
 		DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedDetailView.swift; sourceTree = "<group>"; };
 		DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedDetailViewModel.swift; sourceTree = "<group>"; };
+		DCEACA7326BCD96500E6E196 /* AddNewGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewGroupView.swift; sourceTree = "<group>"; };
+		DCEACA7626BCD97200E6E196 /* AddNewGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewGroupViewModel.swift; sourceTree = "<group>"; };
 		DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCornerRadiusExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +77,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC14B55B26B8D78C00D4AF44 /* ACarousel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +134,8 @@
 				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
 				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
 				DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */,
+				DCEACA7326BCD96500E6E196 /* AddNewGroupView.swift */,
+				DC201F1226BF2FEA001A214C /* ChooseIconView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -139,6 +149,7 @@
 				DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */,
 				DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */,
 				DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */,
+				DCEACA7626BCD97200E6E196 /* AddNewGroupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -156,9 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */,
+				DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */,
 				DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */,
 				DC852E6626B5962700D7BB14 /* HexExtension.swift */,
 				DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */,
+				DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -180,7 +193,6 @@
 			);
 			name = "Movie and TV Show App";
 			packageProductDependencies = (
-				DC14B55A26B8D78C00D4AF44 /* ACarousel */,
 			);
 			productName = "Movie and TV Show App";
 			productReference = DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */;
@@ -210,7 +222,6 @@
 			);
 			mainGroup = DC31C14C26B1DFEA00AD58C6;
 			packageReferences = (
-				DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */,
 			);
 			productRefGroup = DC31C15626B1DFEA00AD58C6 /* Products */;
 			projectDirPath = "";
@@ -240,14 +251,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */,
+				DCEACA7726BCD97200E6E196 /* AddNewGroupViewModel.swift in Sources */,
 				DCF2E46226BB870000B44842 /* CustomCornerRadiusExtension.swift in Sources */,
+				DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */,
 				DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */,
 				DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */,
 				DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */,
+				DCEACA7426BCD96500E6E196 /* AddNewGroupView.swift in Sources */,
+				DC201F1326BF2FEA001A214C /* ChooseIconView.swift in Sources */,
 				DC852E8626B5C2FD00D7BB14 /* TrailerView.swift in Sources */,
 				DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */,
 				DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */,
 				DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */,
+				DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */,
 				DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */,
 				DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */,
 				DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */,
@@ -457,25 +473,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JWAutumn/ACarousel";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		DC14B55A26B8D78C00D4AF44 /* ACarousel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC14B55926B8D78C00D4AF44 /* XCRemoteSwiftPackageReference "ACarousel" */;
-			productName = ACarousel;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC31C14D26B1DFEA00AD58C6 /* Project object */;
 }

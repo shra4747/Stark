@@ -10,14 +10,19 @@ import SwiftUI
 
 class BookmarkedViewModel: ObservableObject {
     @Published var groups: [BookmarkGroupModel] = []
+    
 
+    
     func load() {
-        guard let savedGroups = UserDefaults.standard.value(forKey: "groups") as? [BookmarkGroupModel] else {
-            UserDefaults.standard.set(BookmarkModelDefaultGroups.defaultGroups, forKey: "groups")
-            self.load()
+        guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
             return
         }
         
-        self.groups = savedGroups
+        let decoded = try? JSONDecoder().decode([BookmarkGroupModel].self, from: savedGroupsData)
+        
+        if let savedGroups = decoded {
+            self.groups = savedGroups
+        }
+        
     }
 }

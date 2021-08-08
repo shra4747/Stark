@@ -67,7 +67,7 @@ struct SearchView: View {
                                             destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
                                             label: {
                                                 VStack(alignment: .leading) {
-                                                    Image(uiImage: movie.poster_path?.loadImage() ?? UIImage(imageLiteralResourceName: "questionmark"))
+                                                    Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                         .scaleEffect(0.65)
                                                         .frame(width: 296, height: 440)
                                                         .cornerRadius(18)

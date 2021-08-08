@@ -19,28 +19,27 @@ struct BookmarkedDetailView: View {
                     .foregroundColor(.init(hex: "EBEBEB"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
-                VStack {
+                VStack(spacing: 18) {
                     VStack {
                         ZStack {
-                            LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .topLeading, endPoint: .bottomTrailing).cornerRadius(30, corners: [.bottomLeft, .bottomRight])
+                            LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing).cornerRadius(30, corners: [.bottomLeft, .bottomRight])
                                 .opacity(0.6)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/4.2)
                                 .edgesIgnoringSafeArea(.all)
                                 .shadow(color: Color(.darkGray), radius: 8)
                             VStack(spacing: 20) {
-                                Image(systemName: "clock.arrow.2.circlepath")
+                                Image(systemName: group.icon)
                                     .scaleEffect(3)
-                                Text("Watch Later")
+                                Text(group.name)
                                     .font(.custom("Avenir", size: 27))
                                     .fontWeight(.bold)
 
-                            }.offset(y: 15)
+                            }.offset(y: -25)
                         }
-                        Spacer()
                     }
                     
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
+                        HStack(alignment: .top, spacing: 20) {
                             ForEach(viewModel.bookmarkedContent, id: \.self) { mediaContent in
                                 if mediaContent.media_type == .movie {
                                     NavigationLink(
@@ -56,7 +55,7 @@ struct BookmarkedDetailView: View {
                                                     .font(.custom("Avenir", size: 22))
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
-                                                    .frame(width: 290)
+                                                    .frame(width: 290, alignment: .leading)
                                             }
                                         })
                                 }
@@ -74,13 +73,14 @@ struct BookmarkedDetailView: View {
                                                     .font(.custom("Avenir", size: 22))
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
-                                                    .frame(width: 290)
+                                                    .frame(width: 290, alignment: .leading)
                                             }
                                         })
                                 }
                             }
                         }.padding()
                     }
+                    Spacer()
                 }.onAppear {
                     viewModel.load()
             }.navigationBarHidden(true)

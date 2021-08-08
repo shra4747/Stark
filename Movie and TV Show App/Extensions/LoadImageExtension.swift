@@ -18,7 +18,23 @@ extension String {
             
             let data: Data = try Data(contentsOf: url)
             
-            return UIImage(data: data) ?? UIImage(imageLiteralResourceName: "questionmark")
+            return UIImage(data: data) ?? SearchModel.EmptyModel.Image
+        } catch {
+            
+        }
+        
+        return UIImage()
+    }
+    
+    func loadEmptyImage() -> UIImage {
+        do {
+            guard let url = URL(string: self) else {
+                return UIImage()
+            }
+            
+            let data: Data = try Data(contentsOf: url)
+            
+            return UIImage(data: data) ?? SearchModel.EmptyModel.Image
         } catch {
             
         }
