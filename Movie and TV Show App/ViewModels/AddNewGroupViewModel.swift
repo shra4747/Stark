@@ -32,10 +32,19 @@ class AddNewGroupViewModel: ObservableObject {
         gradient = [color1, color2]
     }
     
+    func checkIfAllFieldsFilled() -> Bool {
+        if self.icon == "" || self.groupName == "" {
+           return false
+        }
+        else {
+            return true
+        }
+    }
+    
     func addButtonClicked() {
         
         // Check if all fields are inputted
-        if self.icon == "" || self.groupName == "" {
+        if !checkIfAllFieldsFilled() {
             // Show Alert
         }
         

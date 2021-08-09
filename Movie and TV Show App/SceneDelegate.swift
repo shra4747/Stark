@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 //        let contentView = MovieDetailView(id: 566525, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
 //        let contentView = BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater)
-        let contentView = BookmarkedView()
+        let contentView = TempTabView()
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

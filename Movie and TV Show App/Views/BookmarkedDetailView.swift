@@ -28,8 +28,10 @@ struct BookmarkedDetailView: View {
                                 .edgesIgnoringSafeArea(.all)
                                 .shadow(color: Color(.darkGray), radius: 8)
                             VStack(spacing: 20) {
-                                Image(systemName: group.icon)
-                                    .scaleEffect(3)
+                                Text(group.icon)
+                                    .font(.system(size: 50))
+                                    .frame(height: 25)
+                                    .foregroundColor(.black)
                                 Text(group.name)
                                     .font(.custom("Avenir", size: 27))
                                     .fontWeight(.bold)
@@ -82,6 +84,7 @@ struct BookmarkedDetailView: View {
                     }
                     Spacer()
                 }.onAppear {
+                    viewModel.groupID = group.id
                     viewModel.load()
             }.navigationBarHidden(true)
             }

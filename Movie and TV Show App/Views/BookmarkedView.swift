@@ -33,8 +33,10 @@ struct BookmarkedView: View {
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 100)
                                     .shadow(color: Color(.darkGray), radius: 6)
                                 VStack(spacing: 10) {
-                                    Image(systemName: countdown.icon)
-                                        .scaleEffect(1.9)
+                                    Text(countdown.icon)
+                                        .font(.system(size: 45))
+                                        .frame(height: 28)
+                                        .foregroundColor(.black)
                                     Text(countdown.name)
                                         .font(.custom("Avenir", size: 23))
                                         .fontWeight(.semibold)
@@ -53,8 +55,10 @@ struct BookmarkedView: View {
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 160)
                                     .shadow(color: Color(.darkGray), radius: 6)
                                 VStack(spacing: 20) {
-                                    Image(systemName: watchLater.icon)
-                                        .scaleEffect(2.7)
+                                    Text(watchLater.icon)
+                                        .font(.system(size: 53))
+                                        .frame(height: 28)
+                                        .foregroundColor(.black)
                                     Text(watchLater.name)
                                         .font(.custom("Avenir", size: 27))
                                         .fontWeight(.semibold)
@@ -63,80 +67,64 @@ struct BookmarkedView: View {
                             }
                         })
                     
-                    ForEach(viewModel.groups, id: \.self) { group in
-                        ZStack {
-                            LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                .cornerRadius(18)
-                                .opacity(0.6)
-                                .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
-                                .shadow(color: Color(.darkGray), radius: 6)
-                            VStack(spacing: 15) {
-                                Text(group.icon)
-                                    .font(.system(size: 60))
-                                    .frame(height: 30)
-                                    .foregroundColor(.black)
-                                Text(group.name)
-                                    .font(.custom("Avenir", size: 22))
-                                    .fontWeight(.medium)
-                            }.offset(y: 5)
-                        }
-                    }
-                    
-//                    HStack(spacing: 20) {
-//                        ZStack {
-//                            LinearGradient(gradient: Gradient(colors: [.green, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-//                                .cornerRadius(18)
-//                                .opacity(0.6)
-//                                .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
-//                                .shadow(color: Color(.darkGray), radius: 6)
-//                            VStack(spacing: 15) {
-//                                Image(systemName: "crown")
-//                                    .scaleEffect(2.3)
-//                                Text("Marvel")
-//                                    .font(.custom("Avenir", size: 22))
-//                                    .fontWeight(.medium)
-//
-//                            }.offset(y: 5)
-//                        }
-//                        ZStack {
-//                            LinearGradient(gradient: Gradient(colors: [.purple, .pink]), startPoint: .topLeading, endPoint: .bottomTrailing)
-//                                .cornerRadius(18)
-//                                .opacity(0.6)
-//                                .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
-//                                .shadow(color: Color(.darkGray), radius: 6)
-//                            VStack(spacing: 15) {
-//                                Image(systemName: "heart")
-//                                    .scaleEffect(2.3)
-//                                Text("Favorites")
-//                                    .font(.custom("Avenir", size: 22))
-//                                    .fontWeight(.medium)
-//
-//                            }.offset(y: 5)
-//                        }
-//                    }
-                    
-                    Button(action: {
-                        self.isPresentingAddNewGroup.toggle()
-                    }) {
-                        ZStack {
-                            LinearGradient(gradient: Gradient(colors: [Color(.white)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                .cornerRadius(18)
-                                .opacity(0.6)
-                                .frame(width: UIScreen.main.bounds.width - 60, height: 60)
-                                .shadow(color: Color(.darkGray), radius: 6)
-                            HStack(spacing: 15) {
-                                Text("Add New Group")
-                                    .font(.custom("Avenir", size: 16))
-                                    .fontWeight(.medium)
-                                Image(systemName: "plus")
-                                    
-                                
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 30) {
+                            VStack(spacing: 22) {
+                                ForEach(viewModel.groups.chunked(into: 2), id: \.self) { chunk in
+                                    HStack(spacing: 20) {
+                                        ForEach(chunk, id: \.self) { group in
+                                            NavigationLink(
+                                                destination: BookmarkedDetailView(group: group),
+                                                label: {
+                                                    ZStack {
+                                                        LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                                            .cornerRadius(18)
+                                                            .opacity(0.6)
+                                                            .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
+                                                            .shadow(color: Color(.darkGray), radius: 6)
+                                                        VStack(spacing: 20) {
+                                                            Text(group.icon)
+                                                                .font(.system(size: 54))
+                                                                .frame(height: 30)
+                                                                .foregroundColor(.black)
+                                                            Text(group.name)
+                                                                .font(.custom("Avenir", size: 22))
+                                                                .foregroundColor(.black)
+                                                                .fontWeight(.medium)
+                                                        }.offset(y: 5)
+                                                    }
+                                                })
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            Button(action: {
+                                self.isPresentingAddNewGroup.toggle()
+                            }) {
+                                ZStack {
+                                    LinearGradient(gradient: Gradient(colors: [Color(.white)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                        .cornerRadius(18)
+                                        .opacity(0.6)
+                                        .frame(width: UIScreen.main.bounds.width - 60, height: 60)
+                                        .shadow(color: Color(.darkGray), radius: 6)
+                                    HStack(spacing: 15) {
+                                        Text("Add New Group")
+                                            .font(.custom("Avenir", size: 16))
+                                            .fontWeight(.medium)
+                                        Image(systemName: "plus")
+                                            
+                                        
 
-                            }.offset(y: 0)
-                        }.foregroundColor(.black)
-                    }.sheet(isPresented: $isPresentingAddNewGroup, content: {
-                        AddNewGroupView()
-                    })
+                                    }.offset(y: 0)
+                                }.foregroundColor(.black)
+                            }.sheet(isPresented: $isPresentingAddNewGroup, onDismiss: {
+                                viewModel.load()
+                            }, content: {
+                                AddNewGroupView()
+                            })
+                        }.frame(width: UIScreen.main.bounds.width).padding(.top)
+                    }
                     
                     Spacer()
                 }.padding(.top, 50)

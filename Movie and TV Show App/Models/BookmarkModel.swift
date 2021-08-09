@@ -24,9 +24,9 @@ struct BookmarkGroupModel: Codable, Hashable {
 }
 
 class BookmarkModelDefaultGroups {
-    static let watchLater = BookmarkGroupModel(name: "Watch Later", icon: "clock.arrow.2.circlepath", gradient: [.blue, .purple], id: "001")
+    static let watchLater = BookmarkGroupModel(name: "Watch Later", icon: "📺", gradient: [.blue, .purple], id: "001")
     
-    static let countdown = BookmarkGroupModel(name: "Countdown", icon: "clock", gradient: [.red, .orange], id: "002")
+    static let countdown = BookmarkGroupModel(name: "Countdown", icon: "🕥", gradient: [.red, .orange], id: "002")
     
     static let defaultGroups = [watchLater, countdown]
 }

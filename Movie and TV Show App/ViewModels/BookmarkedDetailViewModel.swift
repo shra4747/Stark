@@ -10,10 +10,10 @@ import SwiftUI
 class BookmarkedDetailViewModel: ObservableObject {
     @Published var bookmarkedContent: [BookmarkModel] = []
     
-    var groupID: Int = 0
+    var groupID: String = "001"
     
     func load() {
-        guard let data = UserDefaults.standard.data(forKey: "saved-001") else {
+        guard let data = UserDefaults.standard.data(forKey: "saved-\(groupID)") else {
             return
         }
 

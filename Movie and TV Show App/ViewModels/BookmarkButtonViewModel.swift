@@ -16,67 +16,55 @@ class BookmarkButtonViewModel: ObservableObject {
     var media_type: SearchModel.MediaType = .movie
     var release_Date = ""
     @Published var hasBeenSaved = false
+    @Published var showChooseGroupView = false
     
     func changeStateOnAppear() {
-        guard let data = UserDefaults.standard.data(forKey: "saved-001") else {
+        checkGroupForId(groupID: "001")
+        checkGroupForId(groupID: "002")
+        
+        guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
             self.hasBeenSaved = false
             return
         }
 
-        let watchLater = try? JSONDecoder().decode([BookmarkModel].self, from: data)
+        let decoded = try? JSONDecoder().decode([BookmarkGroupModel].self, from: savedGroupsData)
+
+        if let savedGroups = decoded {
+            for group in savedGroups {
+                checkGroupForId(groupID: group.id)
+            }
+        }
+    }
+    
+    func checkGroupForId(groupID: String) {
+        if hasBeenSaved {
+            return
+        }
+        
+        guard let data = UserDefaults.standard.data(forKey: "saved-\(groupID)") else {
+            self.hasBeenSaved = false
+            return
+        }
+
+        let content = try? JSONDecoder().decode([BookmarkModel].self, from: data)
                 
         
-        if let watchLater = watchLater {
-            for media in watchLater {
+        if let content = content {
+            for media in content {
                 if media.id == id {
                     self.hasBeenSaved = true
-                    return
                 }
             }
         }
     }
     
     func buttonClick() {
-        guard let data = UserDefaults.standard.data(forKey: "saved-001") else {
-            self.hasBeenSaved = true
-            
-            let bookmarks = [BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_type, release_date: release_Date)]
-            
-            let data = try? JSONEncoder().encode(bookmarks)
-            UserDefaults.standard.set(data, forKey: "saved-001")
-            return
-        }
-
-        let watchLater = try? JSONDecoder().decode([BookmarkModel].self, from: data)
         
-
-        if let watchLater = watchLater {
-            
-            for media in watchLater {
-                if media.id == id {
-                    self.hasBeenSaved = false
-                    let index = watchLater.firstIndex(of: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_type, release_date: release_Date))
-                    var new = watchLater
-                    if let index = index {
-                        new.remove(at: index)
-                    }
-                    
-                    let newData = try? JSONEncoder().encode(new)
-
-                    UserDefaults.standard.set(newData, forKey: "saved-001")
-                    return
-                }
-            }
-            
-            self.hasBeenSaved = true
-            
-            var new = watchLater
-            new.append(BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_type, release_date: release_Date))
-
-            let newData = try? JSONEncoder().encode(new)
-
-            UserDefaults.standard.set(newData, forKey: "saved-001")
+        if hasBeenSaved == true {
             return
         }
+        
+        self.showChooseGroupView.toggle()
+
     }
 }
