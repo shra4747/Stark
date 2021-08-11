@@ -125,7 +125,7 @@ struct MovieDetailView: View {
                                             CastView(cast: viewModel.cast)
                                         }
                                     }
-                                }
+                                }.padding(.bottom, 60)
                             }.cornerRadius(40)
                             .padding(.top, 5)
                             .padding(.horizontal)
@@ -369,6 +369,6 @@ struct CastView: View {
             }.padding()
             .padding(.leading)
         }.padding(.top, -15)
-
+        
     }
 }
