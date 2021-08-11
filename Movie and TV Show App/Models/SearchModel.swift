@@ -21,7 +21,7 @@ struct SearchModel: Codable, Hashable {
 }
 
 extension SearchModel {
-    struct Movie: Codable, Hashable {
+    struct Movie: Codable, Hashable, Identifiable {
         let backdrop_path: String?
         let genres: [Genre]
         let id: Int
@@ -41,7 +41,7 @@ extension SearchModel {
         let number_of_episodes: Int
         let number_of_seasons: Int
         let overview: String
-        let poster_path: String
+        let poster_path: String?
         let status: String
     }
     
@@ -158,7 +158,7 @@ extension SearchModel.TVShow {
             let episode_number: Int
             let name: String
             let overview: String
-            let still_path: String
+            let still_path: String?
         }
     }
 }

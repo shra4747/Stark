@@ -11,7 +11,7 @@ struct BookmarkedDetailView: View {
     
     @State var group: BookmarkGroupModel
     @StateObject var viewModel = BookmarkedDetailViewModel()
-    
+    @Environment(\.presentationMode) var dismissPage
     var body: some View {
         NavigationView {
             ZStack {
@@ -87,6 +87,20 @@ struct BookmarkedDetailView: View {
                     viewModel.groupID = group.id
                     viewModel.load()
             }.navigationBarHidden(true)
+                
+                Button(action: {
+                    viewModel.deleteAllContentInGroup()
+                    dismissPage.wrappedValue.dismiss()
+                }) {
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                            .shadow(radius: 10)
+                        Image(systemName: "trash")
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
             }
         }
     }

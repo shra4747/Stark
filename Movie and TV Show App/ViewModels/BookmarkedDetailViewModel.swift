@@ -22,4 +22,8 @@ class BookmarkedDetailViewModel: ObservableObject {
         bookmarkedContent = watchLater ?? []
 
     }
+    
+    func deleteAllContentInGroup() {
+        UserDefaults.standard.setValue(nil, forKey: "saved-\(groupID)")
+    }
 }

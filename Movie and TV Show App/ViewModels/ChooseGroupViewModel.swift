@@ -9,7 +9,23 @@ import Foundation
 import SwiftUI
 
 class ChooseGroupViewModel: ObservableObject {
-    @StateObject var groupsModel = BookmarkedViewModel()
+    @Published var groups: [BookmarkGroupModel] = []
+    
+
+    
+    func load() {
+        guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
+            return
+        }
+        
+        let decoded = try? JSONDecoder().decode([BookmarkGroupModel].self, from: savedGroupsData)
+        
+        if let savedGroups = decoded {
+            self.groups = savedGroups
+        }
+        
+    }
+
     var model = BookmarkModel(id: 0, poster_path: "", title: "", media_type: .movie, release_date: "")
     
     func addMediaToGroup(for groupID: String) {

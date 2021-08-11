@@ -96,7 +96,7 @@ struct TVShowDetailView: View {
                                                 ForEach(viewModel.episodes, id: \.self) { episode in
                                                     VStack(alignment: .leading) {
                                                         VStack {
-                                                            Image(uiImage: episode.still_path.loadImage())
+                                                            Image(uiImage: episode.still_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                                 .scaleEffect(0.6)
                                                                 .frame(width: 220, height: 130)
                                                                 .cornerRadius(18)
@@ -203,7 +203,7 @@ struct TVShowDetailView: View {
                                                             label: {
                                                                 VStack(alignment: .leading) {
                                                                     VStack {
-                                                                        Image(uiImage: show.poster_path.loadImage() )
+                                                                        Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                                             .scaleEffect(0.55)
                                                                             .frame(width: 250, height: 370)
                                                                             .cornerRadius(18)
@@ -328,7 +328,7 @@ struct TVShowDetailView: View {
                 if isGivingData {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
-                    viewModel.poster_path = givingShow.poster_path
+                    viewModel.poster_path = givingShow.poster_path ?? ""
                     viewModel.getTrailer()
                     viewModel.getSimilarShows()
                     viewModel.getCast()

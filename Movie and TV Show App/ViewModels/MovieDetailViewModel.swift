@@ -12,7 +12,7 @@ import UIKit
 class MovieDetailViewModel: ObservableObject {
     
     var id = 0
-    
+
     @Published var isLoading = true
     var poster_path = ""
     @Published var backdropImage = UIImage()

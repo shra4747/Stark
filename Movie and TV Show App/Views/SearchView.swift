@@ -109,7 +109,7 @@ struct SearchView: View {
                                             destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
                                             label: {
                                                 VStack(alignment: .leading) {
-                                                    Image(uiImage: show.poster_path.loadImage())
+                                                    Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
                                                         .scaleEffect(0.65)
                                                         .frame(width: 296, height: 440)
                                                         .cornerRadius(18)
