@@ -37,8 +37,6 @@ struct MovieDetailView: View {
                                 .edgesIgnoringSafeArea(.bottom)
                                 .foregroundColor(.white)
                                 .shadow(radius: 4, x: 0, y: -4)
-                            
-
                         }
                         
                         ZStack(alignment: .top) {
@@ -149,20 +147,21 @@ struct MovieDetailView: View {
                             .foregroundColor(Color(.systemGray))
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
-
-                NavigationLink(
-                    destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater),
-                    label: {
-                        ZStack {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.white)
-                                .shadow(radius: 10)
-                            Image(systemName: "checkmark")
-                                .foregroundColor(Color(.systemGray))
-                        }
-                    }).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
+                
+                Button(action: {
+                    
+                }) {
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                            .shadow(radius: 10)
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+
                 if viewModel.isLoading {
                     ZStack {
                         Color.white
@@ -205,7 +204,7 @@ struct MovieDetailView: View {
                     doneLoading = true
                 }
             }
-        }
+        }.ignoresSafeArea(.keyboard)
     }
 }
 
@@ -223,7 +222,6 @@ struct Separator: View {
             .foregroundColor(.gray)
     }
 }
-
 
 struct SimilarMoviesView: View {
     

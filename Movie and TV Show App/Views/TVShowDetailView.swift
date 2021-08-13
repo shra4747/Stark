@@ -81,6 +81,12 @@ struct TVShowDetailView: View {
                                         }
                                     }
                                     
+                                    Text("Trailer")
+                                        .font(.custom("Avenir", size: 22))
+                                        .fontWeight(.bold)
+                                        .padding(.horizontal)
+                                        .padding(.top)
+                                        .padding(.leading)
                                     
                                     // MARK: Trailer View
                                     TrailerView(trailerYTLink: viewModel.trailerLink)
@@ -89,100 +95,31 @@ struct TVShowDetailView: View {
                                         .padding()
                                         .padding(.leading)
                                         .shadow(radius: 10)
+                                        .padding(.bottom, 20)
+                                
                                     
-                                    VStack {
-                                        ScrollView(.horizontal, showsIndicators: false) {
-                                            HStack(alignment: .top, spacing: 15) {
-                                                ForEach(viewModel.episodes, id: \.self) { episode in
-                                                    VStack(alignment: .leading) {
-                                                        VStack {
-                                                            Image(uiImage: episode.still_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                                .scaleEffect(0.6)
-                                                                .frame(width: 220, height: 130)
-                                                                .cornerRadius(18)
-                                                                .shadow(radius: 5)
-                                                        }.frame(height: 150).padding(.bottom, -2)
-                                                        VStack(spacing: 4) {
-                                                            Text(episode.name)
-                                                                .font(.custom("Avenir", size: 16))
-                                                                .fontWeight(.bold)
-                                                                .frame(width: 220, alignment: .leading)
-                                                                .padding(.leading, 1)
-                                                            VStack {
-                                                                Text(episode.overview)
-                                                                    .font(.custom("Avenir", size: 14))
-                                                                    .fontWeight(.light)
-                                                                    .frame(width: 215)
-                                                            }.frame(maxHeight: 1000)
-                                                        }
-                                                    }
-                                                }
-                                            }.padding(.horizontal)
-                                        }
-                                    }.padding()
+                                    if viewModel.episodes.count > 0 {
+                                        Text("Episodes")
+                                            .font(.custom("Avenir", size: 22))
+                                            .fontWeight(.bold)
+                                            .padding(.horizontal)
+                                            .padding(.top)
+                                            .padding(.leading)
+                                        EpisodesView(episodes: viewModel.episodes)
+                                    }
                                   
                                     // MARK: Separator
-                                    Rectangle()
-                                        .frame(width: UIScreen.main.bounds.width - 20, height: 1, alignment: .center)
-                                        .padding()
-                                        .foregroundColor(.gray)
+                                    Separator()
                                     
                                     
                                     // MARK: Watch Providers
-                                    Group {
-                                        if viewModel.watchProviders.count > 0 {
-                                            VStack(alignment: .leading, spacing: 5) {
-                                                Text("Stream")
-                                                    .font(.custom("Avenir", size: 25))
-                                                    .fontWeight(.bold)
-                                                    .padding(.horizontal)
-                                                    .padding(.top)
-                                                    .padding(.leading)
-                                                
-                                                ScrollView(.horizontal, showsIndicators: false) {
-                                                    HStack(alignment: .top, spacing: 17) {
-                                                        ForEach(viewModel.watchProviders[0].flatrate ?? [], id: \.self) { provider in
-                                                            Image(uiImage: provider.logo_path.loadImage())
-                                                                .resizable()
-                                                                .frame(width: 70, height: 70)
-                                                                .cornerRadius(18)
-                                                                .shadow(radius: 3)
-                                                        }
-                                                    }.frame(height: 75).padding(.leading).padding(.leading).padding(.trailing)
-                                                }
-                                            }.padding(.bottom)
-                                        }
-                                        
-                                        if viewModel.watchProviders.count > 0 {
-                                            VStack(alignment: .leading, spacing: 5) {
-                                                Text("Rent or Buy")
-                                                    .font(.custom("Avenir", size: 25))
-                                                    .fontWeight(.bold)
-                                                    .padding(.horizontal)
-                                                    .padding(.top)
-                                                    .padding(.leading)
-                                                
-                                                ScrollView(.horizontal, showsIndicators: false) {
-                                                    HStack(alignment: .top, spacing: 17) {
-                                                        ForEach(viewModel.watchProviders[0].buy ?? [], id: \.self) { provider in
-                                                            Image(uiImage: provider.logo_path.loadImage())
-                                                                .resizable()
-                                                                .frame(width: 70, height: 70)
-                                                                .cornerRadius(18)
-                                                                .shadow(radius: 3)
-                                                        }
-                                                    }.frame(height: 75).padding(.leading).padding(.leading).padding(.trailing)
-                                                }
-                                            }.padding(.bottom)
-                                        }
+                                    if viewModel.watchProviders.count > 0 {
+                                        WatchProvidersView(watchProviders: viewModel.watchProviders)
                                     }
                                     
                                     
                                     // MARK: Separator
-                                    Rectangle()
-                                        .frame(width: UIScreen.main.bounds.width - 20, height: 1, alignment: .center)
-                                        .padding()
-                                        .foregroundColor(.gray)
+//                                    Separator()
                                     
                                     
                                     // MARK: Similar Shows
@@ -195,42 +132,17 @@ struct TVShowDetailView: View {
                                                 .padding(.top)
                                                 .padding(.leading)
                                             
-                                            ScrollView(.horizontal, showsIndicators: false) {
-                                                HStack(spacing: 35) {
-                                                    ForEach(viewModel.similarShows, id: \.self) { show in
-                                                        NavigationLink(
-                                                            destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
-                                                            label: {
-                                                                VStack(alignment: .leading) {
-                                                                    VStack {
-                                                                        Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                                            .scaleEffect(0.55)
-                                                                            .frame(width: 250, height: 370)
-                                                                            .cornerRadius(18)
-                                                                            .shadow(radius: 10).id(UUID())
-                                                                    }.id(UUID())
-                                                                    Text(show.name)
-                                                                        .font(.custom("Avenir", size: 23))
-                                                                        .fontWeight(.bold)
-                                                                        .foregroundColor(.black).id(UUID())
-                                                                }
-                                                        })
-                                                    }
-                                                }.padding()
-                                                .padding(.leading)
+                                            
+                                            if viewModel.similarShows.count > 0 {
+                                                SimilarTVShowsView(similarShows: viewModel.similarShows)
                                             }
-                                            .padding(.bottom)
-                                            .frame(height: 400)
                                             
                                         }
                                     }
                                     
                                     
                                     // MARK: Separator
-                                    Rectangle()
-                                        .frame(width: UIScreen.main.bounds.width - 20, height: 1, alignment: .center)
-                                        .padding()
-                                        .foregroundColor(.gray)
+                                    Separator()
                                     
                                     
                                     // MARK: Cast
@@ -243,33 +155,12 @@ struct TVShowDetailView: View {
                                                 .padding(.top)
                                                 .padding(.leading)
                                             
-                                            ScrollView(.horizontal, showsIndicators: false) {
-                                                HStack(alignment: .top) {
-                                                    ForEach(viewModel.cast, id: \.self) { castmate in
-                                                        VStack(alignment: .center) {
-                                                            Image(uiImage: castmate.profile_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                                .scaleEffect(0.3)
-                                                                .frame(width: 150, height: 150)
-                                                                .aspectRatio(contentMode: .fit)
-                                                                .shadow(radius: 5)
-                                                                .cornerRadius(18).id(UUID())
-                                                            Text(castmate.name)
-                                                                .font(.custom("Avenir", size: 16))
-                                                                .fontWeight(.medium)
-                                                                .foregroundColor(.init(hex: "262626"))
-                                                                .multilineTextAlignment(.center)
-                                                            Text(castmate.character)
-                                                                .font(.custom("Avenir", size: 15))
-                                                                .fontWeight(.light)
-                                                                .multilineTextAlignment(.center)
-                                                        }
-                                                    }
-                                                }.padding()
-                                                .padding(.leading)
+                                            if viewModel.cast.count > 0 {
+                                                CastView(cast: viewModel.cast)
                                             }
                                         }
                                     }
-                                }
+                                }.padding(.bottom, 60)
                             }.cornerRadius(40)
                             .padding(.top, 5)
                             .padding(.horizontal)
@@ -297,18 +188,18 @@ struct TVShowDetailView: View {
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
-                NavigationLink(
-                    destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater),
-                    label: {
-                        ZStack {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.white)
-                                .shadow(radius: 10)
-                            Image(systemName: "checkmark")
-                                .foregroundColor(Color(.systemGray))
-                        }
-                    }).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                Button(action: {
+                    
+                }) {
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                            .shadow(radius: 10)
+                        Image(systemName: "checkmark")
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
                 if viewModel.isLoading {
                     ZStack {
@@ -324,7 +215,6 @@ struct TVShowDetailView: View {
                     return
                 }
                 
-                print(id)
                 if isGivingData {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
@@ -360,5 +250,85 @@ struct TVShowDetailView: View {
 struct TVShowDetailView_Previews: PreviewProvider {
     static var previews: some View {
         TVShowDetailView(id: 100757, isGivingData: false, givingShow: SearchModel.EmptyModel.TVShow)
+    }
+}
+
+
+struct EpisodesView: View {
+    
+    @State var episodes: [SearchModel.TVShow.Season.Episode]
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(alignment: .top, spacing: 15) {
+                ForEach(episodes, id: \.self) { episode in
+                    VStack(alignment: .leading) {
+                        VStack {
+                            Image(uiImage: episode.still_path?.loadImage() ?? SearchModel.EmptyModel.Image)
+                                .scaleEffect(0.6)
+                                .frame(width: 220, height: 130)
+                                .cornerRadius(18)
+                                .shadow(radius: 5)
+                        }.frame(height: 150).padding(.bottom, -2)
+                        VStack(spacing: 4) {
+                            Text(episode.name)
+                                .font(.custom("Avenir", size: 16))
+                                .fontWeight(.bold)
+                                .frame(width: 220, alignment: .leading)
+                                .padding(.leading, 1)
+                            VStack {
+                                Text(episode.overview)
+                                    .font(.custom("Avenir", size: 14))
+                                    .fontWeight(.light)
+                                    .frame(width: 215, alignment: .leading)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding(.bottom, 20)
+                            }
+                        }
+                    }
+                }
+//                RoundedRectangle(cornerRadius: 18)
+//                    .foregroundColor(.white)
+//                    .frame(width: 220, height: 130)
+//                    .shadow(radius: 5)
+            }.padding(.horizontal).padding()
+        }
+    }
+}
+
+
+struct SimilarTVShowsView: View {
+    
+    @State var similarShows: [SearchModel.TVShow]
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 35) {
+                ForEach(similarShows, id: \.self) { show in
+                    NavigationLink(
+                        destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
+                        label: {
+                            VStack(alignment: .leading) {
+                                VStack {
+                                    Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
+                                        .scaleEffect(0.55)
+                                        .frame(width: 250, height: 370)
+                                        .cornerRadius(18)
+                                        .shadow(radius: 10)
+                                }
+                                Text(show.name)
+                                    .font(.custom("Avenir", size: 23))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.black)
+                            }
+                    }).frame(width: 250, alignment: .leading)
+                }
+            }.padding()
+            .padding(.leading)
+            .frame(minHeight: 450)
+
+        }
+        .padding(.bottom)
+        .frame(height: 400)
     }
 }

@@ -43,7 +43,7 @@ struct ChooseGroupView: View {
 
                         }.foregroundColor(.black).offset(y: 5)
                     }
-                }.offset(y: -30)
+                }
                 
                 Button(action: {
                     viewModel.addMediaToGroup(for: watchLater.id)
@@ -66,7 +66,7 @@ struct ChooseGroupView: View {
 
                         }.foregroundColor(.black).offset(y: 10)
                     }
-                }.offset(y: -30)
+                }
                 
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 30) {
@@ -105,6 +105,7 @@ struct ChooseGroupView: View {
                 
                 Spacer()
             }
+            .offset(y: 80)
         }.onAppear {
             viewModel.model = model
             viewModel.load()

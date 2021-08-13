@@ -24,7 +24,7 @@ struct BookmarkedView: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 25) {
                     NavigationLink(
-                        destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.countdown),
+                        destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.countdown).navigationBarHidden(true),
                         label: {
                             ZStack {
                                 LinearGradient(gradient: Gradient(colors: countdown.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -46,7 +46,7 @@ struct BookmarkedView: View {
                         })
                     
                     NavigationLink(
-                        destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater),
+                        destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater).navigationBarHidden(true),
                         label: {
                             ZStack {
                                 LinearGradient(gradient: Gradient(colors: watchLater.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -74,7 +74,7 @@ struct BookmarkedView: View {
                                     HStack(spacing: 20) {
                                         ForEach(chunk, id: \.self) { group in
                                             NavigationLink(
-                                                destination: BookmarkedDetailView(group: group),
+                                                destination: BookmarkedDetailView(group: group).navigationBarHidden(true),
                                                 label: {
                                                     ZStack {
                                                         LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)

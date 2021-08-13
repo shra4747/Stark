@@ -36,7 +36,7 @@ struct BookmarkedDetailView: View {
                                     .font(.custom("Avenir", size: 27))
                                     .fontWeight(.bold)
 
-                            }.offset(y: -25)
+                            }.offset(y: 15)
                         }
                     }
                     
@@ -84,9 +84,24 @@ struct BookmarkedDetailView: View {
                     }
                     Spacer()
                 }.onAppear {
-                    viewModel.groupID = group.id
-                    viewModel.load()
+                    DispatchQueue.main.async {
+                        viewModel.groupID = group.id
+                        viewModel.load()
+                    }
             }.navigationBarHidden(true)
+                
+                Button(action: {
+                    dismissPage.wrappedValue.dismiss()
+                }) {
+                    ZStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                            .shadow(radius: 10)
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
                 Button(action: {
                     viewModel.deleteAllContentInGroup()
@@ -100,7 +115,7 @@ struct BookmarkedDetailView: View {
                         Image(systemName: "trash")
                             .foregroundColor(Color(.systemGray))
                     }
-                }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
             }
         }
     }
