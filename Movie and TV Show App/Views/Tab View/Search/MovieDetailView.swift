@@ -149,18 +149,9 @@ struct MovieDetailView: View {
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
                 
-                Button(action: {
-                    
-                }) {
-                    ZStack {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                            .shadow(radius: 10)
-                        Image(systemName: "checkmark")
-                            .foregroundColor(Color(.systemGray))
-                    }
-                }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                if viewModel.similarMovies.count > 0 {
+                    RatingButtonView(id: id, mediaType: .movie).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                }
 
                 if viewModel.isLoading {
                     ZStack {
@@ -210,7 +201,7 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView(id: 566525, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
+        MovieDetailView(id: 299534, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
     }
 }
 

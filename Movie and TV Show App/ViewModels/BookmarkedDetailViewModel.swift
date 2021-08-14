@@ -39,5 +39,7 @@ class BookmarkedDetailViewModel: ObservableObject {
                 UserDefaults.standard.set(encoded, forKey: "groups")
             }
         }
+        
+        UserDefaults.standard.set(nil, forKey: "saved\(group.id)")
     }
 }

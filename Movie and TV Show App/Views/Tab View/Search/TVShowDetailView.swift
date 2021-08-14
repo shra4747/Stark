@@ -188,18 +188,9 @@ struct TVShowDetailView: View {
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
-                Button(action: {
-                    
-                }) {
-                    ZStack {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                            .shadow(radius: 10)
-                        Image(systemName: "checkmark")
-                            .foregroundColor(Color(.systemGray))
-                    }
-                }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                if viewModel.similarShows.count > 0 {
+                    RatingButtonView(id: id, mediaType: .show).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                }
                 
                 if viewModel.isLoading {
                     ZStack {

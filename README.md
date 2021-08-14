@@ -1,3 +1,3 @@
-# Movie and TV Show App
+# Project: TONY
 
-## This app reccommends movies based on what the user has watched, and users are able to keep track of upcoming movies. 
+## In Development

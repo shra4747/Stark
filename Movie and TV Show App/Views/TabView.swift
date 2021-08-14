@@ -37,21 +37,18 @@ struct TabView: View {
                             }) {
                                 Image(systemName: "house").scaleEffect(1.8)
                                     .foregroundColor(tabType == .home ? .black : Color(.lightGray))
-                                    .shadow(radius: 1)
                             }
                             Button(action: {
                                 self.tabType = .search
                             }) {
                                 Image(systemName: "magnifyingglass").scaleEffect(1.8)
                                     .foregroundColor(tabType == .search ? .black : Color(.lightGray))
-                                    .shadow(radius: 1)
                             }
                             Button(action: {
                                 self.tabType = .saved
                             }) {
                                 Image(systemName: "bookmark").scaleEffect(1.8)
                                     .foregroundColor(tabType == .saved ? .black : Color(.lightGray))
-                                    .shadow(radius: 1)
                             }
                             
                         }

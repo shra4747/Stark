@@ -18,6 +18,7 @@ class HomeViewModel: ObservableObject {
     var id = 299534
     
     init() {
+        if isLoading == false { return }
         self.getRecommendedMovies()
         self.getRecommendedShows()
         self.getTrendingMovies()
