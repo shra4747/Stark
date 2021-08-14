@@ -42,10 +42,10 @@ class TVShowDetailViewModel: ObservableObject {
                     self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     self.poster_path = response.poster_path ?? ""
                     self.name = response.name
-                    self.genres = self.returnGenresText(for: response.genres)
+                    self.genres = self.returnGenresText(for: response.genres ?? [])
                     self.number_of_seasons = "\(response.number_of_seasons)"
                     self.overview = response.overview
-                    self.getSimilarShows()
+                    self.getSimilarShows(type: .recommendation)
                     self.getTrailer()
                     self.getCast()
                     self.getWatchProviders()
@@ -66,9 +66,21 @@ class TVShowDetailViewModel: ObservableObject {
         return arrGenres.joined(separator: ", ")
     }
     
-    func getSimilarShows() {
+    enum SimilarType {
+        case recommendation, similar
+    }
+    
+    func getSimilarShows(type: SimilarType) {
         func getShows() {
             var url = SearchModel.APILinks.TVShow.SimilarTVShows
+            
+            switch type {
+            case .recommendation:
+                url = SearchModel.APILinks.TVShow.TVShowRecommendations
+            case .similar:
+                url = SearchModel.APILinks.TVShow.SimilarTVShows
+            }
+            
             url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
             url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
             
@@ -81,8 +93,13 @@ class TVShowDetailViewModel: ObservableObject {
                 else {
                     let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
                     DispatchQueue.main.async {
-                        for show in response.results {
-                            listShows(show.id)
+                        if response.results.count == 0 {
+                            self.getSimilarShows(type: .similar)
+                        }
+                        else {
+                            for show in response.results {
+                                listShows(show.id)
+                            }
                         }
                         
                     }

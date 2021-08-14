@@ -11,6 +11,7 @@ struct BookmarkedView: View {
     
     @StateObject var viewModel = BookmarkedViewModel()
     @State var isPresentingAddNewGroup = false
+    @State var isDeletingGroup = false
     let watchLater = BookmarkModelDefaultGroups.watchLater
     let countdown = BookmarkModelDefaultGroups.countdown
     
@@ -44,6 +45,7 @@ struct BookmarkedView: View {
                                 }.foregroundColor(.black).offset(y: 5)
                             }
                         })
+                    
                     
                     NavigationLink(
                         destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater).navigationBarHidden(true),
@@ -135,8 +137,36 @@ struct BookmarkedView: View {
     }
 }
 
+struct DeleteAGroupView: View {
+    
+    @Binding var groups: [BookmarkGroupModel]
+    @Environment(\.presentationMode) var dismissPage
+
+    var body: some View {
+        List(groups, id: \.self) { group in
+            Button(action: {
+                if let index = groups.firstIndex(of: group) {
+                    groups.remove(at: index)
+                    let encoded = try? JSONEncoder().encode(groups)
+                    
+                    // Save array to 'groups' user defaults
+                    UserDefaults.standard.set(encoded, forKey: "groups")
+                }
+                dismissPage.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Text(group.name)
+                    Spacer()
+                    Image(systemName: "trash").foregroundColor(.red)
+                }
+            }
+        }
+    }
+}
+
 struct BookmarkedView_Previews: PreviewProvider {
     static var previews: some View {
         BookmarkedView()
     }
 }
+

@@ -12,6 +12,8 @@ struct BookmarkedDetailView: View {
     @State var group: BookmarkGroupModel
     @StateObject var viewModel = BookmarkedDetailViewModel()
     @Environment(\.presentationMode) var dismissPage
+    @State var isPermissingToDelete = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -104,8 +106,7 @@ struct BookmarkedDetailView: View {
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
                 Button(action: {
-                    viewModel.deleteAllContentInGroup()
-                    dismissPage.wrappedValue.dismiss()
+                    self.isPermissingToDelete.toggle()
                 }) {
                     ZStack {
                         Circle()
@@ -116,6 +117,14 @@ struct BookmarkedDetailView: View {
                             .foregroundColor(Color(.systemGray))
                     }
                 }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                .alert(isPresented: $isPermissingToDelete, content: {
+                    Alert(title: Text("Are You Sure?"), message: Text("All of the content and your '\(group.name)' group will be deleted."), primaryButton: .default(Text("Confirm"), action: {
+                        viewModel.deleteGroup(group: group)
+                        dismissPage.wrappedValue.dismiss()
+                    }), secondaryButton: .default(Text("Go Back!"), action: {
+                        dismissPage.wrappedValue.dismiss()
+                    }))
+                })
             }
         }
     }

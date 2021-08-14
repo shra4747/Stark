@@ -220,13 +220,13 @@ struct TVShowDetailView: View {
                     viewModel.id = id
                     viewModel.poster_path = givingShow.poster_path ?? ""
                     viewModel.getTrailer()
-                    viewModel.getSimilarShows()
+                    viewModel.getSimilarShows(type: .recommendation)
                     viewModel.getCast()
                     viewModel.getWatchProviders()
                     viewModel.getEpisodes(season: 1)
                     viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     viewModel.name = givingShow.name
-                    viewModel.genres = viewModel.returnGenresText(for: givingShow.genres)
+                    viewModel.genres = viewModel.returnGenresText(for: givingShow.genres ?? [])
                     viewModel.number_of_seasons = "\(givingShow.number_of_seasons)"
                     viewModel.overview = givingShow.overview
                     
@@ -311,7 +311,7 @@ struct SimilarTVShowsView: View {
                             VStack(alignment: .leading) {
                                 VStack {
                                     Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                        .scaleEffect(0.55)
+                                        .scaleEffect(0.50)
                                         .frame(width: 250, height: 370)
                                         .cornerRadius(18)
                                         .shadow(radius: 10)

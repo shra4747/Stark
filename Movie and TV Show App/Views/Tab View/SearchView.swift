@@ -35,7 +35,9 @@ struct SearchView: View {
                                         .font(.custom("Avenir", size: 17))
                                 }
                                 Button(action: {
-                                    viewModel.search()
+                                    DispatchQueue.main.async {
+                                        viewModel.search()
+                                    }
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }) {
                                     Image(systemName: "magnifyingglass")
@@ -62,7 +64,7 @@ struct SearchView: View {
                         
                         if viewModel.selectedType == .movie {
                             if viewModel.movies.count != 0 {
-                                ScrollView(.horizontal) {
+                                ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(alignment: .top, spacing: 30) {
                                         ForEach(viewModel.movies, id: \.self) { movie in
                                             NavigationLink(
@@ -106,7 +108,7 @@ struct SearchView: View {
                         }
                         else {
                             if viewModel.shows.count != 0 {
-                                ScrollView(.horizontal) {
+                                ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(alignment: .top, spacing: 30) {
                                         ForEach(viewModel.shows, id: \.self) { show in
                                             NavigationLink(
@@ -124,7 +126,7 @@ struct SearchView: View {
                                                             .foregroundColor(.black)
                                                             .frame(width: 290, alignment: .leading)
                                                         
-                                                        Text(viewModel.returnGenresText(for: show.genres))
+                                                        Text(viewModel.returnGenresText(for: show.genres ?? []))
                                                             .font(.custom("Avenir", size: 15))
                                                             .fontWeight(.medium)
                                                             .foregroundColor(Color(hex: "777777"))

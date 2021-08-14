@@ -182,7 +182,7 @@ struct MovieDetailView: View {
                     viewModel.poster_path = givingMovie.poster_path ?? ""
                     viewModel.release_date = givingMovie.release_date
                     viewModel.getTrailer()
-                    viewModel.getSimilarMovies()
+                    viewModel.getSimilarMovies(type: .recommendation)
                     viewModel.getCast()
                     viewModel.getWatchProviders()
                     viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
@@ -238,7 +238,7 @@ struct SimilarMoviesView: View {
                                 VStack(alignment: .leading) {
                                     VStack {
                                         Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                            .scaleEffect(0.55)
+                                            .scaleEffect(0.50)
                                             .frame(width: 250, height: 370)
                                             .cornerRadius(18)
                                             .shadow(radius: 10).id(UUID())

@@ -35,7 +35,7 @@ extension SearchModel {
     
     struct TVShow: Codable, Hashable {
         let backdrop_path: String?
-        let genres: [Genre]
+        let genres: [Genre]?
         let id: Int
         let name: String
         let number_of_episodes: Int
@@ -102,11 +102,15 @@ extension SearchModel {
             
             static let MovieCredits = "https://api.themoviedb.org/3/movie/{MOVIEID}/credits?api_key={APIKEY}"
             
+            static let MovieRecommendations = "https://api.themoviedb.org/3/movie/{MOVIEID}/recommendations?api_key={APIKEY}&language=en-US"
+            
             static let SimilarMovies = "https://api.themoviedb.org/3/movie/{MOVIEID}/similar?api_key={APIKEY}&page=1"
             
             static let MovieVideos = "https://api.themoviedb.org/3/movie/{MOVIEID}/videos?api_key={APIKEY}"
             
             static let MovieWatchProviders = "https://api.themoviedb.org/3/movie/{MOVIEID}/watch/providers?api_key={APIKEY}"
+            
+            static let TrendingMovies = "https://api.themoviedb.org/3/trending/movie/week?api_key={APIKEY}&language=us"
         }
         
         class TVShow {
@@ -118,11 +122,15 @@ extension SearchModel {
             
             static let SimilarTVShows = "https://api.themoviedb.org/3/tv/{TVID}/similar?api_key={APIKEY}&page=1"
             
+            static let TVShowRecommendations = "https://api.themoviedb.org/3/tv/{TVID}/recommendations?api_key={APIKEY}&page=1"
+            
             static let TVShowVideos = "https://api.themoviedb.org/3/tv/{TVID}/videos?api_key={APIKEY}"
             
             static let TVShowWatchProviders = "https://api.themoviedb.org/3/tv/{TVID}/watch/providers?api_key={APIKEY}"
             
             static let TVShowEpisodesInSeason = "https://api.themoviedb.org/3/tv/{TVID}/season/{SEASONID}?api_key={APIKEY}"
+            
+            static let TrendingTVShows = "https://api.themoviedb.org/3/trending/tv/week?api_key={APIKEY}"
         }
     }
     

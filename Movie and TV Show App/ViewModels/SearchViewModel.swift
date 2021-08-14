@@ -34,23 +34,29 @@ class SearchViewModel: ObservableObject {
         url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
         let request = URLRequest(url: URL(string: url)!)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-            }
-            else {
-                let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                
-                for result in searchResult.results {
-                    switch self.selectedType {
-                    case .movie:
-                        self.getMovieInfo(result.id)
-                    case .show:
-                        self.getTVShowInfo(result.id)
+        DispatchQueue.main.async {
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                    
+                    for result in searchResult.results {
+                        switch self.selectedType {
+                        case .movie:
+                            DispatchQueue.main.async {
+                                self.getMovieInfo(result.id)
+                            }
+                        case .show:
+                            DispatchQueue.main.async {
+                                self.getTVShowInfo(result.id)
+                            }
+                        }
                     }
                 }
-            }
-        }.resume()
+            }.resume()
+        }
     }
     
     func getMovieInfo(_ movieID: Int) {

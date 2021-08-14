@@ -23,7 +23,21 @@ class BookmarkedDetailViewModel: ObservableObject {
 
     }
     
-    func deleteAllContentInGroup() {
-        UserDefaults.standard.setValue(nil, forKey: "saved-\(groupID)")
+    func deleteGroup(group: BookmarkGroupModel) {
+        guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
+            return
+        }
+        
+        let decoded = try? JSONDecoder().decode([BookmarkGroupModel].self, from: savedGroupsData)
+        
+        if var savedGroups = decoded {
+            if let index = savedGroups.firstIndex(of: group) {
+                savedGroups.remove(at: index)
+                let encoded = try? JSONEncoder().encode(savedGroups)
+                
+                // Save array to 'groups' user defaults
+                UserDefaults.standard.set(encoded, forKey: "groups")
+            }
+        }
     }
 }

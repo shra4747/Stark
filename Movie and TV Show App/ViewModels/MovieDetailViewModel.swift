@@ -47,7 +47,7 @@ class MovieDetailViewModel: ObservableObject {
                     self.genres = self.returnGenresText(for: response.genres)
                     self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview
-                    self.getSimilarMovies()
+                    self.getSimilarMovies(type: .recommendation)
                     self.getTrailer()
                     self.getWatchProviders()
                     self.getCast()
@@ -58,9 +58,21 @@ class MovieDetailViewModel: ObservableObject {
         }.resume()
     }
     
-    func getSimilarMovies() {
+    enum SimilarType {
+        case recommendation, similar
+    }
+    
+    func getSimilarMovies(type: SimilarType) {
         func getMovies() {
-            var url = SearchModel.APILinks.Movie.SimilarMovies
+            var url = SearchModel.APILinks.Movie.MovieRecommendations
+            
+            switch type {
+            case .recommendation:
+                url = SearchModel.APILinks.Movie.MovieRecommendations
+            case .similar:
+                url = SearchModel.APILinks.Movie.SimilarMovies
+            }
+            
             url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
             url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
             
@@ -73,8 +85,13 @@ class MovieDetailViewModel: ObservableObject {
                 else {
                     let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
                     DispatchQueue.main.async {
-                        for movie in response.results {
-                            listMovies(movie.id)
+                        if response.results.count == 0 {
+                            self.getSimilarMovies(type: .similar)
+                        }
+                        else {
+                            for movie in response.results {
+                                listMovies(movie.id)
+                            }
                         }
                         
                     }

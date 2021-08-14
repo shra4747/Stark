@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct TempTabView: View {
+struct TabView: View {
     
-    @State var tabType: TabType = .search
+    @State var tabType: TabType = .home
     @State var isShowingTabView = true
     var body: some View {
         
         ZStack {
             switch tabType {
             case .home :
-                Text("Home")
+                HomeView()
             case .search:
                 SearchView(isShowingTabView: $isShowingTabView)
             case .saved:
@@ -78,7 +78,7 @@ struct TempTabView: View {
 
 struct TempTabView_Previews: PreviewProvider {
     static var previews: some View {
-        TempTabView()
+        TabView()
     }
 }
 
