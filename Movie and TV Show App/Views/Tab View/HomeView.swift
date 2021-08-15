@@ -45,7 +45,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.recommendedMovies.count > 0 {
-                                SimilarMoviesView(similarMovies: viewModel.recommendedMovies).frame(alignment: .leading)
+                                SimilarMoviesView(similarMovies: viewModel.recommendedMovies, shuffled: true).frame(alignment: .leading)
                             }
                             
                             Separator().opacity(0.4)
@@ -64,7 +64,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.recommendedShows.count > 0 {
-                                SimilarTVShowsView(similarShows: viewModel.recommendedShows).frame(alignment: .leading)
+                                SimilarTVShowsView(similarShows: viewModel.recommendedShows, shuffled: true).frame(alignment: .leading)
                             }
                             
                             Separator().opacity(0.4)
@@ -83,7 +83,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.trendingMovies.count > 0 {
-                                SimilarMoviesView(similarMovies: viewModel.trendingMovies).frame(alignment: .leading)
+                                SimilarMoviesView(similarMovies: viewModel.trendingMovies, shuffled: false).frame(alignment: .leading)
                             }
                             
                             Separator().opacity(0.4)
@@ -102,7 +102,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.trendingShows.count > 0 {
-                                SimilarTVShowsView(similarShows: viewModel.trendingShows).frame(alignment: .leading).padding(.bottom, 100)
+                                SimilarTVShowsView(similarShows: viewModel.trendingShows, shuffled: true).frame(alignment: .leading).padding(.bottom, 100)
                             }
                             
                             
@@ -121,7 +121,9 @@ struct HomeView: View {
                 }
                 
                 
+                
             }.navigationBarHidden(true)
+
         }
     }
 }

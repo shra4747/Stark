@@ -90,7 +90,9 @@ class MovieDetailViewModel: ObservableObject {
                         }
                         else {
                             for movie in response.results {
-                                listMovies(movie.id)
+                                DispatchQueue.main.async {
+                                    listMovies(movie.id)
+                                }
                             }
                         }
                         

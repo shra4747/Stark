@@ -10,6 +10,7 @@
 		DC00B41226C8103B00E6A31E /* RecommendationEngineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41126C8103B00E6A31E /* RecommendationEngineModel.swift */; };
 		DC00B41426C8148E00E6A31E /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41326C8148E00E6A31E /* RatingView.swift */; };
 		DC00B41626C819AE00E6A31E /* RatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41526C819AD00E6A31E /* RatingButtonView.swift */; };
+		DC00B41826C86AF700E6A31E /* RandomArrayPickerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */; };
 		DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
 		DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
 		DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */; };
@@ -52,6 +53,7 @@
 		DC00B41126C8103B00E6A31E /* RecommendationEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEngineModel.swift; sourceTree = "<group>"; };
 		DC00B41326C8148E00E6A31E /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		DC00B41526C819AD00E6A31E /* RatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingButtonView.swift; sourceTree = "<group>"; };
+		DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomArrayPickerExtension.swift; sourceTree = "<group>"; };
 		DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonView.swift; sourceTree = "<group>"; };
 		DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonViewModel.swift; sourceTree = "<group>"; };
 		DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -148,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				DC80F6E326C0D2270012175F /* TabView.swift */,
-				DC89E61026C75DB000D111CB /* HomeView.swift */,
 				DC89E60D26C75B9800D111CB /* Tab View */,
 			);
 			path = Views;
@@ -190,6 +191,7 @@
 				DC80F6DA26C0C02F0012175F /* ArrayChunker.swift */,
 				DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */,
 				DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */,
+				DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -197,9 +199,8 @@
 		DC89E60D26C75B9800D111CB /* Tab View */ = {
 			isa = PBXGroup;
 			children = (
-				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
+				DC89E61026C75DB000D111CB /* HomeView.swift */,
 				DC89E60E26C75BA500D111CB /* Search */,
-				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
 				DC89E60F26C75BBB00D111CB /* Saved */,
 			);
 			path = "Tab View";
@@ -208,6 +209,7 @@
 		DC89E60E26C75BA500D111CB /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
 				DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */,
 				DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */,
 				DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */,
@@ -222,6 +224,7 @@
 		DC89E60F26C75BBB00D111CB /* Saved */ = {
 			isa = PBXGroup;
 			children = (
+				DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */,
 				DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */,
 				DCEACA7326BCD96500E6E196 /* AddNewGroupView.swift */,
 				DC201F1226BF2FEA001A214C /* ChooseIconView.swift */,
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC00B41826C86AF700E6A31E /* RandomArrayPickerExtension.swift in Sources */,
 				DC80F6E426C0D2270012175F /* TabView.swift in Sources */,
 				DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */,
 				DCEACA7726BCD97200E6E196 /* AddNewGroupViewModel.swift in Sources */,

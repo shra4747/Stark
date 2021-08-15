@@ -32,6 +32,8 @@ class SearchViewModel: ObservableObject {
         
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
+        url = url.replacingOccurrences(of: "’", with: "%27")
+        print(url)
         let request = URLRequest(url: URL(string: url)!)
         
         DispatchQueue.main.async {

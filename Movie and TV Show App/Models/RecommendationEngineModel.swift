@@ -30,6 +30,66 @@ struct WRatedGeneral: Codable, Hashable {
 
 class RecommendationEngine {
     
+    func getMovieRecommendations() -> [WRatedModel] {
+        
+        let generalModel = getWatchedAndRated()
+        
+        var WRArr: [WRatedModel] = []
+        
+        if generalModel.movie.Five.count >= 5 {
+            WRArr.append(contentsOf: (generalModel.movie.Five).pickRandom(5))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.movie.Five))
+        }
+        
+        if generalModel.movie.Four.count >= 4 {
+            WRArr.append(contentsOf: (generalModel.movie.Four).pickRandom(3))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.movie.Four))
+        }
+        
+        if generalModel.movie.Three.count >= 3 {
+            WRArr.append(contentsOf: (generalModel.movie.Three).pickRandom(2))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.movie.Three))
+        }
+        
+        return WRArr
+    }
+    
+    func getShowRecommendations() -> [WRatedModel] {
+        
+        let generalModel = getWatchedAndRated()
+        
+        var WRArr: [WRatedModel] = []
+        
+        if generalModel.show.Five.count >= 5 {
+            WRArr.append(contentsOf: (generalModel.show.Five).pickRandom(5))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.show.Five))
+        }
+        
+        if generalModel.show.Four.count >= 4 {
+            WRArr.append(contentsOf: (generalModel.show.Four).pickRandom(3))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.show.Four))
+        }
+        
+        if generalModel.show.Three.count >= 3 {
+            WRArr.append(contentsOf: (generalModel.show.Three).pickRandom(2))
+        }
+        else {
+            WRArr.append(contentsOf: (generalModel.show.Three))
+        }
+        
+        return WRArr
+    }
+    
     func getWatchedAndRated() -> WRatedGeneral {
         
         let Mfive = decode(for: "Mfive")

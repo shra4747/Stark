@@ -43,7 +43,7 @@ struct BookmarkedDetailView: View {
                     }
                     
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(alignment: .top, spacing: 20) {
+                        LazyHStack(alignment: .top, spacing: 20) {
                             ForEach(viewModel.bookmarkedContent, id: \.self) { mediaContent in
                                 if mediaContent.media_type == .movie {
                                     NavigationLink(

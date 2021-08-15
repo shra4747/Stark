@@ -98,7 +98,9 @@ class TVShowDetailViewModel: ObservableObject {
                         }
                         else {
                             for show in response.results {
-                                listShows(show.id)
+                                DispatchQueue.main.async {
+                                    listShows(show.id)
+                                }
                             }
                         }
                         

@@ -102,7 +102,7 @@ struct MovieDetailView: View {
                                             .padding(.leading)
                                         
                                         if viewModel.similarMovies.count > 0 {
-                                            SimilarMoviesView(similarMovies: viewModel.similarMovies)
+                                            SimilarMoviesView(similarMovies: viewModel.similarMovies, shuffled: false)
                                                 .frame(height: 400)
 
                                         }
@@ -217,41 +217,39 @@ struct Separator: View {
 struct SimilarMoviesView: View {
     
     @State var similarMovies : [SearchModel.Movie]
-    
+    @State var shuffled: Bool
     var body: some View {
-        VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 35) {
-                    ForEach(similarMovies) { movie in
-                        NavigationLink(
-                            destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
-                            label: {
-                                VStack(alignment: .leading) {
-                                    VStack {
-                                        Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                            .scaleEffect(0.50)
-                                            .frame(width: 250, height: 370)
-                                            .cornerRadius(18)
-                                            .shadow(radius: 10).id(UUID())
-                                    }.id(UUID())
-                                    Text(movie.title)
-                                        .font(.custom("Avenir", size: 20))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.black).id(UUID())
-
-                                        
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 35) {
+                ForEach(shuffled ? similarMovies.uniqued().shuffled() : similarMovies.uniqued(), id: \.self) { movie in
+                    NavigationLink(
+                        destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
+                        label: {
+                            VStack(alignment: .leading) {
+                                VStack {
+                                    Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
+                                        .scaleEffect(0.50)
+                                        .frame(width: 250, height: 370)
+                                        .cornerRadius(18)
+                                        .shadow(radius: 10)
                                 }
-                        }).frame(width: 250, alignment: .leading)
+                                Text(movie.title)
+                                    .font(.custom("Avenir", size: 20))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.black)
 
-                    }
-                }.padding()
-                .padding(.leading)
-                .frame(minHeight: 450)
+                                    
+                            }
+                    }).frame(width: 250, alignment: .leading)
 
-            }
-            .padding(.bottom)
-            .frame(height: 400)
+                }
+            }.padding()
+            .padding(.leading)
+            .frame(minHeight: 450).id(UUID())
+
         }
+        .padding(.bottom)
+        .frame(height: 400)
     }
 }
 

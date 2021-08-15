@@ -18,12 +18,17 @@ class HomeViewModel: ObservableObject {
     var id = 299534
     
     init() {
-        if isLoading == false { return }
+        if self.isLoading == false { return }
+
         self.getRecommendedMovies()
+
         self.getRecommendedShows()
+
         self.getTrendingMovies()
+
         self.getTrendingShows()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.5) {
             self.isLoading = false
         }
     }
@@ -40,9 +45,11 @@ class HomeViewModel: ObservableObject {
             }
             else {
                 let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                for movie in response.results {
-                    DispatchQueue.main.async {
-                        self.listTrendingMovies(movie.id)
+                DispatchQueue.main.async {
+                    for movie in response.results {
+                        DispatchQueue.main.async {
+                            self.listTrendingMovies(movie.id)
+                        }
                     }
                 }
             }
@@ -61,9 +68,11 @@ class HomeViewModel: ObservableObject {
             }
             else {
                 let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                for show in response.results {
-                    DispatchQueue.main.async {
-                        self.listTrendingShows(show.id)
+                DispatchQueue.main.async {
+                    for show in response.results {
+                        DispatchQueue.main.async {
+                            self.listTrendingShows(show.id)
+                        }
                     }
                 }
             }
@@ -73,25 +82,40 @@ class HomeViewModel: ObservableObject {
     }
 
     func getRecommendedMovies() {
-        var url = SearchModel.APILinks.Movie.MovieRecommendations
-        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-        url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
         
-        let request = URLRequest(url: URL(string: url)!)
+        let recMovies = RecommendationEngine().getMovieRecommendations().uniqued().shuffled()
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-            }
-            else {
-                let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                for movie in response.results {
+        for rmovie in recMovies {
+            var url = SearchModel.APILinks.Movie.MovieRecommendations
+            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+            url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(rmovie.id)")
+            print(rmovie.id)
+            let request = URLRequest(url: URL(string: url)!)
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
                     DispatchQueue.main.async {
-                        listMovies(movie.id)
+                        for movie in response.results[...3] {
+                            let generalModel = RecommendationEngine().getWatchedAndRated()
+                            
+                            let Cmovie = RecommendationEngine().checkInModel(stars: generalModel.movie, id: movie.id)
+                            if Cmovie.wr {
+                                continue
+                            }
+                            DispatchQueue.main.async {
+                                listMovies(movie.id)
+                            }
+                        }
                     }
                 }
-            }
-        }.resume()
+            }.resume()
+        }
+        
+        
         
         func listMovies(_ id: Int) {
             var url = SearchModel.APILinks.Movie.MovieInfo
@@ -115,25 +139,38 @@ class HomeViewModel: ObservableObject {
     }
     
     func getRecommendedShows() {
-        var url = SearchModel.APILinks.TVShow.TVShowRecommendations
-        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-        url = url.replacingOccurrences(of: "{TVID}", with: "84958")
+        let showRecs = RecommendationEngine().getShowRecommendations().uniqued().shuffled()
         
-        let request = URLRequest(url: URL(string: url)!)
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-            }
-            else {
-                let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                for show in response.results {
+        print("\n")
+        for rshow in showRecs {
+            var url = SearchModel.APILinks.TVShow.TVShowRecommendations
+            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+            url = url.replacingOccurrences(of: "{TVID}", with: "\(rshow.id)")
+            print(rshow.id)
+            let request = URLRequest(url: URL(string: url)!)
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
                     DispatchQueue.main.async {
-                        listShows(show.id)
+                        for show in response.results {
+                            let generalModel = RecommendationEngine().getWatchedAndRated()
+                            
+                            let cShow = RecommendationEngine().checkInModel(stars: generalModel.show, id: show.id)
+                            if cShow.wr {
+                                continue
+                            }
+                            DispatchQueue.main.async {
+                                listShows(show.id)
+                            }
+                        }
                     }
                 }
-            }
-        }.resume()
+            }.resume()
+        }
         
         func listShows(_ id: Int) {
             var url = SearchModel.APILinks.TVShow.TVShowInfo

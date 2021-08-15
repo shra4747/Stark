@@ -134,7 +134,7 @@ struct TVShowDetailView: View {
                                             
                                             
                                             if viewModel.similarShows.count > 0 {
-                                                SimilarTVShowsView(similarShows: viewModel.similarShows)
+                                                SimilarTVShowsView(similarShows: viewModel.similarShows, shuffled: true)
                                             }
                                             
                                         }
@@ -291,11 +291,12 @@ struct EpisodesView: View {
 struct SimilarTVShowsView: View {
     
     @State var similarShows: [SearchModel.TVShow]
-    
+    @State var shuffled: Bool
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 35) {
-                ForEach(similarShows, id: \.self) { show in
+                ForEach(shuffled ? similarShows.uniqued().shuffled() : similarShows.uniqued(), id: \.self) { show in
                     NavigationLink(
                         destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
                         label: {
@@ -316,7 +317,7 @@ struct SimilarTVShowsView: View {
                 }
             }.padding()
             .padding(.leading)
-            .frame(minHeight: 450)
+            .frame(minHeight: 450).id(UUID())
 
         }
         .padding(.bottom)
