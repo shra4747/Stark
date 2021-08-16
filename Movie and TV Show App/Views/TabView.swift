@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabView: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     @State var tabType: TabType = .home
     @State var isShowingTabView = true
     var body: some View {
@@ -18,7 +18,7 @@ struct TabView: View {
             case .home :
                 HomeView()
             case .search:
-                SearchView(isShowingTabView: $isShowingTabView)
+                SearchView()
             case .saved:
                 BookmarkedView()
             }
@@ -27,28 +27,28 @@ struct TabView: View {
                 VStack {
                     Spacer()
                     ZStack {
-                        Rectangle().foregroundColor(.white)
+                        Rectangle().foregroundColor(colorScheme == .light ? .white : .black)
                             .cornerRadius(34, corners: [.topLeft, .topRight])
                             .frame(width: UIScreen.main.bounds.width, height: 88, alignment: .center)
-                            .shadow(color: .gray, radius: 5, x: 0, y: -2)
+                            .shadow(color: .gray, radius: 2, x: 0, y: -2)
                         HStack(spacing: 100) {
                             Button(action: {
                                 self.tabType = .home
                             }) {
                                 Image(systemName: "house").scaleEffect(1.8)
-                                    .foregroundColor(tabType == .home ? .black : Color(.lightGray))
+                                    .foregroundColor(tabType == .home ? colorScheme == .light ? .black : .white : Color(.lightGray))
                             }
                             Button(action: {
                                 self.tabType = .search
                             }) {
                                 Image(systemName: "magnifyingglass").scaleEffect(1.8)
-                                    .foregroundColor(tabType == .search ? .black : Color(.lightGray))
+                                    .foregroundColor(tabType == .search ? colorScheme == .light ? .black : .white : Color(.lightGray))
                             }
                             Button(action: {
                                 self.tabType = .saved
                             }) {
                                 Image(systemName: "bookmark").scaleEffect(1.8)
-                                    .foregroundColor(tabType == .saved ? .black : Color(.lightGray))
+                                    .foregroundColor(tabType == .saved ? colorScheme == .light ? .black : .white : Color(.lightGray))
                             }
                             
                         }
@@ -76,6 +76,7 @@ struct TabView: View {
 struct TempTabView_Previews: PreviewProvider {
     static var previews: some View {
         TabView()
+            .preferredColorScheme(.dark)
     }
 }
 

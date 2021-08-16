@@ -14,13 +14,13 @@ struct BookmarkedView: View {
     @State var isDeletingGroup = false
     let watchLater = BookmarkModelDefaultGroups.watchLater
     let countdown = BookmarkModelDefaultGroups.countdown
-    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
             ZStack {
                 Rectangle()
-                    .foregroundColor(.init(hex: "EBEBEB"))
+                    .foregroundColor(colorScheme == .light ? .init(hex: "EBEBEB") : .init(hex: "1A1A1A"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 25) {
@@ -32,7 +32,7 @@ struct BookmarkedView: View {
                                     .cornerRadius(18)
                                     .opacity(0.6)
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 100)
-                                    .shadow(color: Color(.darkGray), radius: 6)
+                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
                                 VStack(spacing: 10) {
                                     Text(countdown.icon)
                                         .font(.system(size: 45))
@@ -41,6 +41,7 @@ struct BookmarkedView: View {
                                     Text(countdown.name)
                                         .font(.custom("Avenir", size: 23))
                                         .fontWeight(.semibold)
+                                        .foregroundColor(colorScheme == .light ? .black : .white)
 
                                 }.foregroundColor(.black).offset(y: 5)
                             }
@@ -55,7 +56,7 @@ struct BookmarkedView: View {
                                     .cornerRadius(18)
                                     .opacity(0.6)
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 160)
-                                    .shadow(color: Color(.darkGray), radius: 6)
+                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
                                 VStack(spacing: 20) {
                                     Text(watchLater.icon)
                                         .font(.system(size: 53))
@@ -64,6 +65,7 @@ struct BookmarkedView: View {
                                     Text(watchLater.name)
                                         .font(.custom("Avenir", size: 27))
                                         .fontWeight(.semibold)
+                                        .foregroundColor(colorScheme == .light ? .black : .white)
 
                                 }.foregroundColor(.black).offset(y: 10)
                             }
@@ -83,7 +85,7 @@ struct BookmarkedView: View {
                                                             .cornerRadius(18)
                                                             .opacity(0.6)
                                                             .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
-                                                            .shadow(color: Color(.darkGray), radius: 6)
+                                                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
                                                         VStack(spacing: 20) {
                                                             Text(group.icon)
                                                                 .font(.system(size: 54))
@@ -93,6 +95,8 @@ struct BookmarkedView: View {
                                                                 .font(.custom("Avenir", size: 22))
                                                                 .foregroundColor(.black)
                                                                 .fontWeight(.medium)
+                                                                .foregroundColor(colorScheme == .light ? .black : .white)
+
                                                         }.offset(y: 5)
                                                     }
                                                 })
@@ -120,7 +124,8 @@ struct BookmarkedView: View {
 
                                     }.offset(y: 0)
                                 }.foregroundColor(.black)
-                            }.sheet(isPresented: $isPresentingAddNewGroup, onDismiss: {
+                            }.offset(y: viewModel.groups.count > 0 ? 0 : -45)
+                            .sheet(isPresented: $isPresentingAddNewGroup, onDismiss: {
                                 viewModel.load()
                             }, content: {
                                 AddNewGroupView()
@@ -137,36 +142,9 @@ struct BookmarkedView: View {
     }
 }
 
-struct DeleteAGroupView: View {
-    
-    @Binding var groups: [BookmarkGroupModel]
-    @Environment(\.presentationMode) var dismissPage
-
-    var body: some View {
-        List(groups, id: \.self) { group in
-            Button(action: {
-                if let index = groups.firstIndex(of: group) {
-                    groups.remove(at: index)
-                    let encoded = try? JSONEncoder().encode(groups)
-                    
-                    // Save array to 'groups' user defaults
-                    UserDefaults.standard.set(encoded, forKey: "groups")
-                }
-                dismissPage.wrappedValue.dismiss()
-            }) {
-                HStack {
-                    Text(group.name)
-                    Spacer()
-                    Image(systemName: "trash").foregroundColor(.red)
-                }
-            }
-        }
-    }
-}
-
 struct BookmarkedView_Previews: PreviewProvider {
     static var previews: some View {
-        BookmarkedView()
+        BookmarkedView().preferredColorScheme(.dark)
     }
 }
 

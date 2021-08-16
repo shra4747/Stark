@@ -11,6 +11,16 @@
 		DC00B41426C8148E00E6A31E /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41326C8148E00E6A31E /* RatingView.swift */; };
 		DC00B41626C819AE00E6A31E /* RatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41526C819AD00E6A31E /* RatingButtonView.swift */; };
 		DC00B41826C86AF700E6A31E /* RandomArrayPickerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */; };
+		DC00B41A26C991CF00E6A31E /* TextFieldPlaceholderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41926C991CF00E6A31E /* TextFieldPlaceholderExtension.swift */; };
+		DC00B41C26C9D19800E6A31E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41B26C9D19800E6A31E /* SettingsView.swift */; };
+		DC00B41F26C9E5E400E6A31E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41E26C9E5E400E6A31E /* WelcomeView.swift */; };
+		DC00B42026C9E75F00E6A31E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC31C15E26B1DFF400AD58C6 /* Assets.xcassets */; };
+		DC00B42226C9EA1600E6A31E /* ChooseAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42126C9EA1600E6A31E /* ChooseAvatarView.swift */; };
+		DC00B42426C9EDEF00E6A31E /* SaveAvatarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */; };
+		DC00B42726C9FE3000E6A31E /* ChooseMovieGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42526C9F64A00E6A31E /* ChooseMovieGenresView.swift */; };
+		DC00B42926C9FE6500E6A31E /* ChooseMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42826C9FE6500E6A31E /* ChooseMoviesView.swift */; };
+		DC00B42B26CA09D400E6A31E /* ChooseTVShowGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42A26CA09D400E6A31E /* ChooseTVShowGenresView.swift */; };
+		DC00B42E26CA0F8700E6A31E /* ChooseTVShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42C26CA0CE100E6A31E /* ChooseTVShowsView.swift */; };
 		DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
 		DC17A14A26B7277D00450FF8 /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
 		DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */; };
@@ -18,7 +28,6 @@
 		DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */; };
 		DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */; };
 		DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */; };
-		DC31C15F26B1DFF400AD58C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC31C15E26B1DFF400AD58C6 /* Assets.xcassets */; };
 		DC31C16226B1DFF400AD58C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC31C16126B1DFF400AD58C6 /* Preview Assets.xcassets */; };
 		DC31C16526B1DFF400AD58C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC31C16326B1DFF400AD58C6 /* LaunchScreen.storyboard */; };
 		DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17126B1EB0900AD58C6 /* SearchModel.swift */; };
@@ -54,6 +63,15 @@
 		DC00B41326C8148E00E6A31E /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		DC00B41526C819AD00E6A31E /* RatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingButtonView.swift; sourceTree = "<group>"; };
 		DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomArrayPickerExtension.swift; sourceTree = "<group>"; };
+		DC00B41926C991CF00E6A31E /* TextFieldPlaceholderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldPlaceholderExtension.swift; sourceTree = "<group>"; };
+		DC00B41B26C9D19800E6A31E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DC00B41E26C9E5E400E6A31E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		DC00B42126C9EA1600E6A31E /* ChooseAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAvatarView.swift; sourceTree = "<group>"; };
+		DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAvatarExtension.swift; sourceTree = "<group>"; };
+		DC00B42526C9F64A00E6A31E /* ChooseMovieGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseMovieGenresView.swift; sourceTree = "<group>"; };
+		DC00B42826C9FE6500E6A31E /* ChooseMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseMoviesView.swift; sourceTree = "<group>"; };
+		DC00B42A26CA09D400E6A31E /* ChooseTVShowGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTVShowGenresView.swift; sourceTree = "<group>"; };
+		DC00B42C26CA0CE100E6A31E /* ChooseTVShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTVShowsView.swift; sourceTree = "<group>"; };
 		DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonView.swift; sourceTree = "<group>"; };
 		DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkButtonViewModel.swift; sourceTree = "<group>"; };
 		DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextFieldExtension.swift; sourceTree = "<group>"; };
@@ -105,6 +123,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC00B41D26C9E5D400E6A31E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				DC00B41E26C9E5E400E6A31E /* WelcomeView.swift */,
+				DC00B42126C9EA1600E6A31E /* ChooseAvatarView.swift */,
+				DC00B42526C9F64A00E6A31E /* ChooseMovieGenresView.swift */,
+				DC00B42826C9FE6500E6A31E /* ChooseMoviesView.swift */,
+				DC00B42A26CA09D400E6A31E /* ChooseTVShowGenresView.swift */,
+				DC00B42C26CA0CE100E6A31E /* ChooseTVShowsView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		DC31C14C26B1DFEA00AD58C6 = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +180,7 @@
 		DC31C16D26B1EA7E00AD58C6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC00B41D26C9E5D400E6A31E /* Onboarding */,
 				DC80F6E326C0D2270012175F /* TabView.swift */,
 				DC89E60D26C75B9800D111CB /* Tab View */,
 			);
@@ -184,6 +216,7 @@
 		DC852E6526B5961500D7BB14 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */,
 				DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */,
 				DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */,
 				DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */,
@@ -192,6 +225,7 @@
 				DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */,
 				DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */,
 				DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */,
+				DC00B41926C991CF00E6A31E /* TextFieldPlaceholderExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -200,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				DC89E61026C75DB000D111CB /* HomeView.swift */,
+				DC00B41B26C9D19800E6A31E /* SettingsView.swift */,
 				DC89E60E26C75BA500D111CB /* Search */,
 				DC89E60F26C75BBB00D111CB /* Saved */,
 			);
@@ -210,9 +245,9 @@
 			isa = PBXGroup;
 			children = (
 				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
-				DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */,
 				DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */,
 				DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */,
+				DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */,
 				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
 				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
 				DC00B41526C819AD00E6A31E /* RatingButtonView.swift */,
@@ -296,8 +331,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC31C16526B1DFF400AD58C6 /* LaunchScreen.storyboard in Resources */,
+				DC00B42026C9E75F00E6A31E /* Assets.xcassets in Resources */,
 				DC31C16226B1DFF400AD58C6 /* Preview Assets.xcassets in Resources */,
-				DC31C15F26B1DFF400AD58C6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,14 +347,21 @@
 				DC80F6E426C0D2270012175F /* TabView.swift in Sources */,
 				DC9183BE26B841EA00CE5877 /* TVShowDetailViewModel.swift in Sources */,
 				DCEACA7726BCD97200E6E196 /* AddNewGroupViewModel.swift in Sources */,
+				DC00B42226C9EA1600E6A31E /* ChooseAvatarView.swift in Sources */,
+				DC00B42E26CA0F8700E6A31E /* ChooseTVShowsView.swift in Sources */,
 				DC00B41626C819AE00E6A31E /* RatingButtonView.swift in Sources */,
 				DC89E61326C75DC100D111CB /* HomeViewModel.swift in Sources */,
 				DCF2E46226BB870000B44842 /* CustomCornerRadiusExtension.swift in Sources */,
+				DC00B41F26C9E5E400E6A31E /* WelcomeView.swift in Sources */,
+				DC00B42426C9EDEF00E6A31E /* SaveAvatarExtension.swift in Sources */,
+				DC00B42926C9FE6500E6A31E /* ChooseMoviesView.swift in Sources */,
+				DC00B42726C9FE3000E6A31E /* ChooseMovieGenresView.swift in Sources */,
 				DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */,
 				DC80F6DB26C0C02F0012175F /* ArrayChunker.swift in Sources */,
 				DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */,
 				DC80F6E126C0C5780012175F /* ChooseGroupViewModel.swift in Sources */,
 				DC17A14726B7276F00450FF8 /* BookmarkButtonView.swift in Sources */,
+				DC00B41A26C991CF00E6A31E /* TextFieldPlaceholderExtension.swift in Sources */,
 				DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */,
 				DC00B41426C8148E00E6A31E /* RatingView.swift in Sources */,
 				DCEACA7426BCD96500E6E196 /* AddNewGroupView.swift in Sources */,
@@ -332,6 +374,7 @@
 				DC89E61126C75DB000D111CB /* HomeView.swift in Sources */,
 				DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */,
 				DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */,
+				DC00B42B26CA09D400E6A31E /* ChooseTVShowGenresView.swift in Sources */,
 				DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */,
 				DC80F6DE26C0C56C0012175F /* ChooseGroupView.swift in Sources */,
 				DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */,
@@ -344,6 +387,7 @@
 				DC31C17226B1EB0900AD58C6 /* SearchModel.swift in Sources */,
 				DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */,
 				DC852E8226B59C3D00D7BB14 /* MovieDetailViewModel.swift in Sources */,
+				DC00B41C26C9D19800E6A31E /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +538,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -515,7 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

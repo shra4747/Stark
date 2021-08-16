@@ -18,12 +18,14 @@ struct MovieDetailView: View {
     
     @State var doneLoading = false
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     Image(uiImage: viewModel.backdropImage)
-                        .frame(width: UIScreen.main.bounds.width)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
@@ -35,7 +37,7 @@ struct MovieDetailView: View {
                             RoundedRectangle(cornerRadius: 34)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                                 .edgesIgnoringSafeArea(.bottom)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .light ? .init(hex: "FFFFFF") : .init(hex: "1A1A1A"))
                                 .shadow(radius: 4, x: 0, y: -4)
                         }
                         
@@ -57,14 +59,14 @@ struct MovieDetailView: View {
                                                 .fontWeight(.medium)
                                                 .padding(.leading)
                                                 .padding(.leading)
-                                                .foregroundColor(.init(hex: "777777"))
+                                                .foregroundColor(.init(hex: colorScheme == .light ? "777777" : "C1C1C1"))
                                                 .fixedSize(horizontal: false, vertical: true)
                                             Text(viewModel.getRuntime())
                                                 .font(.custom("Avenir", size: 16))
                                                 .fontWeight(.medium)
                                                 .padding(.leading)
                                                 .padding(.leading)
-                                                .foregroundColor(.init(hex: "5A5A5A"))
+                                                .foregroundColor(.init(hex: colorScheme == .light ? "5A5A5A" : "AAAAAA"))
                                         }
                                         Spacer()
                                     }
@@ -73,12 +75,18 @@ struct MovieDetailView: View {
                                             .font(.custom("Avenir", size: 16))
                                             .bold()
                                             .fontWeight(.medium)
-                                            .foregroundColor(.init(hex: "383838"))
+                                            .foregroundColor(.init(hex: colorScheme == .light ? "383838" : "DEDEDE"))
                                             .padding()
                                             .padding(.leading)
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
                                     
+                                    Text("Trailer")
+                                        .font(.custom("Avenir", size: 22))
+                                        .fontWeight(.bold)
+                                        .padding(.horizontal)
+                                        .padding(.top)
+                                        .padding(.leading)
                                     
                                     TrailerView(trailerYTLink: viewModel.trailerLink)
                                         .frame(width: 330, height: 190)
@@ -141,10 +149,10 @@ struct MovieDetailView: View {
                     ZStack {
                         Circle()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
+                            .foregroundColor(colorScheme == .light ? .white : .black)
                             .shadow(radius: 10)
                         Image(systemName: "arrow.left")
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
@@ -155,7 +163,12 @@ struct MovieDetailView: View {
 
                 if viewModel.isLoading {
                     ZStack {
-                        Color.white
+                        if colorScheme == .light {
+                            Color.white
+                        }
+                        else {
+                            Color.init(hex: "1A1A1A")
+                        }
                         ActivityIndicator(isAnimating: $viewModel.isLoading)
                     }.edgesIgnoringSafeArea(.top)
                 }
@@ -201,7 +214,7 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView(id: 299534, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
+        MovieDetailView(id: 299534, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).preferredColorScheme(.dark)
     }
 }
 
@@ -218,6 +231,8 @@ struct SimilarMoviesView: View {
     
     @State var similarMovies : [SearchModel.Movie]
     @State var shuffled: Bool
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 35) {
@@ -236,7 +251,7 @@ struct SimilarMoviesView: View {
                                 Text(movie.title)
                                     .font(.custom("Avenir", size: 20))
                                     .fontWeight(.bold)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
 
                                     
                             }
@@ -330,7 +345,7 @@ struct WatchProvidersView: View {
 struct CastView: View {
     
     @State var cast: [SearchModel.Credits.Cast]
-    
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(alignment: .top) {
@@ -342,16 +357,24 @@ struct CastView: View {
                             .aspectRatio(contentMode: .fit)
                             .shadow(radius: 5)
                             .cornerRadius(18).id(UUID())
-                        Text(castmate.name)
-                            .font(.custom("Avenir", size: 16))
-                            .fontWeight(.medium)
-                            .foregroundColor(.init(hex: "262626"))
-                            .multilineTextAlignment(.center)
-                        Text(castmate.character)
-                            .font(.custom("Avenir", size: 15))
-                            .fontWeight(.light)
-                            .multilineTextAlignment(.center)
-                    }
+                        ScrollView(.vertical, showsIndicators: false) {
+                            Text(castmate.name)
+
+                                .font(.custom("Avenir", size: 16))
+                                .fontWeight(.medium)
+                                .foregroundColor(.init(hex: colorScheme == .light ? "262626" : "F7F7F7"))
+                                .multilineTextAlignment(.center)
+                                .frame(width: 150)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Text(castmate.character)
+                                .font(.custom("Avenir", size: 15))
+                                .fontWeight(.light)
+                                .multilineTextAlignment(.center)
+                                .frame(width: 145)
+                                .fixedSize(horizontal: false, vertical: true).padding(.bottom, 15)
+                        }
+                    }.fixedSize(horizontal: false, vertical: false)
+
                 }
             }.padding()
             .padding(.leading)

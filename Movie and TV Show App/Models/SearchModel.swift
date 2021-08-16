@@ -104,6 +104,8 @@ extension SearchModel {
             
             static let MovieRecommendations = "https://api.themoviedb.org/3/movie/{MOVIEID}/recommendations?api_key={APIKEY}&language=en-US"
             
+            static let MovieForGenre = "https://api.themoviedb.org/3/discover/movie?api_key={APIKEY}&with_genres={GENRES}"
+            
             static let SimilarMovies = "https://api.themoviedb.org/3/movie/{MOVIEID}/similar?api_key={APIKEY}&page=1"
             
             static let MovieVideos = "https://api.themoviedb.org/3/movie/{MOVIEID}/videos?api_key={APIKEY}"
@@ -123,6 +125,8 @@ extension SearchModel {
             static let SimilarTVShows = "https://api.themoviedb.org/3/tv/{TVID}/similar?api_key={APIKEY}&page=1"
             
             static let TVShowRecommendations = "https://api.themoviedb.org/3/tv/{TVID}/recommendations?api_key={APIKEY}&page=1"
+            
+            static let TVShowForGenre = "https://api.themoviedb.org/3/discover/tv?api_key={APIKEY}&with_genres={GENRES}"
             
             static let TVShowVideos = "https://api.themoviedb.org/3/tv/{TVID}/videos?api_key={APIKEY}"
             

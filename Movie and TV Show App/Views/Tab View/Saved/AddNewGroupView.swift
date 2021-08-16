@@ -13,7 +13,7 @@ struct AddNewGroupView: View {
     @StateObject var viewModel = AddNewGroupViewModel()
     @Environment(\.presentationMode) var dismissPage
         
-    
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         NavigationView {
             VStack(alignment: .center, spacing: 20) {
@@ -60,12 +60,13 @@ struct AddNewGroupView: View {
                     TextField("Group Name:", text: $viewModel.groupName)
                         .cornerRadius(18)
                         .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
-                            .shadow(radius: 5)
-                        .frame(width: UIScreen.main.bounds.width - 80)
+                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
                         .multilineTextAlignment(.center)
                         .font(.custom("Avenir", size: 18))
                         .keyboardType(.default)
                         .introspectTextField { (textField) in
+                            textField.attributedPlaceholder = NSAttributedString(string: "Group Name:",
+                                                                                 attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
                             let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
                             let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
                             let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
@@ -78,12 +79,14 @@ struct AddNewGroupView: View {
                     TextField("Icon:", text: $viewModel.icon)
                         .cornerRadius(18)
                         .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
-                            .shadow(radius: 5)
+                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
                         .frame(width: UIScreen.main.bounds.width - 80)
                         .multilineTextAlignment(.center)
                         .font(.custom("Avenir", size: 18))
                         
                         .introspectTextField { (textField) in
+                            textField.attributedPlaceholder = NSAttributedString(string: "Icon:",
+                                                                                 attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
                             let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
                             let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
                             let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
@@ -121,6 +124,11 @@ struct AddNewGroupView: View {
                 
             }.navigationBarHidden(true).offset(y: 20)
         }
+    }
+}
+struct AddNewGroupView_PreviewProvider: PreviewProvider {
+    static var previews: some View {
+        AddNewGroupView().preferredColorScheme(.dark)
     }
 }
 

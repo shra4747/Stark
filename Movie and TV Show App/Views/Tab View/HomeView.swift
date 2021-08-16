@@ -10,12 +10,15 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
+    @Environment(\.colorScheme) var colorScheme
+    @State var image = UIImage()
+    @State var showingSettings = false
     
     var body: some View {
         NavigationView {
             ZStack {
                 Rectangle()
-                    .foregroundColor(.init(hex: "EBEBEB"))
+                    .foregroundColor(colorScheme == .light ? .init(hex: "EBEBEB") : .init(hex: "1A1A1A"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
                 
@@ -25,10 +28,27 @@ struct HomeView: View {
                             .font(.custom("Avenir", size: 32))
                             .fontWeight(.bold)
                         Spacer()
-                        Circle()
-                            .frame(width: 52, height: 52, alignment: .center)
-                            .foregroundColor(.white)
-                            .shadow(radius: 5)
+                        Button(action: {
+                            self.showingSettings.toggle()
+                        }) {
+                            
+                            Image(uiImage: image).resizable()
+                                .clipShape(Circle()).frame(width: 54, height: 54, alignment: .center)
+                                .shadow(radius: 5)
+                        }
+                        .onAppear {
+                            guard let data = UserDefaults.standard.data(forKey: "profile_picture") else {
+                                return
+                            }
+                            if let savedImage = UIImage(data: data) {
+                                self.image = savedImage
+                            }
+                        }
+                        .sheet(isPresented: $showingSettings) {
+                            SettingsView()
+                        }
+                        
+                            
                     }.padding(.horizontal, 25).padding(.top, 45).padding(10)
                     
                     ScrollView(.vertical, showsIndicators: false) {
@@ -44,9 +64,37 @@ struct HomeView: View {
                                 Spacer()
                             }
                             
-                            if viewModel.recommendedMovies.count > 0 {
-                                SimilarMoviesView(similarMovies: viewModel.recommendedMovies, shuffled: true).frame(alignment: .leading)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack(spacing: 35) {
+                                    ForEach(viewModel.recommendedMovies.shuffled().uniqued(), id: \.self) { movie in
+                                        NavigationLink(
+                                            destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
+                                            label: {
+                                                VStack(alignment: .leading) {
+                                                    VStack {
+                                                        Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
+                                                            .scaleEffect(0.50)
+                                                            .frame(width: 250, height: 370)
+                                                            .cornerRadius(18)
+                                                            .shadow(radius: 10)
+                                                    }
+                                                    Text(movie.title)
+                                                        .font(.custom("Avenir", size: 20))
+                                                        .fontWeight(.bold)
+                                                        .foregroundColor(colorScheme == .light ? .black : .white)
+
+                                                        
+                                                }
+                                        }).frame(width: 250, alignment: .leading)
+
+                                    }
+                                }.padding()
+                                .padding(.leading)
+                                .frame(minHeight: 450).id(UUID())
+
                             }
+                            .padding(.bottom)
+                            .frame(height: 400)
                             
                             Separator().opacity(0.4)
                         }
@@ -63,9 +111,34 @@ struct HomeView: View {
                                 Spacer()
                             }
                             
-                            if viewModel.recommendedShows.count > 0 {
-                                SimilarTVShowsView(similarShows: viewModel.recommendedShows, shuffled: true).frame(alignment: .leading)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack(spacing: 35) {
+                                    ForEach(viewModel.recommendedShows.shuffled().uniqued(), id: \.self) { show in
+                                        NavigationLink(
+                                            destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
+                                            label: {
+                                                VStack(alignment: .leading) {
+                                                    VStack {
+                                                        Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
+                                                            .scaleEffect(0.50)
+                                                            .frame(width: 250, height: 370)
+                                                            .cornerRadius(18)
+                                                            .shadow(radius: 10)
+                                                    }
+                                                    Text(show.name)
+                                                        .font(.custom("Avenir", size: 23))
+                                                        .fontWeight(.bold)
+                                                        .foregroundColor(colorScheme == .light ? .black : .white)
+                                                }
+                                        }).frame(width: 250, alignment: .leading)
+                                    }
+                                }.padding()
+                                .padding(.leading)
+                                .frame(minHeight: 450).id(UUID())
+
                             }
+                            .padding(.bottom)
+                            .frame(height: 400)
                             
                             Separator().opacity(0.4)
                         }
@@ -102,7 +175,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.trendingShows.count > 0 {
-                                SimilarTVShowsView(similarShows: viewModel.trendingShows, shuffled: true).frame(alignment: .leading).padding(.bottom, 100)
+                                SimilarTVShowsView(similarShows: viewModel.trendingShows, shuffled: false).frame(alignment: .leading).padding(.bottom, 100)
                             }
                             
                             
@@ -115,7 +188,12 @@ struct HomeView: View {
                 
                 if viewModel.isLoading {
                     ZStack {
-                        Color.white
+                        if colorScheme == .light {
+                            Color.white
+                        }
+                        else {
+                            Color.init(hex: "1A1A1A")
+                        }
                         ActivityIndicator(isAnimating: $viewModel.isLoading)
                     }.edgesIgnoringSafeArea(.top)
                 }
@@ -131,6 +209,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .preferredColorScheme(.dark)
     }
 }
 

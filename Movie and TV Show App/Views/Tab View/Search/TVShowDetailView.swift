@@ -16,13 +16,14 @@ struct TVShowDetailView: View {
     @State var givingShow: SearchModel.TVShow
     
     @State var doneLoading = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     Image(uiImage: viewModel.backdropImage)
-                        .frame(width: UIScreen.main.bounds.width)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
@@ -36,7 +37,7 @@ struct TVShowDetailView: View {
                             RoundedRectangle(cornerRadius: 34)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
                                 .edgesIgnoringSafeArea(.bottom)
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .light ? .init(hex: "FFFFFF") : .init(hex: "1A1A1A"))
                                 .shadow(radius: 4, x: 0, y: -4)
                         }
                         
@@ -55,18 +56,22 @@ struct TVShowDetailView: View {
                                                     .padding(.horizontal)
                                                     .padding(.top)
                                                     .padding(.leading)
+                                                    .fixedSize(horizontal: false, vertical: true)
+
                                                 Text(viewModel.genres)
                                                     .font(.custom("Avenir", size: 18))
                                                     .fontWeight(.medium)
                                                     .padding(.leading)
                                                     .padding(.leading)
-                                                    .foregroundColor(.init(hex: "777777"))
+                                                    .foregroundColor(.init(hex: colorScheme == .light ? "777777" : "C1C1C1"))
+                                                    .fixedSize(horizontal: false, vertical: true)
+
                                                 Text("\(viewModel.number_of_seasons) seasons")
                                                     .font(.custom("Avenir", size: 16))
                                                     .fontWeight(.medium)
                                                     .padding(.leading)
                                                     .padding(.leading)
-                                                    .foregroundColor(.init(hex: "5A5A5A"))
+                                                    .foregroundColor(.init(hex: colorScheme == .light ? "5A5A5A" : "AAAAAA"))
                                             }
                                             Spacer()
                                         }
@@ -75,9 +80,11 @@ struct TVShowDetailView: View {
                                                 .font(.custom("Avenir", size: 16))
                                                 .bold()
                                                 .fontWeight(.medium)
-                                                .foregroundColor(.init(hex: "383838"))
+                                                .foregroundColor(.init(hex: colorScheme == .light ? "383838" : "DEDEDE"))
                                                 .padding()
                                                 .padding(.leading)
+                                                .fixedSize(horizontal: false, vertical: true)
+
                                         }
                                     }
                                     
@@ -134,7 +141,8 @@ struct TVShowDetailView: View {
                                             
                                             
                                             if viewModel.similarShows.count > 0 {
-                                                SimilarTVShowsView(similarShows: viewModel.similarShows, shuffled: true)
+                                                SimilarTVShowsView(similarShows: viewModel.similarShows, shuffled: true)                                                .frame(height: 400)
+
                                             }
                                             
                                         }
@@ -181,10 +189,10 @@ struct TVShowDetailView: View {
                     ZStack {
                         Circle()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
+                            .foregroundColor(colorScheme == .light ? .white : .black)
                             .shadow(radius: 10)
                         Image(systemName: "arrow.left")
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
@@ -194,7 +202,12 @@ struct TVShowDetailView: View {
                 
                 if viewModel.isLoading {
                     ZStack {
-                        Color.white
+                        if colorScheme == .light {
+                            Color.white
+                        }
+                        else {
+                            Color.init(hex: "1A1A1A")
+                        }
                         ActivityIndicator(isAnimating: $viewModel.isLoading)
                     }.edgesIgnoringSafeArea(.top)
                 }
@@ -241,6 +254,7 @@ struct TVShowDetailView: View {
 struct TVShowDetailView_Previews: PreviewProvider {
     static var previews: some View {
         TVShowDetailView(id: 100757, isGivingData: false, givingShow: SearchModel.EmptyModel.TVShow)
+            .preferredColorScheme(.dark)
     }
 }
 
@@ -267,7 +281,7 @@ struct EpisodesView: View {
                                 .fontWeight(.bold)
                                 .frame(width: 220, alignment: .leading)
                                 .padding(.leading, 1)
-                            VStack {
+                            ScrollView(.vertical, showsIndicators: false) {
                                 Text(episode.overview)
                                     .font(.custom("Avenir", size: 14))
                                     .fontWeight(.light)
@@ -278,10 +292,7 @@ struct EpisodesView: View {
                         }
                     }
                 }
-//                RoundedRectangle(cornerRadius: 18)
-//                    .foregroundColor(.white)
-//                    .frame(width: 220, height: 130)
-//                    .shadow(radius: 5)
+
             }.padding(.horizontal).padding()
         }
     }
@@ -292,7 +303,8 @@ struct SimilarTVShowsView: View {
     
     @State var similarShows: [SearchModel.TVShow]
     @State var shuffled: Bool
-
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 35) {
@@ -311,7 +323,7 @@ struct SimilarTVShowsView: View {
                                 Text(show.name)
                                     .font(.custom("Avenir", size: 23))
                                     .fontWeight(.bold)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
                             }
                     }).frame(width: 250, alignment: .leading)
                 }

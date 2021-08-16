@@ -10,14 +10,15 @@ import SwiftUI
 struct SearchView: View {
     
     @StateObject var viewModel = SearchViewModel()
-    @Binding var isShowingTabView: Bool
-    
+    @Environment(\.colorScheme) var colorScheme
+    @State private var scrollViewID = UUID()
+
     var body: some View {
         NavigationView {
             GeometryReader { _ in
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.init(hex: "EBEBEB"))
+                        .foregroundColor(colorScheme == .light ? .init(hex: "EBEBEB") : .init(hex: "1A1A1A"))
                         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                         .edgesIgnoringSafeArea(.all)
                     VStack {
@@ -25,24 +26,33 @@ struct SearchView: View {
                             HStack(spacing: 13) {
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 20)
-                                        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color(.darkGray),lineWidth: 1))
+                                        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color(colorScheme == .light ? (.darkGray) : .gray), lineWidth: 1))
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 50)
-                                        .foregroundColor(.white)
-                                    TextField("Search for anything...", text: $viewModel.query).padding(5)
+                                        .foregroundColor(colorScheme == .light ? .white : .black)
+                                    TextField("", text: $viewModel.query)
+                                        .introspectTextField { uiTextField in
+                                            uiTextField.attributedPlaceholder = NSAttributedString(string: "Search for anything...",
+                                                                                                   attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
+                                        }
+                                        .foregroundColor(Color.white)
+                                        .padding(5)
                                         .disableAutocorrection(true)
                                         .frame(width: UIScreen.main.bounds.width - 120, alignment: .leading)
                                         .padding(.leading, 10)
                                         .font(.custom("Avenir", size: 17))
+                                        
+                                        
                                 }
                                 Button(action: {
                                     DispatchQueue.main.async {
+                                        scrollViewID = UUID()
                                         viewModel.search()
                                     }
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }) {
                                     Image(systemName: "magnifyingglass")
                                         .scaleEffect(1.65)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(colorScheme == .light ? .black : Color(.lightGray))
                                         
                                 }
                             }.padding()
@@ -75,32 +85,37 @@ struct SearchView: View {
                                                             .scaleEffect(0.65)
                                                             .frame(width: 296, height: 440)
                                                             .cornerRadius(18)
-                                                            .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
-                                                        Text(movie.title)
-                                                            .font(.custom("Avenir", size: 22))
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.black)
-                                                            .frame(width: 290)
+                                                            .shadow(color: Color(hex: colorScheme == .light ? "000000" : "6E6E6E"), radius: 5, x: 0, y: 3)
+                                                        HStack {
+                                                            Text(movie.title)
+                                                                .font(.custom("Avenir", size: 22))
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(colorScheme == .light ? Color(.black) : .init(hex: "F2F2F2"))
+                                                                .frame(width: 290, alignment: .leading)
+                                                            Spacer()
+                                                        }
                                                         
-                                                        Text(viewModel.returnGenresText(for: movie.genres))
-                                                            .font(.custom("Avenir", size: 16))
-                                                            .fontWeight(.medium)
-                                                            .foregroundColor(Color(hex: "777777"))
-                                                            .frame(width: 290)
+                                                        HStack {
+                                                            Text(viewModel.returnGenresText(for: movie.genres))
+                                                                .font(.custom("Avenir", size: 16))
+                                                                .fontWeight(.medium)
+                                                                .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
+                                                                .frame(width: 290, alignment: .leading)
+                                                            Spacer()
+                                                        }
                                                     }
-                                                }).onTapGesture {
-                                                    isShowingTabView = false
-                                                }
+                                                })
                                         }
                                     }.padding()
-                                }
+                                }.id(self.scrollViewID)
+
                             }
                             else {
                                 VStack {
                                     Image(systemName: "tv")
                                         .resizable()
                                         .frame(width: 90, height: 70)
-                                        .foregroundColor(Color(.darkGray))
+                                        .foregroundColor(colorScheme == .light ? Color(.darkGray) : Color(.lightGray))
                                     Text("Search for TV Shows \nor Movies!").multilineTextAlignment(.center)
                                         .font(.custom("Avenir", size: 22))
                                 }.offset(y: UIScreen.main.bounds.height/2 - 235)
@@ -120,24 +135,29 @@ struct SearchView: View {
                                                             .frame(width: 296, height: 440)
                                                             .cornerRadius(18)
                                                             .shadow(color: Color(hex: "000000"), radius: 4, x: 0, y: 3)
-                                                        Text(show.name)
-                                                            .font(.custom("Avenir", size: 23))
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.black)
-                                                            .frame(width: 290, alignment: .leading)
+                                                        HStack {
+                                                            Text(show.name)
+                                                                .font(.custom("Avenir", size: 23))
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(colorScheme == .light ? .black : .init(hex: "F2F2F2"))
+                                                                .frame(width: 290, alignment: .leading)
+                                                            Spacer()
+                                                        }
                                                         
-                                                        Text(viewModel.returnGenresText(for: show.genres ?? []))
-                                                            .font(.custom("Avenir", size: 15))
-                                                            .fontWeight(.medium)
-                                                            .foregroundColor(Color(hex: "777777"))
-                                                            .frame(width: 290, alignment: .leading)
+                                                        HStack {
+                                                            Text(viewModel.returnGenresText(for: show.genres ?? []))
+                                                                .font(.custom("Avenir", size: 15))
+                                                                .fontWeight(.medium)
+                                                                .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
+                                                                .frame(width: 290, alignment: .leading)
+                                                            Spacer()
+                                                        }
                                                     }
-                                                }).onTapGesture {
-                                                    isShowingTabView = false
-                                                }
+                                                })
                                         }
                                     }.padding()
-                                }
+                                }.id(self.scrollViewID)
+
                             }
                             else {
                                 VStack {
@@ -159,4 +179,10 @@ struct SearchView: View {
 }
 
 
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView()
+            .preferredColorScheme(.dark)
+    }
+}
 

@@ -14,7 +14,7 @@ struct BookmarkButtonView: View {
     @State var title: String
     @State var media_Type: SearchModel.MediaType
     @State var release_date: String
-    
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = BookmarkButtonViewModel()
     
     var body: some View {
@@ -24,11 +24,11 @@ struct BookmarkButtonView: View {
             ZStack {
                 Circle()
                     .frame(width: 70, height: 70)
-                    .foregroundColor(.white)
-                    .shadow(radius: 10)
+                    .foregroundColor(colorScheme == .light ? .white : .black)
+                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "484848")), radius: 10)
                 Image(systemName: viewModel.hasBeenSaved ? "bookmark.fill" : "bookmark")
                     .scaleEffect(1.63)
-                    .foregroundColor(Color(.darkGray))
+                    .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
             }
         }.onAppear {
             viewModel.id = id

@@ -13,12 +13,13 @@ struct BookmarkedDetailView: View {
     @StateObject var viewModel = BookmarkedDetailViewModel()
     @Environment(\.presentationMode) var dismissPage
     @State var isPermissingToDelete = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
             ZStack {
                 Rectangle()
-                    .foregroundColor(.init(hex: "EBEBEB"))
+                    .foregroundColor(colorScheme == .light ? .init(hex: "EBEBEB") : .init(hex: "1A1A1A"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 18) {
@@ -28,7 +29,7 @@ struct BookmarkedDetailView: View {
                                 .opacity(0.6)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/4.2)
                                 .edgesIgnoringSafeArea(.all)
-                                .shadow(color: Color(.darkGray), radius: 8)
+                                .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
                             VStack(spacing: 20) {
                                 Text(group.icon)
                                     .font(.system(size: 50))
@@ -37,6 +38,7 @@ struct BookmarkedDetailView: View {
                                 Text(group.name)
                                     .font(.custom("Avenir", size: 27))
                                     .fontWeight(.bold)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
 
                             }.offset(y: 15)
                         }
@@ -60,6 +62,8 @@ struct BookmarkedDetailView: View {
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
                                                     .frame(width: 290, alignment: .leading)
+                                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+
                                             }
                                         })
                                 }
@@ -78,6 +82,8 @@ struct BookmarkedDetailView: View {
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
                                                     .frame(width: 290, alignment: .leading)
+                                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+
                                             }
                                         })
                                 }
@@ -98,10 +104,10 @@ struct BookmarkedDetailView: View {
                     ZStack {
                         Circle()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
+                            .foregroundColor(colorScheme == .light ? .white : .black)
                             .shadow(radius: 10)
                         Image(systemName: "arrow.left")
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
                     }
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 
@@ -111,10 +117,10 @@ struct BookmarkedDetailView: View {
                     ZStack {
                         Circle()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
+                            .foregroundColor(colorScheme == .light ? .white : .black)
                             .shadow(radius: 10)
                         Image(systemName: "trash")
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
                     }
                 }.offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 .alert(isPresented: $isPermissingToDelete, content: {
@@ -132,6 +138,6 @@ struct BookmarkedDetailView: View {
 
 struct BookmarkedDetailView_PreviewProvider: PreviewProvider {
     static var previews: some View {
-        BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater)
+        BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater).preferredColorScheme(.dark)
     }
 }
