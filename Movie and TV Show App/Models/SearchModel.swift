@@ -113,6 +113,8 @@ extension SearchModel {
             static let MovieWatchProviders = "https://api.themoviedb.org/3/movie/{MOVIEID}/watch/providers?api_key={APIKEY}"
             
             static let TrendingMovies = "https://api.themoviedb.org/3/trending/movie/week?api_key={APIKEY}&language=us"
+            
+            static let ReleaseDate = "https://api.themoviedb.org/3/movie/{MOVIEID}/release_dates?api_key={APIKEY}"
         }
         
         class TVShow {

@@ -40,6 +40,6 @@ class BookmarkedDetailViewModel: ObservableObject {
             }
         }
         
-        UserDefaults.standard.set(nil, forKey: "saved\(group.id)")
+        UserDefaults.standard.set(nil, forKey: "saved-\(group.id)")
     }
 }

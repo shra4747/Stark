@@ -43,7 +43,12 @@ class MovieDetailViewModel: ObservableObject {
                     self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
                     self.poster_path = response.poster_path ?? ""
                     self.title = response.title
-                    self.release_date = response.release_date
+                    
+                    CountdownDate().findReleaseDate(movieID: response.id) { dateString in
+                        self.release_date = dateString
+                        print(dateString)
+                    }
+                    
                     self.genres = self.returnGenresText(for: response.genres)
                     self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview

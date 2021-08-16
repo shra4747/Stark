@@ -34,7 +34,7 @@ struct SearchView: View {
                                             uiTextField.attributedPlaceholder = NSAttributedString(string: "Search for anything...",
                                                                                                    attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
                                         }
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(colorScheme == .light ? .black : .white)
                                         .padding(5)
                                         .disableAutocorrection(true)
                                         .frame(width: UIScreen.main.bounds.width - 120, alignment: .leading)
@@ -48,7 +48,7 @@ struct SearchView: View {
                                         scrollViewID = UUID()
                                         viewModel.search()
                                     }
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }) {
                                     Image(systemName: "magnifyingglass")
                                         .scaleEffect(1.65)

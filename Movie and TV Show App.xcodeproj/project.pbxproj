@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC00B41226C8103B00E6A31E /* RecommendationEngineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41126C8103B00E6A31E /* RecommendationEngineModel.swift */; };
+		DC00B41226C8103B00E6A31E /* RecommendationEngineExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41126C8103B00E6A31E /* RecommendationEngineExtension.swift */; };
 		DC00B41426C8148E00E6A31E /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41326C8148E00E6A31E /* RatingView.swift */; };
 		DC00B41626C819AE00E6A31E /* RatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41526C819AD00E6A31E /* RatingButtonView.swift */; };
 		DC00B41826C86AF700E6A31E /* RandomArrayPickerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */; };
@@ -34,6 +34,69 @@
 		DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */; };
 		DC34BB7226B74C8300217CE9 /* BookmarkedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */; };
 		DC34BB7526B74CA600217CE9 /* BookmarkedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */; };
+		DC3AE1C626CAD2090070262B /* CountdownDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C526CAD2090070262B /* CountdownDateExtension.swift */; };
+		DC3AE1C826CAE9A50070262B /* CountdownWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C726CAE9A50070262B /* CountdownWidgetView.swift */; };
+		DC3AE1CA26CAEF080070262B /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C926CAEF080070262B /* WidgetModel.swift */; };
+		DC3AE1D226CAF0E20070262B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3AE1D126CAF0E20070262B /* WidgetKit.framework */; };
+		DC3AE1D426CAF0E20070262B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3AE1D326CAF0E20070262B /* SwiftUI.framework */; };
+		DC3AE1D726CAF0E20070262B /* CountdownWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1D626CAF0E20070262B /* CountdownWidget.swift */; };
+		DC3AE1DA26CAF0E40070262B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC3AE1D926CAF0E40070262B /* Assets.xcassets */; };
+		DC3AE1E026CAF0E40070262B /* CountdownWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DC3AE1CF26CAF0E20070262B /* CountdownWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DC3AE1ED26CAF1A00070262B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3AE1EC26CAF1A00070262B /* Intents.framework */; };
+		DC3AE1F426CAF1A00070262B /* CountdownWidgetIntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DC3AE1EB26CAF1A00070262B /* CountdownWidgetIntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DC3AE22626CAF2AB0070262B /* ChooseGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */; };
+		DC3AE22726CAF2AB0070262B /* BookmarkedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */; };
+		DC3AE22826CAF2AB0070262B /* HexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E6626B5962700D7BB14 /* HexExtension.swift */; };
+		DC3AE22926CAF2AB0070262B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */; };
+		DC3AE22A26CAF2AB0070262B /* ChooseAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42126C9EA1600E6A31E /* ChooseAvatarView.swift */; };
+		DC3AE22B26CAF2AB0070262B /* BookmarkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */; };
+		DC3AE22C26CAF2AB0070262B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC89E61226C75DC100D111CB /* HomeViewModel.swift */; };
+		DC3AE22D26CAF2AB0070262B /* ChooseMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42826C9FE6500E6A31E /* ChooseMoviesView.swift */; };
+		DC3AE22E26CAF2AB0070262B /* ChooseTVShowGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42A26CA09D400E6A31E /* ChooseTVShowGenresView.swift */; };
+		DC3AE22F26CAF2AB0070262B /* RatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41526C819AD00E6A31E /* RatingButtonView.swift */; };
+		DC3AE23026CAF2AB0070262B /* ChooseMovieGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42526C9F64A00E6A31E /* ChooseMovieGenresView.swift */; };
+		DC3AE23126CAF2AB0070262B /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8126B59C3D00D7BB14 /* MovieDetailViewModel.swift */; };
+		DC3AE23226CAF2AB0070262B /* ActivityIndicatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9671CF26B65AD800A9C99A /* ActivityIndicatorExtension.swift */; };
+		DC3AE23326CAF2AB0070262B /* TVShowDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */; };
+		DC3AE23426CAF2AB0070262B /* AddNewGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEACA7326BCD96500E6E196 /* AddNewGroupView.swift */; };
+		DC3AE23526CAF2AB0070262B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41E26C9E5E400E6A31E /* WelcomeView.swift */; };
+		DC3AE23626CAF2AB0070262B /* ChooseIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F1226BF2FEA001A214C /* ChooseIconView.swift */; };
+		DC3AE23726CAF2AB0070262B /* TextFieldPlaceholderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41926C991CF00E6A31E /* TextFieldPlaceholderExtension.swift */; };
+		DC3AE23826CAF2AB0070262B /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */; };
+		DC3AE23926CAF2AB0070262B /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6E326C0D2270012175F /* TabView.swift */; };
+		DC3AE23A26CAF2AB0070262B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC89E61026C75DB000D111CB /* HomeView.swift */; };
+		DC3AE23B26CAF2AB0070262B /* BookmarkButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17A14926B7277D00450FF8 /* BookmarkButtonViewModel.swift */; };
+		DC3AE23C26CAF2AB0070262B /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17126B1EB0900AD58C6 /* SearchModel.swift */; };
+		DC3AE23D26CAF2AB0070262B /* CountdownWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C726CAE9A50070262B /* CountdownWidgetView.swift */; };
+		DC3AE23E26CAF2AB0070262B /* RandomArrayPickerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */; };
+		DC3AE23F26CAF2AB0070262B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41B26C9D19800E6A31E /* SettingsView.swift */; };
+		DC3AE24026CAF2AB0070262B /* BookmarkedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CE26BA1D3F0050EF72 /* BookmarkedDetailView.swift */; };
+		DC3AE24126CAF2AB0070262B /* ChooseGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6E026C0C5780012175F /* ChooseGroupViewModel.swift */; };
+		DC3AE24226CAF2AB0070262B /* RecommendationEngineExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41126C8103B00E6A31E /* RecommendationEngineExtension.swift */; };
+		DC3AE24326CAF2AB0070262B /* EmojiTextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */; };
+		DC3AE24426CAF2AB0070262B /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C926CAEF080070262B /* WidgetModel.swift */; };
+		DC3AE24526CAF2AB0070262B /* TrailerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */; };
+		DC3AE24626CAF2AB0070262B /* TVShowDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9183BD26B841EA00CE5877 /* TVShowDetailViewModel.swift */; };
+		DC3AE24726CAF2AB0070262B /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */; };
+		DC3AE24826CAF2AB0070262B /* ArrayChunker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6DA26C0C02F0012175F /* ArrayChunker.swift */; };
+		DC3AE24926CAF2AB0070262B /* CustomCornerRadiusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */; };
+		DC3AE24A26CAF2AB0070262B /* ColorCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */; };
+		DC3AE24B26CAF2AB0070262B /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */; };
+		DC3AE24C26CAF2AB0070262B /* ChooseTVShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42C26CA0CE100E6A31E /* ChooseTVShowsView.swift */; };
+		DC3AE24D26CAF2AB0070262B /* CountdownDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C526CAD2090070262B /* CountdownDateExtension.swift */; };
+		DC3AE24E26CAF2AB0070262B /* SaveAvatarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */; };
+		DC3AE24F26CAF2AB0070262B /* LoadImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */; };
+		DC3AE25026CAF2AB0070262B /* BookmarkedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD167D126BA1D510050EF72 /* BookmarkedDetailViewModel.swift */; };
+		DC3AE25126CAF2AB0070262B /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41326C8148E00E6A31E /* RatingView.swift */; };
+		DC3AE25226CAF2AB0070262B /* AddNewGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEACA7626BCD97200E6E196 /* AddNewGroupViewModel.swift */; };
+		DC3AE25326CAF2AB0070262B /* BookmarkedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */; };
+		DC3AE25526CAF2E40070262B /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = DC3AE25426CAF2E40070262B /* Introspect */; };
+		DC3AE25A26CAF48A0070262B /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1C926CAEF080070262B /* WidgetModel.swift */; };
+		DC3AE26226CAFBC70070262B /* CountdownWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */; };
+		DC3AE26326CAFBC80070262B /* CountdownWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */; };
+		DC3AE26426CAFBC80070262B /* CountdownWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */; };
+		DC3AE26526CAFBD80070262B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */; };
+		DC3AE26626CAFBD90070262B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */; };
 		DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */; };
 		DC80F6D826C0B9FC0012175F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = DC80F6D726C0B9FC0012175F /* Introspect */; };
 		DC80F6DB26C0C02F0012175F /* ArrayChunker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6DA26C0C02F0012175F /* ArrayChunker.swift */; };
@@ -58,8 +121,40 @@
 		DCF2E46226BB870000B44842 /* CustomCornerRadiusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF2E46126BB870000B44842 /* CustomCornerRadiusExtension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DC3AE1DE26CAF0E40070262B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC31C14D26B1DFEA00AD58C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC3AE1CE26CAF0E20070262B;
+			remoteInfo = CountdownWidgetExtension;
+		};
+		DC3AE1F226CAF1A00070262B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC31C14D26B1DFEA00AD58C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC3AE1EA26CAF1A00070262B;
+			remoteInfo = CountdownWidgetIntentHandler;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DC3AE1E426CAF0E40070262B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DC3AE1E026CAF0E40070262B /* CountdownWidgetExtension.appex in Embed App Extensions */,
+				DC3AE1F426CAF1A00070262B /* CountdownWidgetIntentHandler.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		DC00B41126C8103B00E6A31E /* RecommendationEngineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEngineModel.swift; sourceTree = "<group>"; };
+		DC00B41126C8103B00E6A31E /* RecommendationEngineExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEngineExtension.swift; sourceTree = "<group>"; };
 		DC00B41326C8148E00E6A31E /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		DC00B41526C819AD00E6A31E /* RatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingButtonView.swift; sourceTree = "<group>"; };
 		DC00B41726C86AF700E6A31E /* RandomArrayPickerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomArrayPickerExtension.swift; sourceTree = "<group>"; };
@@ -88,6 +183,23 @@
 		DC31C17426B1F4F800AD58C6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		DC34BB7126B74C8300217CE9 /* BookmarkedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedView.swift; sourceTree = "<group>"; };
 		DC34BB7426B74CA600217CE9 /* BookmarkedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedViewModel.swift; sourceTree = "<group>"; };
+		DC3AE1C526CAD2090070262B /* CountdownDateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownDateExtension.swift; sourceTree = "<group>"; };
+		DC3AE1C726CAE9A50070262B /* CountdownWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownWidgetView.swift; sourceTree = "<group>"; };
+		DC3AE1C926CAEF080070262B /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
+		DC3AE1CF26CAF0E20070262B /* CountdownWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CountdownWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC3AE1D126CAF0E20070262B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DC3AE1D326CAF0E20070262B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		DC3AE1D626CAF0E20070262B /* CountdownWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownWidget.swift; sourceTree = "<group>"; };
+		DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = CountdownWidget.intentdefinition; sourceTree = "<group>"; };
+		DC3AE1D926CAF0E40070262B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC3AE1DB26CAF0E40070262B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC3AE1EB26CAF1A00070262B /* CountdownWidgetIntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CountdownWidgetIntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC3AE1EC26CAF1A00070262B /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		DC3AE1F126CAF1A00070262B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC3AE25626CAF3BD0070262B /* CountdownWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CountdownWidgetExtension.entitlements; sourceTree = "<group>"; };
+		DC3AE25726CAF3EA0070262B /* Movie and TV Show App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Movie and TV Show App.entitlements"; sourceTree = "<group>"; };
+		DC3AE25826CAF3F50070262B /* CountdownWidgetIntentHandler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CountdownWidgetIntentHandler.entitlements; sourceTree = "<group>"; };
 		DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodableExtension.swift; sourceTree = "<group>"; };
 		DC80F6DA26C0C02F0012175F /* ArrayChunker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayChunker.swift; sourceTree = "<group>"; };
 		DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseGroupView.swift; sourceTree = "<group>"; };
@@ -120,6 +232,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC3AE1CC26CAF0E20070262B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3AE1D426CAF0E20070262B /* SwiftUI.framework in Frameworks */,
+				DC3AE25526CAF2E40070262B /* Introspect in Frameworks */,
+				DC3AE1D226CAF0E20070262B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC3AE1E826CAF1A00070262B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3AE1ED26CAF1A00070262B /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -139,7 +269,11 @@
 		DC31C14C26B1DFEA00AD58C6 = {
 			isa = PBXGroup;
 			children = (
+				DC3AE25626CAF3BD0070262B /* CountdownWidgetExtension.entitlements */,
 				DC31C15726B1DFEA00AD58C6 /* Movie and TV Show App */,
+				DC3AE1D526CAF0E20070262B /* CountdownWidget */,
+				DC3AE1EE26CAF1A00070262B /* CountdownWidgetIntentHandler */,
+				DC3AE1D026CAF0E20070262B /* Frameworks */,
 				DC31C15626B1DFEA00AD58C6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */,
+				DC3AE1CF26CAF0E20070262B /* CountdownWidgetExtension.appex */,
+				DC3AE1EB26CAF1A00070262B /* CountdownWidgetIntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +291,7 @@
 		DC31C15726B1DFEA00AD58C6 /* Movie and TV Show App */ = {
 			isa = PBXGroup;
 			children = (
+				DC3AE25726CAF3EA0070262B /* Movie and TV Show App.entitlements */,
 				DC31C15826B1DFEA00AD58C6 /* AppDelegate.swift */,
 				DC31C15A26B1DFEA00AD58C6 /* SceneDelegate.swift */,
 				DC31C17026B1EAB000AD58C6 /* Models */,
@@ -183,6 +320,7 @@
 				DC00B41D26C9E5D400E6A31E /* Onboarding */,
 				DC80F6E326C0D2270012175F /* TabView.swift */,
 				DC89E60D26C75B9800D111CB /* Tab View */,
+				DC3AE1C726CAE9A50070262B /* CountdownWidgetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,14 +346,47 @@
 			children = (
 				DC31C17126B1EB0900AD58C6 /* SearchModel.swift */,
 				DCD167CB26BA16B90050EF72 /* BookmarkModel.swift */,
-				DC00B41126C8103B00E6A31E /* RecommendationEngineModel.swift */,
+				DC3AE1C926CAEF080070262B /* WidgetModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DC3AE1D026CAF0E20070262B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC3AE1D126CAF0E20070262B /* WidgetKit.framework */,
+				DC3AE1D326CAF0E20070262B /* SwiftUI.framework */,
+				DC3AE1EC26CAF1A00070262B /* Intents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC3AE1D526CAF0E20070262B /* CountdownWidget */ = {
+			isa = PBXGroup;
+			children = (
+				DC3AE1D626CAF0E20070262B /* CountdownWidget.swift */,
+				DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */,
+				DC3AE1D926CAF0E40070262B /* Assets.xcassets */,
+				DC3AE1DB26CAF0E40070262B /* Info.plist */,
+			);
+			path = CountdownWidget;
+			sourceTree = "<group>";
+		};
+		DC3AE1EE26CAF1A00070262B /* CountdownWidgetIntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				DC3AE25826CAF3F50070262B /* CountdownWidgetIntentHandler.entitlements */,
+				DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */,
+				DC3AE1F126CAF1A00070262B /* Info.plist */,
+			);
+			path = CountdownWidgetIntentHandler;
 			sourceTree = "<group>";
 		};
 		DC852E6526B5961500D7BB14 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DC00B41126C8103B00E6A31E /* RecommendationEngineExtension.swift */,
+				DC3AE1C526CAD2090070262B /* CountdownDateExtension.swift */,
 				DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */,
 				DC852E7B26B59B6400D7BB14 /* LoadImageExtension.swift */,
 				DC201F0F26BEF45C001A214C /* EmojiTextFieldExtension.swift */,
@@ -277,10 +448,13 @@
 				DC31C15126B1DFEA00AD58C6 /* Sources */,
 				DC31C15226B1DFEA00AD58C6 /* Frameworks */,
 				DC31C15326B1DFEA00AD58C6 /* Resources */,
+				DC3AE1E426CAF0E40070262B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DC3AE1DF26CAF0E40070262B /* PBXTargetDependency */,
+				DC3AE1F326CAF1A00070262B /* PBXTargetDependency */,
 			);
 			name = "Movie and TV Show App";
 			packageProductDependencies = (
@@ -290,17 +464,60 @@
 			productReference = DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DC3AE1CE26CAF0E20070262B /* CountdownWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC3AE1E126CAF0E40070262B /* Build configuration list for PBXNativeTarget "CountdownWidgetExtension" */;
+			buildPhases = (
+				DC3AE1CB26CAF0E20070262B /* Sources */,
+				DC3AE1CC26CAF0E20070262B /* Frameworks */,
+				DC3AE1CD26CAF0E20070262B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CountdownWidgetExtension;
+			packageProductDependencies = (
+				DC3AE25426CAF2E40070262B /* Introspect */,
+			);
+			productName = CountdownWidgetExtension;
+			productReference = DC3AE1CF26CAF0E20070262B /* CountdownWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		DC3AE1EA26CAF1A00070262B /* CountdownWidgetIntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC3AE1F526CAF1A00070262B /* Build configuration list for PBXNativeTarget "CountdownWidgetIntentHandler" */;
+			buildPhases = (
+				DC3AE1E726CAF1A00070262B /* Sources */,
+				DC3AE1E826CAF1A00070262B /* Frameworks */,
+				DC3AE1E926CAF1A00070262B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CountdownWidgetIntentHandler;
+			productName = CountdownWidgetIntentHandler;
+			productReference = DC3AE1EB26CAF1A00070262B /* CountdownWidgetIntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		DC31C14D26B1DFEA00AD58C6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					DC31C15426B1DFEA00AD58C6 = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					DC3AE1CE26CAF0E20070262B = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					DC3AE1EA26CAF1A00070262B = {
+						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
 			};
@@ -321,6 +538,8 @@
 			projectRoot = "";
 			targets = (
 				DC31C15426B1DFEA00AD58C6 /* Movie and TV Show App */,
+				DC3AE1CE26CAF0E20070262B /* CountdownWidgetExtension */,
+				DC3AE1EA26CAF1A00070262B /* CountdownWidgetIntentHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -333,6 +552,21 @@
 				DC31C16526B1DFF400AD58C6 /* LaunchScreen.storyboard in Resources */,
 				DC00B42026C9E75F00E6A31E /* Assets.xcassets in Resources */,
 				DC31C16226B1DFF400AD58C6 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC3AE1CD26CAF0E20070262B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3AE1DA26CAF0E40070262B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC3AE1E926CAF1A00070262B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,9 +587,11 @@
 				DC89E61326C75DC100D111CB /* HomeViewModel.swift in Sources */,
 				DCF2E46226BB870000B44842 /* CustomCornerRadiusExtension.swift in Sources */,
 				DC00B41F26C9E5E400E6A31E /* WelcomeView.swift in Sources */,
+				DC3AE26226CAFBC70070262B /* CountdownWidget.intentdefinition in Sources */,
 				DC00B42426C9EDEF00E6A31E /* SaveAvatarExtension.swift in Sources */,
 				DC00B42926C9FE6500E6A31E /* ChooseMoviesView.swift in Sources */,
 				DC00B42726C9FE3000E6A31E /* ChooseMovieGenresView.swift in Sources */,
+				DC3AE1C626CAD2090070262B /* CountdownDateExtension.swift in Sources */,
 				DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */,
 				DC80F6DB26C0C02F0012175F /* ArrayChunker.swift in Sources */,
 				DCD167CF26BA1D3F0050EF72 /* BookmarkedDetailView.swift in Sources */,
@@ -370,13 +606,15 @@
 				DC31C15926B1DFEA00AD58C6 /* AppDelegate.swift in Sources */,
 				DC852E6726B5962700D7BB14 /* HexExtension.swift in Sources */,
 				DC31C17526B1F4F800AD58C6 /* SearchViewModel.swift in Sources */,
-				DC00B41226C8103B00E6A31E /* RecommendationEngineModel.swift in Sources */,
+				DC00B41226C8103B00E6A31E /* RecommendationEngineExtension.swift in Sources */,
 				DC89E61126C75DB000D111CB /* HomeView.swift in Sources */,
 				DC201F1026BEF45C001A214C /* EmojiTextFieldExtension.swift in Sources */,
 				DCD167D226BA1D510050EF72 /* BookmarkedDetailViewModel.swift in Sources */,
 				DC00B42B26CA09D400E6A31E /* ChooseTVShowGenresView.swift in Sources */,
+				DC3AE1CA26CAEF080070262B /* WidgetModel.swift in Sources */,
 				DC852E7C26B59B6400D7BB14 /* LoadImageExtension.swift in Sources */,
 				DC80F6DE26C0C56C0012175F /* ChooseGroupView.swift in Sources */,
+				DC3AE1C826CAE9A50070262B /* CountdownWidgetView.swift in Sources */,
 				DC31C15B26B1DFEA00AD58C6 /* SceneDelegate.swift in Sources */,
 				DC31C15D26B1DFEA00AD58C6 /* SearchView.swift in Sources */,
 				DC9671D026B65AD800A9C99A /* ActivityIndicatorExtension.swift in Sources */,
@@ -391,7 +629,86 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC3AE1CB26CAF0E20070262B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3AE23E26CAF2AB0070262B /* RandomArrayPickerExtension.swift in Sources */,
+				DC3AE25326CAF2AB0070262B /* BookmarkedView.swift in Sources */,
+				DC3AE25226CAF2AB0070262B /* AddNewGroupViewModel.swift in Sources */,
+				DC3AE24326CAF2AB0070262B /* EmojiTextFieldExtension.swift in Sources */,
+				DC3AE23626CAF2AB0070262B /* ChooseIconView.swift in Sources */,
+				DC3AE22F26CAF2AB0070262B /* RatingButtonView.swift in Sources */,
+				DC3AE23B26CAF2AB0070262B /* BookmarkButtonViewModel.swift in Sources */,
+				DC3AE22826CAF2AB0070262B /* HexExtension.swift in Sources */,
+				DC3AE22E26CAF2AB0070262B /* ChooseTVShowGenresView.swift in Sources */,
+				DC3AE23226CAF2AB0070262B /* ActivityIndicatorExtension.swift in Sources */,
+				DC3AE26326CAFBC80070262B /* CountdownWidget.intentdefinition in Sources */,
+				DC3AE24D26CAF2AB0070262B /* CountdownDateExtension.swift in Sources */,
+				DC3AE24026CAF2AB0070262B /* BookmarkedDetailView.swift in Sources */,
+				DC3AE22626CAF2AB0070262B /* ChooseGroupView.swift in Sources */,
+				DC3AE24B26CAF2AB0070262B /* SearchViewModel.swift in Sources */,
+				DC3AE22D26CAF2AB0070262B /* ChooseMoviesView.swift in Sources */,
+				DC3AE22C26CAF2AB0070262B /* HomeViewModel.swift in Sources */,
+				DC3AE22B26CAF2AB0070262B /* BookmarkButtonView.swift in Sources */,
+				DC3AE26526CAFBD80070262B /* IntentHandler.swift in Sources */,
+				DC3AE23826CAF2AB0070262B /* MovieDetailView.swift in Sources */,
+				DC3AE24526CAF2AB0070262B /* TrailerView.swift in Sources */,
+				DC3AE24826CAF2AB0070262B /* ArrayChunker.swift in Sources */,
+				DC3AE25126CAF2AB0070262B /* RatingView.swift in Sources */,
+				DC3AE23726CAF2AB0070262B /* TextFieldPlaceholderExtension.swift in Sources */,
+				DC3AE23C26CAF2AB0070262B /* SearchModel.swift in Sources */,
+				DC3AE22926CAF2AB0070262B /* SearchView.swift in Sources */,
+				DC3AE22A26CAF2AB0070262B /* ChooseAvatarView.swift in Sources */,
+				DC3AE23026CAF2AB0070262B /* ChooseMovieGenresView.swift in Sources */,
+				DC3AE24126CAF2AB0070262B /* ChooseGroupViewModel.swift in Sources */,
+				DC3AE24426CAF2AB0070262B /* WidgetModel.swift in Sources */,
+				DC3AE23F26CAF2AB0070262B /* SettingsView.swift in Sources */,
+				DC3AE24E26CAF2AB0070262B /* SaveAvatarExtension.swift in Sources */,
+				DC3AE24C26CAF2AB0070262B /* ChooseTVShowsView.swift in Sources */,
+				DC3AE24626CAF2AB0070262B /* TVShowDetailViewModel.swift in Sources */,
+				DC3AE25026CAF2AB0070262B /* BookmarkedDetailViewModel.swift in Sources */,
+				DC3AE23D26CAF2AB0070262B /* CountdownWidgetView.swift in Sources */,
+				DC3AE24226CAF2AB0070262B /* RecommendationEngineExtension.swift in Sources */,
+				DC3AE24A26CAF2AB0070262B /* ColorCodableExtension.swift in Sources */,
+				DC3AE23126CAF2AB0070262B /* MovieDetailViewModel.swift in Sources */,
+				DC3AE23326CAF2AB0070262B /* TVShowDetailView.swift in Sources */,
+				DC3AE24F26CAF2AB0070262B /* LoadImageExtension.swift in Sources */,
+				DC3AE22726CAF2AB0070262B /* BookmarkedViewModel.swift in Sources */,
+				DC3AE1D726CAF0E20070262B /* CountdownWidget.swift in Sources */,
+				DC3AE23926CAF2AB0070262B /* TabView.swift in Sources */,
+				DC3AE23A26CAF2AB0070262B /* HomeView.swift in Sources */,
+				DC3AE24726CAF2AB0070262B /* BookmarkModel.swift in Sources */,
+				DC3AE23426CAF2AB0070262B /* AddNewGroupView.swift in Sources */,
+				DC3AE24926CAF2AB0070262B /* CustomCornerRadiusExtension.swift in Sources */,
+				DC3AE23526CAF2AB0070262B /* WelcomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC3AE1E726CAF1A00070262B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3AE25A26CAF48A0070262B /* WidgetModel.swift in Sources */,
+				DC3AE26626CAFBD90070262B /* IntentHandler.swift in Sources */,
+				DC3AE26426CAFBC80070262B /* CountdownWidget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DC3AE1DF26CAF0E40070262B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC3AE1CE26CAF0E20070262B /* CountdownWidgetExtension */;
+			targetProxy = DC3AE1DE26CAF0E40070262B /* PBXContainerItemProxy */;
+		};
+		DC3AE1F326CAF1A00070262B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC3AE1EA26CAF1A00070262B /* CountdownWidgetIntentHandler */;
+			targetProxy = DC3AE1F226CAF1A00070262B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DC31C16326B1DFF400AD58C6 /* LaunchScreen.storyboard */ = {
@@ -524,8 +841,10 @@
 		DC31C16A26B1DFF400AD58C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Movie and TV Show App/Movie and TV Show App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Movie and TV Show App/Preview Content\"";
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
@@ -545,8 +864,10 @@
 		DC31C16B26B1DFF400AD58C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Movie and TV Show App/Movie and TV Show App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Movie and TV Show App/Preview Content\"";
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
@@ -560,6 +881,94 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		DC3AE1E226CAF0E40070262B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CountdownWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 66AVQK2TF9;
+				INFOPLIST_FILE = CountdownWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App.CountdownWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC3AE1E326CAF0E40070262B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CountdownWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 66AVQK2TF9;
+				INFOPLIST_FILE = CountdownWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App.CountdownWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DC3AE1F626CAF1A00070262B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CountdownWidgetIntentHandler/CountdownWidgetIntentHandler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 66AVQK2TF9;
+				INFOPLIST_FILE = CountdownWidgetIntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App.CountdownWidgetIntentHandler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC3AE1F726CAF1A00070262B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CountdownWidgetIntentHandler/CountdownWidgetIntentHandler.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 66AVQK2TF9;
+				INFOPLIST_FILE = CountdownWidgetIntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App.CountdownWidgetIntentHandler";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -584,6 +993,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		DC3AE1E126CAF0E40070262B /* Build configuration list for PBXNativeTarget "CountdownWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC3AE1E226CAF0E40070262B /* Debug */,
+				DC3AE1E326CAF0E40070262B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC3AE1F526CAF1A00070262B /* Build configuration list for PBXNativeTarget "CountdownWidgetIntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC3AE1F626CAF1A00070262B /* Debug */,
+				DC3AE1F726CAF1A00070262B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -598,6 +1025,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC3AE25426CAF2E40070262B /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC80F6D626C0B9FB0012175F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
 		DC80F6D726C0B9FC0012175F /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC80F6D626C0B9FB0012175F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;

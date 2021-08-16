@@ -123,6 +123,7 @@ class HomeViewModel: ObservableObject {
                     else {
                         let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
     //                    DispatchQueue.main.async {
+                        if response.results.count > 3 {
                             for movie in response.results[...3] {
                                 let generalModel = RecommendationEngine().getWatchedAndRated()
                                 
@@ -134,6 +135,7 @@ class HomeViewModel: ObservableObject {
                                 self.listMovies(movie.id)
     //                            }
                             }
+                        }
     //                    }
                     }
                 }.resume()

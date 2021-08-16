@@ -47,5 +47,9 @@ class ChooseGroupViewModel: ObservableObject {
         let encoded = try? JSONEncoder().encode(content)
         
         UserDefaults.standard.set(encoded, forKey: "saved-\(groupID)")
+        
+        if groupID == "002" {
+            UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(encoded, forKey: "countdownsData")
+        }
     }
 }

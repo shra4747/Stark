@@ -16,6 +16,7 @@ struct BookmarkButtonView: View {
     @State var release_date: String
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = BookmarkButtonViewModel()
+    @State var canShowCountdown: Bool
     
     var body: some View {
         Button(action: {
@@ -37,7 +38,8 @@ struct BookmarkButtonView: View {
             viewModel.media_type = media_Type
             viewModel.release_Date = release_date
             viewModel.changeStateOnAppear()
-        }.sheet(isPresented: $viewModel.showChooseGroupView) {             ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date))
+        }.sheet(isPresented: $viewModel.showChooseGroupView) {
+            ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: canShowCountdown ? CountdownDate().returnIfCountdown(dateString: release_date) : false, save: $viewModel.hasBeenSaved)
         }
     }
 }

@@ -15,6 +15,9 @@ struct ChooseGroupView: View {
     let countdown = BookmarkModelDefaultGroups.countdown
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    @State var canShowCountDown: Bool
+    @Binding var save: Bool
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -22,27 +25,30 @@ struct ChooseGroupView: View {
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .edgesIgnoringSafeArea(.all).padding(.top, 20)
             VStack(spacing: 25) {
-                Button(action: {
-                    viewModel.addMediaToGroup(for: countdown.id)
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    ZStack {
-                        LinearGradient(gradient: Gradient(colors: countdown.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .cornerRadius(18)
-                            .opacity(0.6)
-                            .frame(width: UIScreen.main.bounds.width - 60, height: 100)
-                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
-                        VStack(spacing: 10) {
-                            Text(countdown.icon)
-                                .font(.system(size: 45))
-                                .frame(height: 28)
-                                .foregroundColor(.black)
-                            Text(countdown.name)
-                                .font(.custom("Avenir", size: 23))
-                                .fontWeight(.semibold)
-                                .foregroundColor(colorScheme == .light ? .black : .white)
+                if canShowCountDown {
+                    Button(action: {
+                        viewModel.addMediaToGroup(for: countdown.id)
+                        save = true
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        ZStack {
+                            LinearGradient(gradient: Gradient(colors: countdown.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                .cornerRadius(18)
+                                .opacity(0.6)
+                                .frame(width: UIScreen.main.bounds.width - 60, height: 100)
+                                .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                            VStack(spacing: 10) {
+                                Text(countdown.icon)
+                                    .font(.system(size: 45))
+                                    .frame(height: 28)
+                                    .foregroundColor(.black)
+                                Text(countdown.name)
+                                    .font(.custom("Avenir", size: 23))
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
 
-                        }.foregroundColor(.black).offset(y: 5)
+                            }.foregroundColor(.black).offset(y: 5)
+                        }
                     }
                 }
                 
@@ -115,12 +121,3 @@ struct ChooseGroupView: View {
         }
     }
 }
-
-
-struct ChooseGroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChooseGroupView(model: BookmarkModel(id: 0, poster_path: "", title: "", media_type: .movie, release_date: ""))
-            .preferredColorScheme(.dark)
-    }
-}
-

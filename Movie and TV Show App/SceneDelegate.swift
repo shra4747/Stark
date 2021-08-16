@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             return
         }
-        print(OnboardingFinished)
+
         if OnboardingFinished {
             if let windowScene = scene as? UIWindowScene {
                 let window = UIWindow(windowScene: windowScene)

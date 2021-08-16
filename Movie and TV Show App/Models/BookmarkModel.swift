@@ -8,12 +8,18 @@
 import Foundation
 import SwiftUI
 
-struct BookmarkModel: Codable, Hashable {
+struct BookmarkModel: Codable, Hashable, Comparable {
+    
+    
     let id: Int
     let poster_path: String
     let title: String
     let media_type: SearchModel.MediaType
     let release_date: String
+    
+    static func < (lhs: BookmarkModel, rhs: BookmarkModel) -> Bool {
+        CountdownDate().returnDaysUntil(dateString: lhs.release_date) < CountdownDate().returnDaysUntil(dateString: rhs.release_date)
+    }
 }
 
 struct BookmarkGroupModel: Codable, Hashable {

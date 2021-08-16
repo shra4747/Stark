@@ -174,7 +174,7 @@ struct TVShowDetailView: View {
                             .padding(.horizontal)
                             
                             if viewModel.name != "" {
-                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "").offset(y: -50)
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "", canShowCountdown: false).offset(y: -50)
                             }
                             
                         }

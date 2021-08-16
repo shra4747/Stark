@@ -137,7 +137,7 @@ struct MovieDetailView: View {
                             .padding(.horizontal)
                             
                             if viewModel.title != "" {
-                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.title, media_Type: .movie, release_date: viewModel.release_date).offset(y: -50)
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.title, media_Type: .movie, release_date: viewModel.release_date, canShowCountdown: true).offset(y: -50)
                             }
                         }
                     }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
@@ -184,7 +184,9 @@ struct MovieDetailView: View {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
                     viewModel.poster_path = givingMovie.poster_path ?? ""
-                    viewModel.release_date = givingMovie.release_date
+                    CountdownDate().findReleaseDate(movieID: givingMovie.id) { dateString in
+                        viewModel.release_date = dateString
+                    }
                     viewModel.getTrailer()
                     viewModel.getSimilarMovies(type: .recommendation)
                     viewModel.getCast()

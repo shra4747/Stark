@@ -45,27 +45,51 @@ struct BookmarkedDetailView: View {
                     }
                     
                     ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(alignment: .top, spacing: 20) {
-                            ForEach(viewModel.bookmarkedContent, id: \.self) { mediaContent in
+                        LazyHStack(alignment: .top, spacing: 30) {
+                            ForEach(viewModel.bookmarkedContent.sorted(), id: \.self) { mediaContent in
                                 if mediaContent.media_type == .movie {
-                                    NavigationLink(
-                                        destination: MovieDetailView(id: mediaContent.id, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).navigationBarHidden(true),
-                                        label: {
-                                            VStack(alignment: .leading) {
-                                                Image(uiImage: mediaContent.poster_path.loadImage())
-                                                    .scaleEffect(0.65)
-                                                    .frame(width: 296, height: 440)
-                                                    .cornerRadius(18)
-                                                    .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
-                                                Text(mediaContent.title)
-                                                    .font(.custom("Avenir", size: 22))
-                                                    .fontWeight(.bold)
-                                                    .foregroundColor(.black)
-                                                    .frame(width: 290, alignment: .leading)
-                                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                    ZStack(alignment: .topTrailing) {
+                                        NavigationLink(
+                                            destination: MovieDetailView(id: mediaContent.id, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).navigationBarHidden(true),
+                                            label: {
+                                                VStack(alignment: .leading) {
+                                                    Image(uiImage: mediaContent.poster_path.loadImage())
+                                                        .scaleEffect(0.65)
+                                                        .frame(width: 250, height: 380)
+                                                        .cornerRadius(18)
+                                                        .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
+                                                    Text(mediaContent.title)
+                                                        .font(.custom("Avenir", size: 20))
+                                                        .fontWeight(.bold)
+                                                        .foregroundColor(.black)
+                                                        .frame(width: 245, alignment: .leading)
+                                                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                                    Text("\(CountdownDate().returnDaysUntil(dateString: mediaContent.release_date)) days")
+                                                        .font(.custom("Avenir", size: 25))
+                                                        .foregroundColor(colorScheme == .light ? Color(.darkGray) : Color(.lightGray))
+
+                                                }
+                                            })
+                                        Button(action: {
+                                            if let index = viewModel.bookmarkedContent.firstIndex(of: mediaContent) {
+                                                viewModel.bookmarkedContent.remove(at: index)
+                                                
+                                                let encoded = try? JSONEncoder().encode(viewModel.bookmarkedContent)
+                                                UserDefaults.standard.set(encoded, forKey: "saved-\(group.id)")
+                                                UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(encoded, forKey: "countdownsData")
 
                                             }
-                                        })
+                                        }) {
+                                            ZStack {
+                                                Circle()
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(colorScheme == .light ? .white : .black)
+                                                    .shadow(radius: 10)
+                                                Image(systemName: "trash")
+                                                    .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
+                                            }
+                                        }.offset(x: 20, y: 365)
+                                    }
                                 }
                                 else {
                                     NavigationLink(
@@ -74,7 +98,7 @@ struct BookmarkedDetailView: View {
                                             VStack(alignment: .leading) {
                                                 Image(uiImage: mediaContent.poster_path.loadImage())
                                                     .scaleEffect(0.65)
-                                                    .frame(width: 296, height: 440)
+                                                    .frame(width: 250, height: 400)
                                                     .cornerRadius(18)
                                                     .shadow(color: Color(hex: "000000"), radius: 5, x: 0, y: 3)
                                                 Text(mediaContent.title)
@@ -138,6 +162,6 @@ struct BookmarkedDetailView: View {
 
 struct BookmarkedDetailView_PreviewProvider: PreviewProvider {
     static var previews: some View {
-        BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater).preferredColorScheme(.dark)
+        BookmarkedDetailView(group: BookmarkModelDefaultGroups.countdown)
     }
 }

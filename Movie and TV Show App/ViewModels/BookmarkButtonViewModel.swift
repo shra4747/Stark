@@ -21,9 +21,11 @@ class BookmarkButtonViewModel: ObservableObject {
     func changeStateOnAppear() {
         checkGroupForId(groupID: "001")
         checkGroupForId(groupID: "002")
-        
+
         guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
-            self.hasBeenSaved = false
+            if !hasBeenSaved {
+                self.hasBeenSaved = false
+            }
             return
         }
 
@@ -53,6 +55,7 @@ class BookmarkButtonViewModel: ObservableObject {
             for media in content {
                 if media.id == id {
                     self.hasBeenSaved = true
+                    
                 }
             }
         }
