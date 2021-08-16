@@ -10,7 +10,7 @@ import SwiftUI
 struct ChooseTVShowsView: View {
     @State var genres: [Int]
     @State var shows: [SearchModel.TVShow] = []
-    @State var selectedShows: [SearchModel.TVShow] = []
+    @State var selectedShows: [Int] = []
     @State var continueOnboarding = false
     var body: some View {
         NavigationView {
@@ -26,13 +26,15 @@ struct ChooseTVShowsView: View {
                             HStack(spacing: 10) {
                                 ForEach(chunk, id: \.self) { show in
                                     Button(action: {
-                                        if selectedShows.contains(show) {
-                                            if let index = selectedShows.firstIndex(of: show) {
+                                       
+                                        
+                                        if selectedShows.contains(show.id) {
+                                            if let index = selectedShows.firstIndex(of: show.id) {
                                                 selectedShows.remove(at: index)
                                             }
                                         }
                                         else {
-                                            selectedShows.append(show)
+                                            selectedShows.append(show.id)
                                         }
                                     }) {
                                         VStack {
@@ -48,14 +50,14 @@ struct ChooseTVShowsView: View {
                                         }.overlay(
                                             ZStack {
                                                 VStack {
-                                                    RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(selectedShows.contains(show) ? 0.6 : 0)
+                                                    RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(selectedShows.contains(show.id) ? 0.6 : 0)
                                                     Spacer()
                                                 }
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(.white)
                                                     .scaleEffect(2)
                                                     .offset(y: -15)
-                                                    .opacity(selectedShows.contains(show) ? 1 : 0)
+                                                    .opacity(selectedShows.contains(show.id) ? 1 : 0)
                                             }
                                         )
                                     }
@@ -67,6 +69,9 @@ struct ChooseTVShowsView: View {
                 
                 Button(action: {
                     if selectedShows.count > 1 {
+                        let encoded = try? JSONEncoder().encode(selectedShows)
+                        UserDefaults.standard.set(encoded, forKey: "__ONBOARDING_SHOWS__")
+                        UserDefaults.standard.set(true, forKey: "__FINISH__")
                         continueOnboarding.toggle()
                     }
                 }) {

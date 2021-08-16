@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @State var name = "Shravan"
+    @State var name = ""
     @State var continueOnboarding = false
     var body: some View {
         NavigationView {

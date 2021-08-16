@@ -21,14 +21,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 //        let contentView = MovieDetailView(id: 566525, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie)
 //        let contentView = BookmarkedDetailView(group: BookmarkModelDefaultGroups.watchLater)
-        let contentView = ChooseTVShowGenresView()
-        // Use a UIHostingController as window root view controller.
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
-            self.window = window
-            window.makeKeyAndVisible()
+        guard let OnboardingFinished = UserDefaults.standard.value(forKey: "__FINISH__") as? Bool else {
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: WelcomeView())
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+
+            return
         }
+        print(OnboardingFinished)
+        if OnboardingFinished {
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: TabView())
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
+        else {
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: WelcomeView())
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
+        // Use a UIHostingController as window root view controller.
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

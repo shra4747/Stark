@@ -64,7 +64,7 @@ struct ChooseMovieGenresView: View {
                             .frame(width: UIScreen.main.bounds.width - 80, height: 50)
                             .foregroundColor(.black)
                             .shadow(radius: 4)
-                        Text("Chose Movies ")
+                        Text("Choose Movies")
                             .font(.custom("Avenir", size: 22)).bold()
                             .foregroundColor(.white)
                     }

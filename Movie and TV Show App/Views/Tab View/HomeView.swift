@@ -11,8 +11,10 @@ struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
     @Environment(\.colorScheme) var colorScheme
-    @State var image = UIImage()
     @State var showingSettings = false
+    
+    var name = UserDefaults.standard.value(forKey: "__NAME__")
+    var avatar = getImage(key: "__AVATAR__")
     
     var body: some View {
         NavigationView {
@@ -24,7 +26,7 @@ struct HomeView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Hi, Shravan")
+                        Text("Hi, \(name as! String)")
                             .font(.custom("Avenir", size: 32))
                             .fontWeight(.bold)
                         Spacer()
@@ -32,17 +34,9 @@ struct HomeView: View {
                             self.showingSettings.toggle()
                         }) {
                             
-                            Image(uiImage: image).resizable()
+                            Image(uiImage: avatar!).resizable()
                                 .clipShape(Circle()).frame(width: 54, height: 54, alignment: .center)
                                 .shadow(radius: 5)
-                        }
-                        .onAppear {
-                            guard let data = UserDefaults.standard.data(forKey: "profile_picture") else {
-                                return
-                            }
-                            if let savedImage = UIImage(data: data) {
-                                self.image = savedImage
-                            }
                         }
                         .sheet(isPresented: $showingSettings) {
                             SettingsView()

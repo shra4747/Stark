@@ -10,35 +10,30 @@ import SwiftUI
 struct SettingsView: View {
     
     @State var pickerBool = false
-    @State var images: [UIImage] = []
-    @State var image = UIImage()
+    @State var avatar = getImage(key: "__AVATAR__")
+
     var body: some View {
         VStack {
             Button(action: {
                 pickerBool.toggle()
             }) {
-                Image(uiImage: image).resizable()
+                Image(uiImage: avatar!).resizable()
                     .clipShape(Circle()).frame(width: 80, height: 80, alignment: .center).shadow(radius: 5)
             }.sheet(isPresented: $pickerBool) {
                 ImagePickerView(sourceType: .photoLibrary) { image in
-                    self.image = image
-                    if let encoded = try? JSONEncoder().encode(self.image.pngData()) {
-                        UserDefaults.standard.set(encoded, forKey: "profile_picture")
-                    }
+                    self.avatar = image
+                    setImage(image: image, key: "__AVATAR__")
                 }
-            }
-            .onAppear {
-                guard let data = UserDefaults.standard.data(forKey: "profile_picture") else {
-                    return
-                }
-                if let savedImage = UIImage(data: data) {
-                    self.image = savedImage
-                }
-            }
+            }.padding()
+
             Form {
                 Section {
                     Button(action: {
-                        
+                        UserDefaults.standard.set(nil, forKey: "__FINISH__")
+                        let stars = ["Mfive", "Mfour", "Mthree", "Mdislike", "Tfive", "Tfour", "Tthree", "Tdislike"]
+                        for star in stars {
+                            UserDefaults.standard.set(nil, forKey: "\(star)-star")
+                        }
                     }) {
                         Text("Delete all data to recommend content")
                     }

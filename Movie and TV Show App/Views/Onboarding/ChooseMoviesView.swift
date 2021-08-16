@@ -11,7 +11,7 @@ struct ChooseMoviesView: View {
     
     @State var genres: [Int]
     @State var movies: [SearchModel.Movie] = []
-    @State var selectedMovies: [SearchModel.Movie] = []
+    @State var selectedMovies: [Int] = []
     @State var continueOnboarding = false
     
     var body: some View {
@@ -28,13 +28,13 @@ struct ChooseMoviesView: View {
                             HStack(spacing: 10) {
                                 ForEach(chunk, id: \.self) { movie in
                                     Button(action: {
-                                        if selectedMovies.contains(movie) {
-                                            if let index = selectedMovies.firstIndex(of: movie) {
+                                        if selectedMovies.contains(movie.id) {
+                                            if let index = selectedMovies.firstIndex(of: movie.id) {
                                                 selectedMovies.remove(at: index)
                                             }
                                         }
                                         else {
-                                            selectedMovies.append(movie)
+                                            selectedMovies.append(movie.id)
                                         }
                                     }) {
                                         VStack {
@@ -50,14 +50,14 @@ struct ChooseMoviesView: View {
                                         }.overlay(
                                             ZStack {
                                                 VStack {
-                                                    RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(selectedMovies.contains(movie) ? 0.6 : 0)
+                                                    RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(selectedMovies.contains(movie.id) ? 0.6 : 0)
                                                     Spacer()
                                                 }
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(.white)
                                                     .scaleEffect(2)
                                                     .offset(y: -15)
-                                                    .opacity(selectedMovies.contains(movie) ? 1 : 0)
+                                                    .opacity(selectedMovies.contains(movie.id) ? 1 : 0)
                                             }
                                         )
                                     }
@@ -69,6 +69,9 @@ struct ChooseMoviesView: View {
                 
                 Button(action: {
                     if selectedMovies.count > 1 {
+                        let encoded = try? JSONEncoder().encode(selectedMovies)
+                        UserDefaults.standard.set(encoded, forKey: "__ONBOARDING_MOVIES__")
+                        
                         continueOnboarding.toggle()
                     }
                 }) {

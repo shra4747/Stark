@@ -95,8 +95,20 @@ class HomeViewModel: ObservableObject {
     func getRecommendedMovies() {
         
 //        DispatchQueue.main.async {
-            let recMovies = RecommendationEngine().getMovieRecommendations().uniqued().shuffled()
+            var recMovies = RecommendationEngine().getMovieRecommendations().uniqued().shuffled()
+        
+        if recMovies.count < 2 {
+            guard let data = UserDefaults.standard.value(forKey: "__ONBOARDING_MOVIES__") as? Data else {
+                return
+            }
+            let onboardingMovies = try? JSONDecoder().decode([Int].self, from: data)
+            for movie in onboardingMovies! {
+                print(movie)
+                recMovies.append(WRatedModel(id: movie, stars_rated: 0))
+            }
+        }
             
+        
             for rmovie in recMovies {
                 var url = SearchModel.APILinks.Movie.MovieRecommendations
                 url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
@@ -132,8 +144,19 @@ class HomeViewModel: ObservableObject {
     
     func getRecommendedShows() {
 //        DispatchQueue.main.async {
-            let showRecs = RecommendationEngine().getShowRecommendations().uniqued().shuffled()
+            var showRecs = RecommendationEngine().getShowRecommendations().uniqued().shuffled()
             
+        if showRecs.count < 2 {
+            guard let data = UserDefaults.standard.value(forKey: "__ONBOARDING_SHOWS__") as? Data else {
+                return
+            }
+            let onboardingShows = try? JSONDecoder().decode([Int].self, from: data)
+            for show in onboardingShows! {
+                print(show)
+                showRecs.append(WRatedModel(id: show, stars_rated: 0))
+            }
+        }
+        
             for rshow in showRecs {
                 var url = SearchModel.APILinks.TVShow.TVShowRecommendations
                 url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
