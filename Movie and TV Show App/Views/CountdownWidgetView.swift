@@ -11,6 +11,7 @@ struct CountdownWidgetView: View {
     
     @State var widgetModel: WidgetModel
     @State var widgetCase: WidgetCase
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         switch widgetCase {
@@ -19,86 +20,78 @@ struct CountdownWidgetView: View {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 169, height: 169, alignment: .center)
                 ZStack(alignment: .topLeading) {
-                    Image(uiImage: widgetModel.poster_path.loadImage())
+                    Image(uiImage: widgetModel.poster_path.loadImage(type: .cast, colorScheme: (colorScheme == .light ? .light : .dark)))
                         .resizable()
                         .scaledToFill()
                         .frame(width: 169, height: 169, alignment: .center)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        .opacity(0.8)
+                        .opacity(0.95)
                     
                     VStack(alignment: .leading) {
                         Text(widgetModel.title)
                             .font(.custom("Avenir", size: 22))
                             .bold()
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
                         Spacer()
                         Text("\(CountdownDate().returnDaysUntil(dateString: widgetModel.release_date)) Days")
                             .font(.custom("Avenir", size: 25))
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
                     }.padding()
                 }.frame(width: 169, height: 169, alignment: .center)
-            }
+            }.widgetURL(URL(string: "countdownwidget://\(widgetModel.id)"))
         case .medium:
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 360, height: 169, alignment: .center)
                 ZStack(alignment: .topLeading) {
-                    Image(uiImage: widgetModel.poster_path.loadImage())
+                    Image(uiImage: widgetModel.poster_path.loadImage(type: .cast, colorScheme: (colorScheme == .light ? .light : .dark)))
                         .resizable()
                         .scaledToFill()
                         .frame(width: 360, height: 169, alignment: .center)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        .opacity(0.8)
+                        .opacity(0.95)
                     
                     VStack(alignment: .leading) {
                         Text(widgetModel.title)
-                            .font(.custom("Avenir", size: 22))
+                            .font(.custom("Avenir", size: 24))
                             .bold()
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
                         Spacer()
                         Text("\(CountdownDate().returnDaysUntil(dateString: widgetModel.release_date)) Days")
                             .font(.custom("Avenir", size: 25))
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
-                    }.padding()
+                    }.padding().padding(5)
+
                 }.frame(width: 360, height: 169, alignment: .center)
-            }
+            }.widgetURL(URL(string: "countdownwidget://\(widgetModel.id)"))
         case .large:
             ZStack {
                 RoundedRectangle(cornerRadius: 25)
                     .frame(width: 360, height: 376, alignment: .center)
                 ZStack(alignment: .topLeading) {
-                    Image(uiImage: widgetModel.poster_path.loadImage())
+                    Image(uiImage: widgetModel.poster_path.loadImage(type: .cast, colorScheme: (colorScheme == .light ? .light : .dark)))
                         .resizable()
                         .scaledToFill()
                         .frame(width: 360, height: 376, alignment: .center)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        .opacity(0.8)
+                        .opacity(0.95)
                     
                     VStack(alignment: .leading) {
                         Text(widgetModel.title)
-                            .font(.custom("Avenir", size: 28))
+                            .font(.custom("Avenir", size: 30))
                             .bold()
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
                         Spacer()
                         Text("\(CountdownDate().returnDaysUntil(dateString: widgetModel.release_date)) Days")
                             .font(.custom("Avenir", size: 32))
                             .foregroundColor(.white)
-                            .shadow(color: .white, radius: 10)
                     }.padding(25)
                 }.frame(width: 360, height: 376, alignment: .center)
-            }
+            }.widgetURL(URL(string: "countdownwidget://\(widgetModel.id)"))
         }
     }
 }
 
 struct CountdownWidgetView_Previews: PreviewProvider {
     static var previews: some View {
-        CountdownWidgetView(widgetModel: WidgetModel(title: "Eternals", release_date: "2021-11-05", poster_path: "/6AdXwFTRTAzggD2QUTt5B7JFGKL.jpg"), widgetCase: .small)
+        CountdownWidgetView(widgetModel: WidgetModel(title: "Shang-Chi and the Legend of the Ten Rings", release_date: "2021-09-03", poster_path: "/9f2Q0U3IOsLgrI2HkvldwSABZy5.jpg"), widgetCase: .large)
     }
 }
 

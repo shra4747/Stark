@@ -12,7 +12,11 @@ struct SearchView: View {
     @StateObject var viewModel = SearchViewModel()
     @Environment(\.colorScheme) var colorScheme
     @State private var scrollViewID = UUID()
-
+    @State private var textFieldId: String = UUID().uuidString
+    
+    @State var imageText = "tv"
+    @State var text = "Search for TV Shows \nor Movies!"
+    
     var body: some View {
         NavigationView {
             GeometryReader { _ in
@@ -30,6 +34,7 @@ struct SearchView: View {
                                         .frame(width: UIScreen.main.bounds.width - 70, height: 50)
                                         .foregroundColor(colorScheme == .light ? .white : .black)
                                     TextField("", text: $viewModel.query)
+                                        .id(textFieldId)
                                         .introspectTextField { uiTextField in
                                             uiTextField.attributedPlaceholder = NSAttributedString(string: "Search for anything...",
                                                                                                    attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
@@ -44,11 +49,19 @@ struct SearchView: View {
                                         
                                 }
                                 Button(action: {
+                                    if viewModel.query.count < 1 {
+                                        return
+                                    }
+                                    textFieldId = UUID().uuidString
+                                    viewModel.isLoading = true
+                                    text = "No Results!"
+                                    imageText = "xmark.octagon"
+                                    
                                     DispatchQueue.main.async {
                                         scrollViewID = UUID()
                                         viewModel.search()
                                     }
-//                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    
                                 }) {
                                     Image(systemName: "magnifyingglass")
                                         .scaleEffect(1.65)
@@ -56,7 +69,10 @@ struct SearchView: View {
                                         
                                 }
                             }.padding()
-                            Picker("", selection: $viewModel.selectedType) {
+                            Picker("", selection: $viewModel.selectedType.onTFChanged({ _ in
+                                imageText = "tv"
+                                text = "Search for TV Shows \nor Movies!"
+                            })) {
                                 ForEach(SearchModel.MediaType.allCases) { mediaType in
                                     if mediaType == .show {
                                         Text("TV \(mediaType.displayName)s")
@@ -71,103 +87,126 @@ struct SearchView: View {
                                 }
                             }.pickerStyle(SegmentedPickerStyle()).padding()
                         }.navigationBarHidden(true)
-                        
-                        if viewModel.selectedType == .movie {
-                            if viewModel.movies.count != 0 {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(alignment: .top, spacing: 30) {
-                                        ForEach(viewModel.movies, id: \.self) { movie in
-                                            NavigationLink(
-                                                destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
-                                                label: {
-                                                    VStack(alignment: .leading) {
-                                                        Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                            .scaleEffect(0.65)
-                                                            .frame(width: 296, height: 440)
-                                                            .cornerRadius(18)
-                                                            .shadow(color: Color(hex: colorScheme == .light ? "000000" : "6E6E6E"), radius: 5, x: 0, y: 3)
-                                                        HStack {
-                                                            Text(movie.title)
-                                                                .font(.custom("Avenir", size: 22))
-                                                                .fontWeight(.bold)
-                                                                .foregroundColor(colorScheme == .light ? Color(.black) : .init(hex: "F2F2F2"))
-                                                                .frame(width: 290, alignment: .leading)
-                                                            Spacer()
-                                                        }
-                                                        
-                                                        HStack {
-                                                            Text(viewModel.returnGenresText(for: movie.genres))
-                                                                .font(.custom("Avenir", size: 16))
-                                                                .fontWeight(.medium)
-                                                                .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
-                                                                .frame(width: 290, alignment: .leading)
-                                                            Spacer()
-                                                        }
-                                                    }
-                                                })
-                                        }
-                                    }.padding()
-                                }.id(self.scrollViewID)
+                        ZStack {
+                            if viewModel.isLoading {
+                                ZStack {
+                                    if colorScheme == .light {
+                                        Color.init(hex: "EBEBEB")
+                                    }
+                                    else {
+                                        Color.init(hex: "1A1A1A")
+                                    }
+                                    ActivityIndicator(isAnimating: $viewModel.isLoading)
+                                }
+                            }
+                            if viewModel.selectedType == .movie {
+                                if viewModel.movies.count != 0 {
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(alignment: .top, spacing: 22) {
+                                            ForEach(viewModel.movies    , id: \.self) { movie in
+                                                if movie.poster_path != "" || movie.poster_path != nil {
+                                                    NavigationLink(
+                                                        destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
+                                                        label: {
+                                                            VStack(alignment: .leading) {
+                                                                Image(uiImage: ((movie.poster_path?.loadImage(type: .search, colorScheme: (colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SearchLight") : UIImage(named: "SearchDark")))!))
+                                                                    .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.5))
+                                                                    .frame(width: 220, height: 350)
+                                                                    .cornerRadius(18)
+                                                                    .shadow(color: Color(hex: colorScheme == .light ? "000000" : "6E6E6E"), radius: 5, x: 0, y: 3)
+                                                                HStack {
+                                                                    Text(movie.title)
+                                                                        .font(.custom("Avenir", size: 22))
+                                                                        .fontWeight(.bold)
+                                                                        .foregroundColor(colorScheme == .light ? Color(.black) : .init(hex: "F2F2F2"))
+                                                                        .frame(width:  220, alignment: .leading)
+                                                                        .frame(maxHeight: 30)
+                                                                    Spacer()
+                                                                }
+                                                                
+                                                                HStack {
+                                                                    Text(viewModel.returnGenresText(for: movie.genres))
+                                                                        .font(.custom("Avenir", size: 16))
+                                                                        .fontWeight(.medium)
+                                                                        .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
+                                                                        .frame(width:  220, alignment: .leading)
+                                                                    Spacer()
+                                                                }
+                                                            }
+                                                        })
+                                                }
+                                            }
+                                        }.padding()
+                                    }.id(self.scrollViewID).offset(y: -20)
 
+                                }
+                                else {
+                                    if !viewModel.isLoading {
+                                        ZStack {
+                                            VStack {
+                                                Image(systemName: imageText)
+                                                    .resizable()
+                                                    .frame(width: 90, height: imageText != "tv" ? 80 : 70)
+                                                    .foregroundColor(colorScheme == .light ? Color(.darkGray) : Color(.lightGray))
+                                                Text(text).multilineTextAlignment(.center)
+                                                    .font(.custom("Avenir", size: 22))
+                                            }
+                                        }.offset(y: UIScreen.main.bounds.height/2 - 235)
+                                    }
+                                }
                             }
                             else {
-                                VStack {
-                                    Image(systemName: "tv")
-                                        .resizable()
-                                        .frame(width: 90, height: 70)
-                                        .foregroundColor(colorScheme == .light ? Color(.darkGray) : Color(.lightGray))
-                                    Text("Search for TV Shows \nor Movies!").multilineTextAlignment(.center)
-                                        .font(.custom("Avenir", size: 22))
-                                }.offset(y: UIScreen.main.bounds.height/2 - 235)
-                            }
-                        }
-                        else {
-                            if viewModel.shows.count != 0 {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(alignment: .top, spacing: 30) {
-                                        ForEach(viewModel.shows, id: \.self) { show in
-                                            NavigationLink(
-                                                destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
-                                                label: {
-                                                    VStack(alignment: .leading) {
-                                                        Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                            .scaleEffect(0.65)
-                                                            .frame(width: 296, height: 440)
-                                                            .cornerRadius(18)
-                                                            .shadow(color: Color(hex: "000000"), radius: 4, x: 0, y: 3)
-                                                        HStack {
-                                                            Text(show.name)
-                                                                .font(.custom("Avenir", size: 23))
-                                                                .fontWeight(.bold)
-                                                                .foregroundColor(colorScheme == .light ? .black : .init(hex: "F2F2F2"))
-                                                                .frame(width: 290, alignment: .leading)
-                                                            Spacer()
-                                                        }
-                                                        
-                                                        HStack {
-                                                            Text(viewModel.returnGenresText(for: show.genres ?? []))
-                                                                .font(.custom("Avenir", size: 15))
-                                                                .fontWeight(.medium)
-                                                                .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
-                                                                .frame(width: 290, alignment: .leading)
-                                                            Spacer()
-                                                        }
-                                                    }
-                                                })
-                                        }
-                                    }.padding()
-                                }.id(self.scrollViewID)
+                                if viewModel.shows.count != 0 {
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(alignment: .top, spacing: 22) {
+                                            ForEach(viewModel.shows, id: \.self) { show in
+                                                if show.poster_path != "" || show.poster_path != nil {
+                                                    NavigationLink(
+                                                        destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
+                                                        label: {
+                                                            VStack(alignment: .leading) {
+                                                                Image(uiImage: ((show.poster_path?.loadImage(type: .search, colorScheme: (colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SearchLight") : UIImage(named: "SearchDark")))!))
+                                                                    .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.5))
+                                                                    .frame(width: 220, height: 350)
+                                                                    .cornerRadius(18)
+                                                                    .shadow(color: Color(hex: "000000"), radius: 4, x: 0, y: 3)
+                                                                HStack {
+                                                                    Text(show.name)
+                                                                        .font(.custom("Avenir", size: 23))
+                                                                        .fontWeight(.bold)
+                                                                        .foregroundColor(colorScheme == .light ? .black : .init(hex: "F2F2F2"))
+                                                                        .frame(width:  220, alignment: .leading)
+                                                                    Spacer()
+                                                                }
+                                                                
+                                                                HStack {
+                                                                    Text(viewModel.returnGenresText(for: show.genres ?? []))
+                                                                        .font(.custom("Avenir", size: 15))
+                                                                        .fontWeight(.medium)
+                                                                        .foregroundColor(Color(hex: colorScheme == .light ? "777777" : "D0D0D0"))
+                                                                        .frame(width:  220, alignment: .leading)
+                                                                    Spacer()
+                                                                }
+                                                            }
+                                                        })
+                                                }
+                                            }
+                                        }.padding()
+                                    }.id(self.scrollViewID).offset(y: -20)
 
-                            }
-                            else {
-                                VStack {
-                                    Image(systemName: "tv")
-                                        .resizable()
-                                        .frame(width: 90, height: 70)
-                                        .foregroundColor(Color(.darkGray))
-                                    Text("Search for TV Shows \nor Movies!").multilineTextAlignment(.center)
-                                        .font(.custom("Avenir", size: 22))
-                                }.offset(y: UIScreen.main.bounds.height/2 - 235)
+                                }
+                                else {
+                                    if !viewModel.isLoading {
+                                        VStack {
+                                            Image(systemName: imageText)
+                                                .resizable()
+                                                .frame(width: 90, height: imageText != "tv" ? 80 : 70)
+                                                .foregroundColor(colorScheme == .light ? Color(.darkGray) : Color(.lightGray))
+                                            Text(text).multilineTextAlignment(.center)
+                                                .font(.custom("Avenir", size: 22))
+                                        }.offset(y: UIScreen.main.bounds.height/2 - 235)
+                                    }
+                                }
                             }
                         }
                         Spacer()
@@ -186,3 +225,13 @@ struct SearchView_Previews: PreviewProvider {
     }
 }
 
+extension Binding {
+    func onTFChanged(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        return Binding(
+            get: { self.wrappedValue },
+            set: { selection in
+                self.wrappedValue = selection
+                handler(selection)
+        })
+    }
+}

@@ -11,19 +11,21 @@ struct TabView: View {
     @Environment(\.colorScheme) var colorScheme
     @State var tabType: TabType = .home
     @State var isShowingTabView = true
+    @State var didResetEverything = false
     var body: some View {
         
         ZStack {
+            NavigationLink("", destination: WelcomeView().navigationBarHidden(true), isActive: $didResetEverything)
             switch tabType {
             case .home :
-                HomeView()
+                HomeView(didResetEverything: $didResetEverything)
             case .search:
                 SearchView()
             case .saved:
                 BookmarkedView()
             }
             
-            if isShowingTabView {
+            if isShowingTabView && didResetEverything == false {
                 VStack {
                     Spacer()
                     ZStack {
@@ -76,6 +78,8 @@ struct TabView: View {
 struct TempTabView_Previews: PreviewProvider {
     static var previews: some View {
         TabView()
+            .previewLayout(.device)
+            .previewDevice("iPhone SE (2nd generation)")
             .preferredColorScheme(.dark)
     }
 }

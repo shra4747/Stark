@@ -29,6 +29,7 @@ struct ChooseAvatarView: View {
                     Image(uiImage: avatar!)
                         .resizable()
                         .scaledToFill()
+                        .scaleEffect(avatar == UIImage(named: "ironman") ? 500 : 1)
                         .frame(width: 200, height: 200, alignment: .center)
                         .cornerRadius(500).shadow(radius: 10).padding(.bottom, 30)
                     

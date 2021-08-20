@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct TVShowDetailView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -17,13 +18,14 @@ struct TVShowDetailView: View {
     
     @State var doneLoading = false
     @Environment(\.colorScheme) var colorScheme
-    
+    @State var showSavedToast = false
+    @State var showRatedToast = false
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     Image(uiImage: viewModel.backdropImage)
-                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+                        .frame(width: UIScreen.main.bounds.width)
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
@@ -35,7 +37,7 @@ struct TVShowDetailView: View {
                         // MARK: Backing Rounded Rectangle
                         ZStack(alignment: .top) {
                             RoundedRectangle(cornerRadius: 34)
-                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
+                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.4)
                                 .edgesIgnoringSafeArea(.bottom)
                                 .foregroundColor(colorScheme == .light ? .init(hex: "FFFFFF") : .init(hex: "1A1A1A"))
                                 .shadow(radius: 4, x: 0, y: -4)
@@ -88,21 +90,23 @@ struct TVShowDetailView: View {
                                         }
                                     }
                                     
-                                    Text("Trailer")
-                                        .font(.custom("Avenir", size: 22))
-                                        .fontWeight(.bold)
-                                        .padding(.horizontal)
-                                        .padding(.top)
-                                        .padding(.leading)
+                                    if viewModel.trailers.count > 0 {
+                                        Text("Trailers / Videos")
+                                            .font(.custom("Avenir", size: 22))
+                                            .fontWeight(.bold)
+                                            .padding(.horizontal)
+                                            .padding(.top)
+                                            .padding(.leading)
+                                    }
                                     
                                     // MARK: Trailer View
-                                    TrailerView(trailerYTLink: viewModel.trailerLink)
-                                        .frame(width: 330, height: 190)
-                                        .cornerRadius(18)
-                                        .padding()
-                                        .padding(.leading)
-                                        .shadow(radius: 10)
-                                        .padding(.bottom, 20)
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(spacing: -20) {
+                                            ForEach(viewModel.trailers.reversed(), id: \.self) { trailer in
+                                                TrailerButtonView(trailer: trailer)
+                                            }
+                                        }
+                                    }
                                 
                                     
                                     if viewModel.episodes.count > 0 {
@@ -141,7 +145,7 @@ struct TVShowDetailView: View {
                                             
                                             
                                             if viewModel.similarShows.count > 0 {
-                                                SimilarTVShowsView(similarShows: viewModel.similarShows, shuffled: true)                                                .frame(height: 400)
+                                                ShowSimilarView(similarMovies: viewModel.similarShows, shuffled: true)                                                .frame(height: 400)
 
                                             }
                                             
@@ -174,11 +178,11 @@ struct TVShowDetailView: View {
                             .padding(.horizontal)
                             
                             if viewModel.name != "" {
-                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "", canShowCountdown: false).offset(y: -50)
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "", canShowCountdown: false, showSaveToast: $showSavedToast).offset(y: -50)
                             }
                             
                         }
-                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
+                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.4)
                 }
                 
                 Button(action: {
@@ -197,7 +201,7 @@ struct TVShowDetailView: View {
                 }.offset(x: -(UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
 
                 if viewModel.similarShows.count > 0 {
-                    RatingButtonView(id: id, mediaType: .show).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                    RatingButtonView(id: id, mediaType: .show, showRatedToast: $showRatedToast).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 }
                 
                 if viewModel.isLoading {
@@ -223,17 +227,16 @@ struct TVShowDetailView: View {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
                     viewModel.poster_path = givingShow.poster_path ?? ""
-                    viewModel.getTrailer()
-                    viewModel.getSimilarShows(type: .recommendation)
+                    viewModel.getTrailers()
                     viewModel.getCast()
                     viewModel.getWatchProviders()
                     viewModel.getEpisodes(season: 1)
-                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
+                    viewModel.backdropImage = givingShow.backdrop_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? UIImage()
                     viewModel.name = givingShow.name
                     viewModel.genres = viewModel.returnGenresText(for: givingShow.genres ?? [])
                     viewModel.number_of_seasons = "\(givingShow.number_of_seasons)"
                     viewModel.overview = givingShow.overview
-                    
+                    viewModel.getSimilarShows(type: .recommendation)
                     doneLoading = true
                     
                     DispatchQueue.main.asyncAfter(deadline: .now()+1) {
@@ -262,15 +265,15 @@ struct TVShowDetailView_Previews: PreviewProvider {
 struct EpisodesView: View {
     
     @State var episodes: [SearchModel.TVShow.Season.Episode]
-    
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(alignment: .top, spacing: 15) {
                 ForEach(episodes, id: \.self) { episode in
                     VStack(alignment: .leading) {
                         VStack {
-                            Image(uiImage: episode.still_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                .scaleEffect(0.6)
+                            Image(uiImage: episode.still_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "EpisodesLight") : UIImage(named: "EpisodesDark"))!)
+                                .scaleEffect(((episode.still_path ?? "") == "" ? 1 : 0.6))
                                 .frame(width: 220, height: 130)
                                 .cornerRadius(18)
                                 .shadow(radius: 5)
@@ -310,12 +313,12 @@ struct SimilarTVShowsView: View {
             LazyHStack(spacing: 35) {
                 ForEach(shuffled ? similarShows.uniqued().shuffled() : similarShows.uniqued(), id: \.self) { show in
                     NavigationLink(
-                        destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
+                        destination: TVShowDetailView(id: show.id, isGivingData: false, givingShow: show).navigationBarHidden(true),
                         label: {
                             VStack(alignment: .leading) {
                                 VStack {
-                                    Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                        .scaleEffect(0.50)
+                                    Image(uiImage: ((show.poster_path?.loadImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                        .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.5))
                                         .frame(width: 250, height: 370)
                                         .cornerRadius(18)
                                         .shadow(radius: 10)
@@ -326,6 +329,47 @@ struct SimilarTVShowsView: View {
                                     .foregroundColor(colorScheme == .light ? .black : .white)
                             }
                     }).frame(width: 250, alignment: .leading)
+                }
+            }.padding()
+            .padding(.leading)
+            .frame(minHeight: 450).id(UUID())
+
+        }
+        .padding(.bottom)
+        .frame(height: 400)
+    }
+}
+
+struct ShowSimilarView: View {
+    
+    @State var similarMovies : [SimilarShows.SimilarShow]
+    @State var shuffled: Bool
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 35) {
+                ForEach(shuffled ? similarMovies.uniqued().shuffled() : similarMovies.uniqued(), id: \.self) { movie in
+                    NavigationLink(
+                        destination: TVShowDetailView(id: movie.id, isGivingData: false, givingShow: SearchModel.EmptyModel.TVShow).navigationBarHidden(true),
+                        label: {
+                            VStack(alignment: .leading) {
+                                VStack {
+                                    Image(uiImage: ((movie.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                        .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.50))
+                                        .frame(width: 250, height: 370)
+                                        .cornerRadius(18)
+                                        .shadow(radius: 10)
+                                }
+                                Text(movie.name)
+                                    .font(.custom("Avenir", size: 20))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
+
+                                    
+                            }
+                    }).frame(width: 250, alignment: .leading)
+
                 }
             }.padding()
             .padding(.leading)

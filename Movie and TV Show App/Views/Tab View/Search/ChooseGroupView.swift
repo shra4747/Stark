@@ -17,6 +17,7 @@ struct ChooseGroupView: View {
     @Environment(\.colorScheme) var colorScheme
     @State var canShowCountDown: Bool
     @Binding var save: Bool
+    @Binding var changeFill: Bool
     
     var body: some View {
         ZStack {
@@ -28,7 +29,8 @@ struct ChooseGroupView: View {
                 if canShowCountDown {
                     Button(action: {
                         viewModel.addMediaToGroup(for: countdown.id)
-                        save = true
+                        self.save = true
+                        changeFill = true
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         ZStack {
@@ -54,6 +56,8 @@ struct ChooseGroupView: View {
                 
                 Button(action: {
                     viewModel.addMediaToGroup(for: watchLater.id)
+                    self.save = true
+                    changeFill = true
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     ZStack {
@@ -84,7 +88,10 @@ struct ChooseGroupView: View {
                                         ForEach(chunk, id: \.self) { group in
                                             Button(action: {
                                                 viewModel.addMediaToGroup(for: group.id)
+                                                self.save = true
+                                                changeFill = true
                                                 presentationMode.wrappedValue.dismiss()
+                                                
                                             }) {
                                                 ZStack {
                                                     LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)

@@ -14,9 +14,10 @@ class BookmarkButtonViewModel: ObservableObject {
     var poster_path = ""
     var title = ""
     var media_type: SearchModel.MediaType = .movie
-    var release_Date = ""
+    @Published var release_Date = ""
     @Published var hasBeenSaved = false
     @Published var showChooseGroupView = false
+    @Published var groupSavedIn = ""
     
     func changeStateOnAppear() {
         checkGroupForId(groupID: "001")
@@ -54,7 +55,10 @@ class BookmarkButtonViewModel: ObservableObject {
         if let content = content {
             for media in content {
                 if media.id == id {
-                    self.hasBeenSaved = true
+                    DispatchQueue.main.async {
+                        self.groupSavedIn = "\(groupID)"
+                        self.hasBeenSaved = true
+                    }
                     
                 }
             }
@@ -64,10 +68,25 @@ class BookmarkButtonViewModel: ObservableObject {
     func buttonClick() {
         
         if hasBeenSaved == true {
-            return
+//            guard let data = UserDefaults.standard.data(forKey: "saved-\(groupSavedIn)") else {
+//                return
+//            }
+//
+//            let content = try? JSONDecoder().decode([BookmarkModel].self, from: data)
+//            if var newContent = content {
+//                newContent = newContent.filter({ model in
+//                    model != BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_type, release_date: release_Date)
+//                })
+//                let encoded = try? JSONEncoder().encode(newContent)
+//                UserDefaults.standard.set(encoded, forKey: "saved-\(groupSavedIn)")
+//                UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(encoded, forKey: "countdownsData")
+//                self.hasBeenSaved = false
+//            }
+        }
+        else {
+            self.showChooseGroupView.toggle()
         }
         
-        self.showChooseGroupView.toggle()
 
     }
 }

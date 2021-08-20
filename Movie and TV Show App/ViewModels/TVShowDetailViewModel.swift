@@ -19,11 +19,12 @@ class TVShowDetailViewModel: ObservableObject {
     @Published var genres = ""
     @Published var number_of_seasons = ""
     @Published var overview = ""
-    @Published var trailerLink = ""
-    @Published var similarShows: [SearchModel.TVShow] = []
+    @Published var trailers: [SearchModel.Video.VideoInfo] = []
+    @Published var similarShows: [SimilarShows.SimilarShow] = []
     @Published var cast: [SearchModel.Credits.Cast] = []
     @Published var watchProviders: [SearchModel.WatchProviders.Options] = []
     @Published var episodes: [SearchModel.TVShow.Season.Episode] = []
+    @Environment(\.colorScheme) var colorScheme
     
     func getShowInfo() {
         var url = SearchModel.APILinks.TVShow.TVShowInfo
@@ -39,14 +40,14 @@ class TVShowDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
+                    self.backdropImage = response.backdrop_path?.loadImage(type: .episodes, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? UIImage()
                     self.poster_path = response.poster_path ?? ""
                     self.name = response.name
                     self.genres = self.returnGenresText(for: response.genres ?? [])
                     self.number_of_seasons = "\(response.number_of_seasons)"
                     self.overview = response.overview
                     self.getSimilarShows(type: .recommendation)
-                    self.getTrailer()
+                    self.getTrailers()
                     self.getCast()
                     self.getWatchProviders()
                     self.getEpisodes(season: 1)
@@ -91,49 +92,26 @@ class TVShowDetailViewModel: ObservableObject {
                     print(error)
                 }
                 else {
-                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                    DispatchQueue.main.async {
-                        if response.results.count == 0 {
-                            self.getSimilarShows(type: .similar)
-                        }
-                        else {
-                            for show in response.results {
-                                DispatchQueue.main.async {
-                                    listShows(show.id)
-                                }
+                    let response = try! JSONDecoder().decode(SimilarShows.self, from: data!)
+//
+                    if response.results.count == 0 {
+                        self.getSimilarShows(type: .similar)
+                    }
+                    else {
+                        for show in response.results {
+                            DispatchQueue.main.async {
+                                self.similarShows.append(show)
                             }
                         }
-                        
                     }
                 }
             }.resume()
         }
-        
-        func listShows(_ id: Int) {
-            var url = SearchModel.APILinks.TVShow.TVShowInfo
-            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-            url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
-            
-            let request = URLRequest(url: URL(string: url)!)
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
-                    DispatchQueue.main.async {
-                        self.similarShows.append(response)
-                    }
-                }
-            }.resume()
-        }
-        
         getShows()
         
     }
     
-    func getTrailer() {
+    func getTrailers() {
         var url = SearchModel.APILinks.TVShow.TVShowVideos
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
@@ -147,25 +125,11 @@ class TVShowDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Video.self, from: data!)
                 DispatchQueue.main.async {
-                    var key = ""
                     for video in response.results {
-                        if video.type.lowercased() == "trailer" {
-                            if video.site.lowercased() == "youtube" {
-                                key = video.key
-                            }
+                        if video.site.lowercased() == "youtube" {
+                            self.trailers.append(video)
                         }
                     }
-                    
-                    if key == "" {
-                        if response.results.count > 0 {
-                            key = response.results[0].key
-                        }
-                        else {
-                            key = "nil"
-                        }
-                    }
-                    
-                    self.trailerLink = "https://www.youtube.com/embed/\(key)"
                 }
             }
         }.resume()
@@ -201,7 +165,6 @@ class TVShowDetailViewModel: ObservableObject {
         var url = SearchModel.APILinks.TVShow.TVShowCredits
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
-        print(url)
         let request = URLRequest(url: URL(string: url)!)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -209,9 +172,9 @@ class TVShowDetailViewModel: ObservableObject {
                 print(error)
             }
             else {
-                let response = try! JSONDecoder().decode(SearchModel.Credits.self, from: data!)
+                let response = try? JSONDecoder().decode(SearchModel.Credits.self, from: data!)
                 DispatchQueue.main.async {
-                    for castmate in response.cast {
+                    for castmate in response?.cast ?? [] {
                         self.cast.append(castmate)
                     }
                 }
@@ -232,10 +195,10 @@ class TVShowDetailViewModel: ObservableObject {
                 print(error)
             }
             else {
-                let response = try! JSONDecoder().decode(SearchModel.TVShow.Season.self, from: data!)
+                let response = try? JSONDecoder().decode(SearchModel.TVShow.Season.self, from: data!)
                 
                 DispatchQueue.main.async {
-                    for episode in response.episodes {
+                    for episode in response?.episodes ?? [] {
                         self.episodes.append(episode)
                     }
                 }

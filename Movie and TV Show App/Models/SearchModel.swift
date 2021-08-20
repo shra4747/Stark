@@ -153,8 +153,6 @@ extension SearchModel {
     struct EmptyModel {
         static let Movie = SearchModel.Movie(backdrop_path: "", genres: [], id: 0, overview: "", poster_path: "", release_date: "", runtime: 0, status: "", title: "")
         static let TVShow = SearchModel.TVShow(backdrop_path: "", genres: [], id: 0, name: "", number_of_episodes: 0, number_of_seasons: 0, overview: "", poster_path: "", status: "")
-        
-        static let Image = ("https://static.vecteezy.com/system/resources/thumbnails/000/365/820/small/Basic_Elements__2818_29.jpg".loadEmptyImage())
     }
 }
 

@@ -15,41 +15,43 @@ struct ChooseTVShowGenresView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("What Genres of TV Shows do you Like?")
-                    .font(.custom("Avenir", size: 28))
-                    .fontWeight(.heavy)
-                    .multilineTextAlignment(.center).padding()
-                
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 10759, genreName: "Action & Adventure")
-                    GenreView(clickedArr: $clickedArr, genreID: 16, genreName: "Animation")
-                }
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 35, genreName: "Comedy")
+                ScrollView(.vertical, showsIndicators: false) {
+                    Text("What Genres of TV Shows do you Like?")
+                        .font(.custom("Avenir", size: 28))
+                        .fontWeight(.heavy)
+                        .multilineTextAlignment(.center).padding()
+                    
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 10759, genreName: "Action & Adventure")
+                        GenreView(clickedArr: $clickedArr, genreID: 16, genreName: "Animation")
+                    }
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 35, genreName: "Comedy")
 
-                    GenreView(clickedArr: $clickedArr, genreID: 80, genreName: "Crime")
-                    GenreView(clickedArr: $clickedArr, genreID: 99, genreName: "Documentary")
-                }
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 18, genreName: "Drama")
-                    GenreView(clickedArr: $clickedArr, genreID: 10751, genreName: "Family")
-                    GenreView(clickedArr: $clickedArr, genreID: 10762, genreName: "Kids")
-                }
+                        GenreView(clickedArr: $clickedArr, genreID: 80, genreName: "Crime")
+                        GenreView(clickedArr: $clickedArr, genreID: 99, genreName: "Documentary")
+                    }
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 18, genreName: "Drama")
+                        GenreView(clickedArr: $clickedArr, genreID: 10751, genreName: "Family")
+                        GenreView(clickedArr: $clickedArr, genreID: 10762, genreName: "Kids")
+                    }
 
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 9648, genreName: "Kids")
-                    GenreView(clickedArr: $clickedArr, genreID: 10763, genreName: "News")
-                    GenreView(clickedArr: $clickedArr, genreID: 10764, genreName: "Reality")
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 9648, genreName: "Mystery")
+                        GenreView(clickedArr: $clickedArr, genreID: 10763, genreName: "News")
+                        GenreView(clickedArr: $clickedArr, genreID: 10764, genreName: "Reality")
 
-                }
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 10765, genreName: "Sci-Fi & Fantasy")
-                    GenreView(clickedArr: $clickedArr, genreID: 10766, genreName: "Soap")
-                    GenreView(clickedArr: $clickedArr, genreID: 10767, genreName: "Talk")
-                }
-                HStack {
-                    GenreView(clickedArr: $clickedArr, genreID: 10768, genreName: "War & Politics")
-                    GenreView(clickedArr: $clickedArr, genreID: 37, genreName: "Western")
+                    }
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 10765, genreName: "Sci-Fi & Fantasy")
+                        GenreView(clickedArr: $clickedArr, genreID: 10766, genreName: "Soap")
+                        GenreView(clickedArr: $clickedArr, genreID: 10767, genreName: "Talk")
+                    }
+                    HStack {
+                        GenreView(clickedArr: $clickedArr, genreID: 10768, genreName: "War & Politics")
+                        GenreView(clickedArr: $clickedArr, genreID: 37, genreName: "Western")
+                    }
                 }
                 
                 Button(action: {

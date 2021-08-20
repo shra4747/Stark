@@ -19,8 +19,8 @@ struct WelcomeView: View {
                     .fontWeight(.heavy)
                 Image("home_cinema")
                     .resizable()
-                    .scaleEffect(1.3)
-                    .frame(width: 250, height: 250, alignment: .center)
+                    .scaleEffect(1.1)
+                    .frame(width: 150, height: 150, alignment: .center)
                 
                 TextField("What's Your Name?", text: $name)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -54,3 +54,4 @@ struct WelcomeView_Previews: PreviewProvider {
         WelcomeView()
     }
 }
+

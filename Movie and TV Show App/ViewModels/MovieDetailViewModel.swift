@@ -19,12 +19,13 @@ class MovieDetailViewModel: ObservableObject {
     @Published var title = ""
     @Published var genres = ""
     @Published var runtime = ""
-    var release_date = ""
+    @Published var release_date = ""
     @Published var overview = ""
-    @Published var trailerLink = ""
-    @Published var similarMovies: [SearchModel.Movie] = []
+    @Published var trailers: [SearchModel.Video.VideoInfo] = []
+    @Published var similarMovies: [SimilarMovies.SimilarMovie] = []
     @Published var cast: [SearchModel.Credits.Cast] = []
     @Published var watchProviders: [SearchModel.WatchProviders.Options] = []
+    @Environment(\.colorScheme) var colorScheme
     
     func getMovieInfo() {
         var url = SearchModel.APILinks.Movie.MovieInfo
@@ -40,24 +41,24 @@ class MovieDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
                 DispatchQueue.main.async {
-                    self.backdropImage = response.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
+                    self.backdropImage = response.backdrop_path?.loadImage(type: .episodes, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? UIImage()
                     self.poster_path = response.poster_path ?? ""
                     self.title = response.title
                     
                     CountdownDate().findReleaseDate(movieID: response.id) { dateString in
-                        self.release_date = dateString
-                        print(dateString)
+                        DispatchQueue.main.async {
+                            self.release_date = dateString
+                        }
                     }
                     
                     self.genres = self.returnGenresText(for: response.genres)
                     self.runtime = "\(response.runtime ?? 0)"
                     self.overview = response.overview
                     self.getSimilarMovies(type: .recommendation)
-                    self.getTrailer()
+                    self.getTrailers()
                     self.getWatchProviders()
                     self.getCast()
                     self.isLoading = false
-
                 }
             }
         }.resume()
@@ -88,40 +89,19 @@ class MovieDetailViewModel: ObservableObject {
                     print(error)
                 }
                 else {
-                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                    DispatchQueue.main.async {
-                        if response.results.count == 0 {
-                            self.getSimilarMovies(type: .similar)
-                        }
-                        else {
-                            for movie in response.results {
-                                DispatchQueue.main.async {
-                                    listMovies(movie.id)
-                                }
+                    let response = try! JSONDecoder().decode(SimilarMovies.self, from: data!)
+//
+                    if response.results.count == 0 {
+                        self.getSimilarMovies(type: .similar)
+                    }
+                    else {
+                        for movie in response.results {
+                            DispatchQueue.main.async {
+                                self.similarMovies.append(movie)
                             }
                         }
-                        
                     }
-                }
-            }.resume()
-        }
-        
-        func listMovies(_ id: Int) {
-            var url = SearchModel.APILinks.Movie.MovieInfo
-            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-            url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
-            
-            let request = URLRequest(url: URL(string: url)!)
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
-                    DispatchQueue.main.async {
-                        self.similarMovies.append(response)
-                    }
+//
                 }
             }.resume()
         }
@@ -151,7 +131,7 @@ class MovieDetailViewModel: ObservableObject {
         }.resume()
     }
     
-    func getTrailer() {
+    func getTrailers() {
         var url = SearchModel.APILinks.Movie.MovieVideos
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
@@ -165,25 +145,11 @@ class MovieDetailViewModel: ObservableObject {
             else {
                 let response = try! JSONDecoder().decode(SearchModel.Video.self, from: data!)
                 DispatchQueue.main.async {
-                    var key = ""
                     for video in response.results {
-                        if video.type.lowercased() == "trailer" {
-                            if video.site.lowercased() == "youtube" {
-                                key = video.key
-                            }
+                        if video.site.lowercased() == "youtube" {
+                            self.trailers.append(video)
                         }
                     }
-                    
-                    if key == "" {
-                        if response.results.count > 0 {
-                            key = response.results[0].key
-                        }
-                        else {
-                            key = "nil"
-                        }
-                    }
-                    
-                    self.trailerLink = "https://www.youtube.com/embed/\(key)"
                 }
             }
         }.resume()
@@ -237,5 +203,25 @@ class MovieDetailViewModel: ObservableObject {
         else {
             return "\(runtime)mins"
         }
+    }
+}
+
+struct SimilarMovies: Codable, Hashable {
+    let results: [SimilarMovie]
+    
+    struct SimilarMovie: Codable, Hashable {
+        let id: Int
+        let poster_path: String?
+        let title: String
+    }
+}
+
+struct SimilarShows: Codable, Hashable {
+    let results: [SimilarShow]
+    
+    struct SimilarShow: Codable, Hashable {
+        let id: Int
+        let poster_path: String?
+        let name: String
     }
 }

@@ -12,7 +12,7 @@ class SearchViewModel: ObservableObject {
     
     var query = ""
     @Published var selectedType: SearchModel.MediaType = .movie
-    
+    @Published var isLoading = false
     @Published var movies: [SearchModel.Movie] = []
     @Published var shows: [SearchModel.TVShow] = []
     
@@ -33,32 +33,29 @@ class SearchViewModel: ObservableObject {
         url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
         url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
         url = url.replacingOccurrences(of: "’", with: "%27")
-        print(url)
+
         let request = URLRequest(url: URL(string: url)!)
         
-        DispatchQueue.main.async {
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                    
-                    for result in searchResult.results {
-                        switch self.selectedType {
-                        case .movie:
-                            DispatchQueue.main.async {
-                                self.getMovieInfo(result.id)
-                            }
-                        case .show:
-                            DispatchQueue.main.async {
-                                self.getTVShowInfo(result.id)
-                            }
-                        }
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                for result in searchResult.results {
+                    switch self.selectedType {
+                    case .movie:
+                        self.getMovieInfo(result.id)
+                    case .show:
+                        self.getTVShowInfo(result.id)
                     }
                 }
-            }.resume()
-        }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                    self.isLoading = false
+                }
+            }
+        }.resume()
     }
     
     func getMovieInfo(_ movieID: Int) {

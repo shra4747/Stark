@@ -14,6 +14,10 @@ class CountdownDate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if dateString == "" {
+            return false
+        }
         let date = dateFormatter.date(from: dateString)!
         let today = Calendar.current.startOfDay(for: Date())
         let daysUntil = ((Calendar.current.dateComponents([.day], from: today, to: date).day ?? 0))
@@ -54,8 +58,13 @@ class CountdownDate {
                 let response = try! JSONDecoder().decode(ReleaseDates.self, from: data!)
                 for result in response.results {
                     if result.iso_3166_1 == "US" {
-                        completion(result.release_dates[0].release_date.stringBefore("T"))
-                        return
+                        
+                        for date in result.release_dates {
+                            if date.type == 3 {
+                                completion(date.release_date.stringBefore("T"))
+                                return
+                            }
+                        }
                     }
                 }
 
@@ -73,6 +82,7 @@ class CountdownDate {
             
             struct RDate: Codable, Hashable {
                 let release_date: String
+                let type: Int
             }
         }
     }

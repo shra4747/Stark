@@ -15,6 +15,7 @@ struct RatingView: View {
     @Environment(\.presentationMode) var dismissPage
     @State var id: Int
     @State var mediaType: SearchModel.MediaType
+    @Binding var showRatedToast: Bool
     
     var body: some View {
         VStack {
@@ -71,6 +72,7 @@ struct RatingView: View {
                 RecommendationEngine().WatchAndRated(mediaType: mediaType, model: WRatedModel(id: id, stars_rated: selectedStar))
                 starImg = true
                 dismissPage.wrappedValue.dismiss()
+                showRatedToast.toggle()
             }) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)

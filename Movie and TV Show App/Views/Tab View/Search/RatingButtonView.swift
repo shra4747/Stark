@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct RatingButtonView: View {
     
@@ -14,6 +15,7 @@ struct RatingButtonView: View {
     @State var mediaType: SearchModel.MediaType
     @State var isWR = false
     @Environment(\.colorScheme) var colorScheme
+    @Binding var showRatedToast: Bool
     
     var body: some View {
         Button(action: {
@@ -28,13 +30,14 @@ struct RatingButtonView: View {
                     .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
             }
         }.sheet(isPresented: $didTapButton, content: {
-            RatingView(starImg: $isWR, id: id, mediaType: mediaType)
+            RatingView(starImg: $isWR, id: id, mediaType: mediaType, showRatedToast: $showRatedToast)
         }).onAppear {
             let rc = RecommendationEngine().loadRatingViewState(mediaType: mediaType, id: id)
             if rc.wr {
                 self.isWR = true
             }
         }
+        
     }
 }
 

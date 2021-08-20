@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct BookmarkButtonView: View {
     
@@ -17,7 +18,8 @@ struct BookmarkButtonView: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel = BookmarkButtonViewModel()
     @State var canShowCountdown: Bool
-    
+    @Binding var showSaveToast: Bool
+        
     var body: some View {
         Button(action: {
             viewModel.buttonClick()
@@ -32,14 +34,37 @@ struct BookmarkButtonView: View {
                     .foregroundColor(colorScheme == .light ? Color(.systemGray) : Color(.lightGray))
             }
         }.onAppear {
-            viewModel.id = id
-            viewModel.poster_path = poster_path
-            viewModel.title = title
-            viewModel.media_type = media_Type
-            viewModel.release_Date = release_date
-            viewModel.changeStateOnAppear()
+            
+            if media_Type == .show {viewModel.id = id
+                viewModel.poster_path = poster_path
+                viewModel.title = title
+                viewModel.media_type = media_Type
+                viewModel.release_Date = release_date
+                viewModel.changeStateOnAppear()}
+            else {
+                CountdownDate().findReleaseDate(movieID: id) { date in
+                    if CountdownDate().returnIfCountdown(dateString: date) {
+                        canShowCountdown = true
+                    }
+                    else {
+                        canShowCountdown = false
+                    }
+                    viewModel.id = id
+                    viewModel.poster_path = poster_path
+                    viewModel.title = title
+                    viewModel.media_type = media_Type
+                    self.release_date = date
+                    DispatchQueue.main.async {
+                        viewModel.release_Date = date
+                    }
+                    viewModel.changeStateOnAppear()
+                }
+            }
+            
+            
         }.sheet(isPresented: $viewModel.showChooseGroupView) {
-            ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: canShowCountdown ? CountdownDate().returnIfCountdown(dateString: release_date) : false, save: $viewModel.hasBeenSaved)
+            ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: canShowCountdown, save: $showSaveToast, changeFill: $viewModel.hasBeenSaved)
         }
+        
     }
 }

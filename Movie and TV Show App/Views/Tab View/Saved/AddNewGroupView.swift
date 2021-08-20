@@ -57,45 +57,61 @@ struct AddNewGroupView: View {
                         }
                     }
                     
-                    TextField("Group Name:", text: $viewModel.groupName)
-                        .cornerRadius(18)
-                        .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
-                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
-                        .multilineTextAlignment(.center)
-                        .font(.custom("Avenir", size: 18))
-                        .keyboardType(.default)
-                        .introspectTextField { (textField) in
-                            textField.attributedPlaceholder = NSAttributedString(string: "Group Name:",
-                                                                                 attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
-                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                            doneButton.tintColor = UIColor(viewModel.gradient[0])
-                            toolBar.items = [flexButton, doneButton]
-                            toolBar.setItems([flexButton, doneButton], animated: true)
-                            textField.inputAccessoryView = toolBar
-                         }
-                    
-                    TextField("Icon:", text: $viewModel.icon)
-                        .cornerRadius(18)
-                        .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
-                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
-                        .frame(width: UIScreen.main.bounds.width - 80)
-                        .multilineTextAlignment(.center)
-                        .font(.custom("Avenir", size: 18))
+                    HStack(spacing: -130) {
+                        TextField("Group Name:", text: $viewModel.groupName.onChange({ changed in
+                            if changed.count > 15 {
+                                let string = "\(viewModel.groupName.prefix(15))"
+                                viewModel.groupName = string
+                            }
+                        }))
+                        .frame(width: 200)
+                            .cornerRadius(18)
+                            .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
+                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("Avenir", size: 18))
+                            .keyboardType(.default)
+                            .introspectTextField { (textField) in
+                                textField.attributedPlaceholder = NSAttributedString(string: "Group Name:",
+                                                                                     attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
+                                let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+                                let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+                                let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+                                doneButton.tintColor = UIColor(viewModel.gradient[0])
+                                toolBar.items = [flexButton, doneButton]
+                                toolBar.setItems([flexButton, doneButton], animated: true)
+                                textField.inputAccessoryView = toolBar
+                             }
                         
-                        .introspectTextField { (textField) in
-                            textField.attributedPlaceholder = NSAttributedString(string: "Icon:",
-                                                                                 attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
-                            let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-                            let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-                            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-                            doneButton.tintColor = UIColor(viewModel.gradient[0])
-                            toolBar.items = [flexButton, doneButton]
-                            toolBar.setItems([flexButton, doneButton], animated: true)
-                            textField.inputAccessoryView = toolBar
+                        TextField(":", text: $viewModel.icon.onChange({ changed in
+                            if changed.count > 1 {
+                                let string = "\(viewModel.icon.prefix(1))"
+                                viewModel.icon = string
+                            }
+                        }))
+                        
+                        .frame(width: 50)
+                            .cornerRadius(18)
+                            .textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 20)
+                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 5)
+                            .frame(width: UIScreen.main.bounds.width - 80)
+                            .multilineTextAlignment(.center)
+                            .font(.custom("Avenir", size: 18))
                             
-                         }
+                            .introspectTextField { (textField) in
+                                
+                                textField.attributedPlaceholder = NSAttributedString(string: ":",
+                                                                                     attributes: [NSAttributedString.Key.foregroundColor: (colorScheme == .light ? UIColor.darkGray : UIColor.lightGray)])
+                                let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+                                let flexButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+                                let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+                                doneButton.tintColor = UIColor(viewModel.gradient[0])
+                                toolBar.items = [flexButton, doneButton]
+                                toolBar.setItems([flexButton, doneButton], animated: true)
+                                textField.inputAccessoryView = toolBar
+                                
+                             }
+                    }.offset(x: 55)
                         
                     
                     Button(action: {

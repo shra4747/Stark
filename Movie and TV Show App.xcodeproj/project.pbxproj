@@ -14,7 +14,6 @@
 		DC00B41A26C991CF00E6A31E /* TextFieldPlaceholderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41926C991CF00E6A31E /* TextFieldPlaceholderExtension.swift */; };
 		DC00B41C26C9D19800E6A31E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41B26C9D19800E6A31E /* SettingsView.swift */; };
 		DC00B41F26C9E5E400E6A31E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B41E26C9E5E400E6A31E /* WelcomeView.swift */; };
-		DC00B42026C9E75F00E6A31E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC31C15E26B1DFF400AD58C6 /* Assets.xcassets */; };
 		DC00B42226C9EA1600E6A31E /* ChooseAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42126C9EA1600E6A31E /* ChooseAvatarView.swift */; };
 		DC00B42426C9EDEF00E6A31E /* SaveAvatarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42326C9EDEE00E6A31E /* SaveAvatarExtension.swift */; };
 		DC00B42726C9FE3000E6A31E /* ChooseMovieGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC00B42526C9F64A00E6A31E /* ChooseMovieGenresView.swift */; };
@@ -98,6 +97,10 @@
 		DC3AE26526CAFBD80070262B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */; };
 		DC3AE26626CAFBD90070262B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3AE1EF26CAF1A00070262B /* IntentHandler.swift */; };
 		DC7C370226BC39B500B07B91 /* ColorCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C370126BC39B500B07B91 /* ColorCodableExtension.swift */; };
+		DC7F555F26CB41A1002FB176 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC31C15E26B1DFF400AD58C6 /* Assets.xcassets */; };
+		DC7F556426CB49E8002FB176 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = DC7F556326CB49E8002FB176 /* AlertToast */; };
+		DC7F556626CB4AF5002FB176 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = DC7F556526CB4AF5002FB176 /* AlertToast */; };
+		DC7F556826CB4AFA002FB176 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = DC7F556726CB4AFA002FB176 /* AlertToast */; };
 		DC80F6D826C0B9FC0012175F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = DC80F6D726C0B9FC0012175F /* Introspect */; };
 		DC80F6DB26C0C02F0012175F /* ArrayChunker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6DA26C0C02F0012175F /* ArrayChunker.swift */; };
 		DC80F6DE26C0C56C0012175F /* ChooseGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */; };
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC80F6D826C0B9FC0012175F /* Introspect in Frameworks */,
+				DC7F556426CB49E8002FB176 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC3AE1D426CAF0E20070262B /* SwiftUI.framework in Frameworks */,
+				DC7F556826CB4AFA002FB176 /* AlertToast in Frameworks */,
 				DC3AE25526CAF2E40070262B /* Introspect in Frameworks */,
 				DC3AE1D226CAF0E20070262B /* WidgetKit.framework in Frameworks */,
 			);
@@ -247,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC3AE1ED26CAF1A00070262B /* Intents.framework in Frameworks */,
+				DC7F556626CB4AF5002FB176 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +305,7 @@
 				DC31C16F26B1EA8600AD58C6 /* ViewModels */,
 				DC852E6526B5961500D7BB14 /* Extensions */,
 				DC31C15E26B1DFF400AD58C6 /* Assets.xcassets */,
+				DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */,
 				DC31C16326B1DFF400AD58C6 /* LaunchScreen.storyboard */,
 				DC31C16626B1DFF400AD58C6 /* Info.plist */,
 				DC31C16026B1DFF400AD58C6 /* Preview Content */,
@@ -365,7 +372,6 @@
 			isa = PBXGroup;
 			children = (
 				DC3AE1D626CAF0E20070262B /* CountdownWidget.swift */,
-				DC3AE1D826CAF0E20070262B /* CountdownWidget.intentdefinition */,
 				DC3AE1D926CAF0E40070262B /* Assets.xcassets */,
 				DC3AE1DB26CAF0E40070262B /* Info.plist */,
 			);
@@ -418,9 +424,9 @@
 				DC31C15C26B1DFEA00AD58C6 /* SearchView.swift */,
 				DC852E7E26B59C2A00D7BB14 /* MovieDetailView.swift */,
 				DC9183C026B86C8500CE5877 /* TVShowDetailView.swift */,
-				DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */,
 				DC852E8526B5C2FD00D7BB14 /* TrailerView.swift */,
 				DC17A14626B7276F00450FF8 /* BookmarkButtonView.swift */,
+				DC80F6DD26C0C56C0012175F /* ChooseGroupView.swift */,
 				DC00B41526C819AD00E6A31E /* RatingButtonView.swift */,
 				DC00B41326C8148E00E6A31E /* RatingView.swift */,
 			);
@@ -459,6 +465,7 @@
 			name = "Movie and TV Show App";
 			packageProductDependencies = (
 				DC80F6D726C0B9FC0012175F /* Introspect */,
+				DC7F556326CB49E8002FB176 /* AlertToast */,
 			);
 			productName = "Movie and TV Show App";
 			productReference = DC31C15526B1DFEA00AD58C6 /* Movie and TV Show App.app */;
@@ -479,6 +486,7 @@
 			name = CountdownWidgetExtension;
 			packageProductDependencies = (
 				DC3AE25426CAF2E40070262B /* Introspect */,
+				DC7F556726CB4AFA002FB176 /* AlertToast */,
 			);
 			productName = CountdownWidgetExtension;
 			productReference = DC3AE1CF26CAF0E20070262B /* CountdownWidgetExtension.appex */;
@@ -497,6 +505,9 @@
 			dependencies = (
 			);
 			name = CountdownWidgetIntentHandler;
+			packageProductDependencies = (
+				DC7F556526CB4AF5002FB176 /* AlertToast */,
+			);
 			productName = CountdownWidgetIntentHandler;
 			productReference = DC3AE1EB26CAF1A00070262B /* CountdownWidgetIntentHandler.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -532,6 +543,7 @@
 			mainGroup = DC31C14C26B1DFEA00AD58C6;
 			packageReferences = (
 				DC80F6D626C0B9FB0012175F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				DC7F556026CB48D7002FB176 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = DC31C15626B1DFEA00AD58C6 /* Products */;
 			projectDirPath = "";
@@ -550,7 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC31C16526B1DFF400AD58C6 /* LaunchScreen.storyboard in Resources */,
-				DC00B42026C9E75F00E6A31E /* Assets.xcassets in Resources */,
+				DC7F555F26CB41A1002FB176 /* Assets.xcassets in Resources */,
 				DC31C16226B1DFF400AD58C6 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -846,14 +858,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Movie and TV Show App/Movie and TV Show App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Movie and TV Show App/Preview Content\"";
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Movie and TV Show App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -869,14 +884,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Movie and TV Show App/Movie and TV Show App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"Movie and TV Show App/Preview Content\"";
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Movie and TV Show App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shravanprasanth.Movie-and-TV-Show-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -887,10 +905,12 @@
 		DC3AE1E226CAF0E40070262B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CountdownWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				INFOPLIST_FILE = CountdownWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -910,10 +930,12 @@
 		DC3AE1E326CAF0E40070262B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CountdownWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				INFOPLIST_FILE = CountdownWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -935,6 +957,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CountdownWidgetIntentHandler/CountdownWidgetIntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				INFOPLIST_FILE = CountdownWidgetIntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -956,6 +979,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CountdownWidgetIntentHandler/CountdownWidgetIntentHandler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 66AVQK2TF9;
 				INFOPLIST_FILE = CountdownWidgetIntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -1014,6 +1038,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC7F556026CB48D7002FB176 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		DC80F6D626C0B9FB0012175F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
@@ -1029,6 +1061,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC80F6D626C0B9FB0012175F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		DC7F556326CB49E8002FB176 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7F556026CB48D7002FB176 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		DC7F556526CB4AF5002FB176 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7F556026CB48D7002FB176 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		DC7F556726CB4AFA002FB176 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7F556026CB48D7002FB176 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		DC80F6D726C0B9FC0012175F /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;

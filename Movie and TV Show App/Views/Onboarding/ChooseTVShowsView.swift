@@ -12,55 +12,24 @@ struct ChooseTVShowsView: View {
     @State var shows: [SearchModel.TVShow] = []
     @State var selectedShows: [Int] = []
     @State var continueOnboarding = false
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         NavigationView {
             VStack {
-                Text("Tap Some Shows You Like!")
-                    .font(.custom("Avenir", size: 28))
-                    .fontWeight(.heavy)
-                    .multilineTextAlignment(.center).padding()
+                
                 
                 ScrollView(.vertical) {
+                    Text("Tap Some Shows You Like!")
+                        .font(.custom("Avenir", size: 28))
+                        .fontWeight(.heavy)
+                        .multilineTextAlignment(.center).padding()
                     LazyVStack {
                         ForEach(shows.uniqued().chunked(into: 2), id: \.self) { chunk in
                             HStack(spacing: 10) {
                                 ForEach(chunk, id: \.self) { show in
-                                    Button(action: {
-                                       
-                                        
-                                        if selectedShows.contains(show.id) {
-                                            if let index = selectedShows.firstIndex(of: show.id) {
-                                                selectedShows.remove(at: index)
-                                            }
-                                        }
-                                        else {
-                                            selectedShows.append(show.id)
-                                        }
-                                    }) {
-                                        VStack {
-                                            Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                .scaleEffect(0.37)
-                                                .shadow(radius: 5)
-                                                .frame(width: UIScreen.main.bounds.width / 2.2, height: 240)
-                                                .cornerRadius(18)
-                                            Text(show.name)
-                                                .foregroundColor(.black)
-                                                .font(.custom("Avenir", size: 18)).bold()
-                                                .frame(width: UIScreen.main.bounds.width / 2.2, alignment: .leading)
-                                        }.overlay(
-                                            ZStack {
-                                                VStack {
-                                                    RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(selectedShows.contains(show.id) ? 0.6 : 0)
-                                                    Spacer()
-                                                }
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(.white)
-                                                    .scaleEffect(2)
-                                                    .offset(y: -15)
-                                                    .opacity(selectedShows.contains(show.id) ? 1 : 0)
-                                            }
-                                        )
-                                    }
+                                    ChooseShowButtonView(selectedShows: $selectedShows, show: show)
                                 }
                             }
                         }
@@ -111,6 +80,7 @@ struct ChooseTVShowsView: View {
                     }
                 }
             }.navigationBarHidden(true)
+
         }
     }
     
@@ -126,11 +96,69 @@ struct ChooseTVShowsView: View {
                 print(error)
             }
             else {
-                let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
+                let response = try? JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
                 DispatchQueue.main.async {
-                    self.shows.append(response)
+                    if let response = response {
+                        self.shows.append(response)
+                    }
                 }
             }
         }.resume()
+    }
+}
+
+struct ChooseShowButtonView: View {
+    
+    @Binding var selectedShows: [Int]
+    @State var show: SearchModel.TVShow
+    @Environment(\.colorScheme) var colorScheme
+    @State var clicked = false
+    
+    var body: some View {
+        Button(action: {
+            clicked.toggle()
+            
+            if clicked {
+                selectedShows.append(show.id)
+            }
+            else {
+                selectedShows = selectedShows.filter({ i in
+                    i != show.id
+                })
+            }
+            
+//            if selectedMovies.contains(movie.id) {
+//                if let index = selectedMovies.firstIndex(of: movie.id) {
+//                    selectedMovies.remove(at: index)
+//                }
+//            }
+//            else {
+//                selectedMovies.append(movie.id)
+//            }
+        }) {
+            VStack {
+                Image(uiImage: show.poster_path?.loadImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)) ?? getDefaultImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)))
+                    .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.37))
+                    .shadow(radius: 5)
+                    .frame(width: UIScreen.main.bounds.width / 2.2, height: 240)
+                    .cornerRadius(18)
+                Text(show.name)
+                    .foregroundColor(.black)
+                    .font(.custom("Avenir", size: 18)).bold()
+                    .frame(width: UIScreen.main.bounds.width / 2.2, alignment: .leading)
+            }.overlay(
+                ZStack {
+                    VStack {
+                        RoundedRectangle(cornerRadius: 18).foregroundColor(.black).frame(height: 240).opacity(clicked ? 0.6 : 0)
+                        Spacer()
+                    }
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.white)
+                        .scaleEffect(2)
+                        .offset(y: -15)
+                        .opacity(clicked ? 1 : 0)
+                }
+            )
+        }
     }
 }

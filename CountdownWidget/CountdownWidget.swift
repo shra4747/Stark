@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "test", release_date: "2022-11-05", poster_path: ""))
+        SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "Tap and Hold to Edit!", release_date: "", poster_path: ""))
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "test", release_date: "2022-11-05", poster_path: ""))
+        let entry = SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "Tap and Hold to Edit!", release_date: "", poster_path: ""))
         completion(entry)
     }
 
@@ -30,7 +30,7 @@ struct Provider: IntentTimelineProvider {
             completion(timeline)
         }
         else {
-            let selectedCountdown = WidgetModel(title: "", release_date: "2021-11-05", poster_path: "")
+            let selectedCountdown = WidgetModel(title: "Tap and Hold to Edit!", release_date: "", poster_path: "")
             
             let entries: [SimpleEntry] = [SimpleEntry(date: Date(), countdownModel: selectedCountdown)]
             
@@ -80,7 +80,7 @@ struct CountdownWidget: Widget {
 
 struct CountdownWidget_Previews: PreviewProvider {
     static var previews: some View {
-        CountdownWidgetEntryView(entry: SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "test", release_date: "2022-11-05", poster_path: "")))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        CountdownWidgetEntryView(entry: SimpleEntry(date: Date(), countdownModel: WidgetModel(title: "Tap and Hold to Edit!", release_date: "", poster_path: "")))
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

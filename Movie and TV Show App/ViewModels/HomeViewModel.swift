@@ -10,38 +10,13 @@ import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var isLoading = true
-    @Published var recommendedMovies: [SearchModel.Movie] = []
-    @Published var recommendedShows: [SearchModel.TVShow] = []
+    @Published var recommendedMovies: [SimilarMovies.SimilarMovie] = []
+    @Published var recommendedShows: [SimilarShows.SimilarShow] = []
     
-    @Published var trendingMovies: [SearchModel.Movie] = []
-    @Published var trendingShows: [SearchModel.TVShow] = []
-    
-    init() {
-        if self.isLoading == false { return }
-
-        DispatchQueue.main.async {
-            self.getRecommendedMovies()
-        }
-        DispatchQueue.main.async {
-            self.getRecommendedShows()
-
-        }
-        DispatchQueue.main.async {
-            self.getTrendingMovies()
-
-        }
-        DispatchQueue.main.async {
-            self.getTrendingShows()
-
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.5) {
-            self.isLoading = false
-        }
-    }
+    @Published var trendingMovies: [SimilarMovies.SimilarMovie] = []
+    @Published var trendingShows: [SimilarShows.SimilarShow] = []
     
     func getTrendingMovies() {
-//        DispatchQueue.main.async {
             var url = SearchModel.APILinks.Movie.TrendingMovies
             url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
             
@@ -52,17 +27,14 @@ class HomeViewModel: ObservableObject {
                     print(error)
                 }
                 else {
-                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
-    //                DispatchQueue.main.async {
-                        for movie in response.results {
-    //                        DispatchQueue.main.async {
-                                self.listTrendingMovies(movie.id)
-    //                        }
+                    let response = try? JSONDecoder().decode(SimilarMovies.self, from: data!)
+                    for movie in response?.results ?? [] {
+                        DispatchQueue.main.async {
+                            self.trendingMovies.append(movie)
                         }
-    //                }
+                    }
                 }
             }.resume()
-//        }
     }
     
     func getTrendingShows() {
@@ -77,12 +49,12 @@ class HomeViewModel: ObservableObject {
                     print(error)
                 }
                 else {
-                    let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                    let response = try? JSONDecoder().decode(SimilarShows.self, from: data!)
     //                DispatchQueue.main.async {
-                        for show in response.results {
-    //                        DispatchQueue.main.async {
-                                self.listTrendingShows(show.id)
-    //                        }
+                        for show in response?.results ?? [] {
+                            DispatchQueue.main.async {
+                                self.trendingShows.append(show)
+                            }
                         }
     //                }
                 }
@@ -103,7 +75,6 @@ class HomeViewModel: ObservableObject {
             }
             let onboardingMovies = try? JSONDecoder().decode([Int].self, from: data)
             for movie in onboardingMovies! {
-                print(movie)
                 recMovies.append(WRatedModel(id: movie, stars_rated: 0))
             }
         }
@@ -121,7 +92,7 @@ class HomeViewModel: ObservableObject {
                         print(error)
                     }
                     else {
-                        let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                        let response = try! JSONDecoder().decode(SimilarMovies.self, from: data!)
     //                    DispatchQueue.main.async {
                         if response.results.count > 3 {
                             for movie in response.results[...3] {
@@ -131,9 +102,10 @@ class HomeViewModel: ObservableObject {
                                 if Cmovie.wr {
                                     continue
                                 }
-    //                            DispatchQueue.main.async {
-                                self.listMovies(movie.id)
-    //                            }
+                                DispatchQueue.main.async {
+                                    self.recommendedMovies.append(movie)
+                                }
+                                
                             }
                         }
     //                    }
@@ -154,7 +126,6 @@ class HomeViewModel: ObservableObject {
             }
             let onboardingShows = try? JSONDecoder().decode([Int].self, from: data)
             for show in onboardingShows! {
-                print(show)
                 showRecs.append(WRatedModel(id: show, stars_rated: 0))
             }
         }
@@ -170,7 +141,7 @@ class HomeViewModel: ObservableObject {
                         print(error)
                     }
                     else {
-                        let response = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                        let response = try! JSONDecoder().decode(SimilarShows.self, from: data!)
     //                    DispatchQueue.main.async {
                             for show in response.results {
                                 let generalModel = RecommendationEngine().getWatchedAndRated()
@@ -179,9 +150,9 @@ class HomeViewModel: ObservableObject {
                                 if cShow.wr {
                                     continue
                                 }
-    //                            DispatchQueue.main.async {
-                                self.listShows(show.id)
-    //                            }
+                                DispatchQueue.main.async {
+                                    self.recommendedShows.append(show)
+                                }
                             }
     //                    }
                     }
@@ -190,89 +161,6 @@ class HomeViewModel: ObservableObject {
 //        }
         
         
-    }
-    
-    func listTrendingMovies(_ id: Int) {
-//        DispatchQueue.main.async {
-            var url = SearchModel.APILinks.Movie.MovieInfo
-            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-            url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
-            
-            let request = URLRequest(url: URL(string: url)!)
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
-                    DispatchQueue.main.async {
-                        self.trendingMovies.append(response)
-                    }
-                }
-            }.resume()
-//        }
-    }
-    
-    func listMovies(_ id: Int) {
-        var url = SearchModel.APILinks.Movie.MovieInfo
-        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-        url = url.replacingOccurrences(of: "{MOVIEID}", with: "\(id)")
-        
-        let request = URLRequest(url: URL(string: url)!)
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-            }
-            else {
-                let response = try! JSONDecoder().decode(SearchModel.Movie.self, from: data!)
-                DispatchQueue.main.async {
-                    self.recommendedMovies.append(response)
-                }
-            }
-        }.resume()
-    }
-    
-    func listTrendingShows(_ id: Int) {
-//        DispatchQueue.main.async {
-            var url = SearchModel.APILinks.TVShow.TVShowInfo
-            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-            url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
-            
-            let request = URLRequest(url: URL(string: url)!)
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
-                    DispatchQueue.main.async {
-                        self.trendingShows.append(response)
-                    }
-                }
-            }.resume()
-        }
-    
-    func listShows(_ id: Int) {
-        var url = SearchModel.APILinks.TVShow.TVShowInfo
-        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
-        url = url.replacingOccurrences(of: "{TVID}", with: "\(id)")
-        
-        let request = URLRequest(url: URL(string: url)!)
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print(error)
-            }
-            else {
-                let response = try! JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
-                DispatchQueue.main.async {
-                    self.recommendedShows.append(response)
-                }
-            }
-        }.resume()
     }
 //    }
 }

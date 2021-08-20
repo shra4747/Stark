@@ -23,7 +23,7 @@ struct BookmarkedView: View {
                     .foregroundColor(colorScheme == .light ? .init(hex: "EBEBEB") : .init(hex: "1A1A1A"))
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
-                VStack(spacing: 25) {
+                VStack(spacing: 30) {
                     NavigationLink(
                         destination: BookmarkedDetailView(group: BookmarkModelDefaultGroups.countdown).navigationBarHidden(true),
                         label: {
@@ -32,7 +32,7 @@ struct BookmarkedView: View {
                                     .cornerRadius(18)
                                     .opacity(0.6)
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 100)
-                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "414141")), radius: 6)
                                 VStack(spacing: 10) {
                                     Text(countdown.icon)
                                         .font(.system(size: 45))
@@ -56,7 +56,7 @@ struct BookmarkedView: View {
                                     .cornerRadius(18)
                                     .opacity(0.6)
                                     .frame(width: UIScreen.main.bounds.width - 60, height: 160)
-                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "414141")), radius: 6)
                                 VStack(spacing: 20) {
                                     Text(watchLater.icon)
                                         .font(.system(size: 53))
@@ -93,9 +93,8 @@ struct BookmarkedView: View {
                                                                 .foregroundColor(.black)
                                                             Text(group.name)
                                                                 .font(.custom("Avenir", size: 22))
-                                                                .foregroundColor(.black)
-                                                                .fontWeight(.medium)
                                                                 .foregroundColor(colorScheme == .light ? .black : .white)
+                                                                .fontWeight(.medium)
 
                                                         }.offset(y: 5)
                                                     }
@@ -123,8 +122,9 @@ struct BookmarkedView: View {
                                         
 
                                     }.offset(y: 0)
-                                }.foregroundColor(.black)
-                            }.offset(y: viewModel.groups.count > 0 ? 0 : -45)
+                                }.foregroundColor(.black).padding(.top, 30)
+                            }.offset(y: viewModel.groups.count > 0 ? -20 : -65)
+                            .padding(.bottom, 50)
                             .sheet(isPresented: $isPresentingAddNewGroup, onDismiss: {
                                 viewModel.load()
                             }, content: {

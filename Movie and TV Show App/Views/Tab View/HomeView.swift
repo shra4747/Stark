@@ -13,8 +13,10 @@ struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     @State var showingSettings = false
     
-    var name = UserDefaults.standard.value(forKey: "__NAME__")
-    var avatar = getImage(key: "__AVATAR__")
+    @State var name = UserDefaults.standard.value(forKey: "__NAME__")
+    @State var avatar = getImage(key: "__AVATAR__")
+    @State var isLoading = true
+    @Binding var didResetEverything: Bool
     
     var body: some View {
         NavigationView {
@@ -35,15 +37,19 @@ struct HomeView: View {
                         }) {
                             
                             Image(uiImage: avatar!).resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle()).frame(width: 54, height: 54, alignment: .center)
                                 .shadow(radius: 5)
                         }
-                        .sheet(isPresented: $showingSettings) {
-                            SettingsView()
+                        .sheet(isPresented: $showingSettings, onDismiss: {
+                            avatar = getImage(key: "__AVATAR__")
+                            name = UserDefaults.standard.value(forKey: "__NAME__")
+                        }) {
+                            SettingsView(didResetEverything: $didResetEverything)
                         }
                         
                             
-                    }.padding(.horizontal, 25).padding(.top, 45).padding(10)
+                    }.padding(.horizontal, 25).padding(.top, 45)
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         Group {
@@ -62,12 +68,12 @@ struct HomeView: View {
                                 LazyHStack(spacing: 35) {
                                     ForEach(viewModel.recommendedMovies.shuffled().uniqued(), id: \.self) { movie in
                                         NavigationLink(
-                                            destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
+                                            destination: MovieDetailView(id: movie.id, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).navigationBarHidden(true),
                                             label: {
                                                 VStack(alignment: .leading) {
                                                     VStack {
-                                                        Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                            .scaleEffect(0.50)
+                                                        Image(uiImage: ((movie.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                                            .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.50))
                                                             .frame(width: 250, height: 370)
                                                             .cornerRadius(18)
                                                             .shadow(radius: 10)
@@ -109,12 +115,12 @@ struct HomeView: View {
                                 LazyHStack(spacing: 35) {
                                     ForEach(viewModel.recommendedShows.shuffled().uniqued(), id: \.self) { show in
                                         NavigationLink(
-                                            destination: TVShowDetailView(id: show.id, isGivingData: true, givingShow: show).navigationBarHidden(true),
+                                            destination: TVShowDetailView(id: show.id, isGivingData: false, givingShow: SearchModel.EmptyModel.TVShow).navigationBarHidden(true),
                                             label: {
                                                 VStack(alignment: .leading) {
                                                     VStack {
-                                                        Image(uiImage: show.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                                            .scaleEffect(0.50)
+                                                        Image(uiImage: ((show.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                                            .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.50))
                                                             .frame(width: 250, height: 370)
                                                             .cornerRadius(18)
                                                             .shadow(radius: 10)
@@ -150,7 +156,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.trendingMovies.count > 0 {
-                                SimilarMoviesView(similarMovies: viewModel.trendingMovies, shuffled: false).frame(alignment: .leading)
+                                MovieSimilarView(similarMovies: viewModel.trendingMovies, shuffled: false).frame(alignment: .leading)
                             }
                             
                             Separator().opacity(0.4)
@@ -169,7 +175,7 @@ struct HomeView: View {
                             }
                             
                             if viewModel.trendingShows.count > 0 {
-                                SimilarTVShowsView(similarShows: viewModel.trendingShows, shuffled: false).frame(alignment: .leading).padding(.bottom, 100)
+                                ShowSimilarView(similarMovies: viewModel.trendingShows, shuffled: false).frame(alignment: .leading).padding(.bottom, 100)
                             }
                             
                             
@@ -188,22 +194,35 @@ struct HomeView: View {
                         else {
                             Color.init(hex: "1A1A1A")
                         }
-                        ActivityIndicator(isAnimating: $viewModel.isLoading)
+                        VStack {
+                            ActivityIndicator(isAnimating: $viewModel.isLoading)
+                            Text("Getting\nRecommendations")
+                                .font(.custom("Avenir", size: 23))
+                                .fontWeight(.light)
+                                .multilineTextAlignment(.center)
+                        }
                     }.edgesIgnoringSafeArea(.top)
                 }
                 
                 
                 
             }.navigationBarHidden(true)
+            
+            .onAppear {
+                if isLoading == false { return }
 
+                viewModel.getRecommendedMovies()
+                viewModel.getRecommendedShows()
+                viewModel.getTrendingMovies()
+                viewModel.getTrendingShows()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                    
+                    viewModel.isLoading = false
+                    isLoading = false
+                }
+            }
         }
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-            .preferredColorScheme(.dark)
     }
 }
 

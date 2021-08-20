@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct MovieDetailView: View {
     
@@ -20,12 +21,15 @@ struct MovieDetailView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @State var showSavedToast = false
+    @State var showRatedToast = false
+    
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     Image(uiImage: viewModel.backdropImage)
-                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+                        .frame(width: UIScreen.main.bounds.width)
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
@@ -35,7 +39,7 @@ struct MovieDetailView: View {
                     ZStack {
                         ZStack(alignment: .top) {
                             RoundedRectangle(cornerRadius: 34)
-                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
+                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.4)
                                 .edgesIgnoringSafeArea(.bottom)
                                 .foregroundColor(colorScheme == .light ? .init(hex: "FFFFFF") : .init(hex: "1A1A1A"))
                                 .shadow(radius: 4, x: 0, y: -4)
@@ -81,19 +85,28 @@ struct MovieDetailView: View {
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
                                     
-                                    Text("Trailer")
-                                        .font(.custom("Avenir", size: 22))
-                                        .fontWeight(.bold)
-                                        .padding(.horizontal)
-                                        .padding(.top)
-                                        .padding(.leading)
+                                    if viewModel.trailers.count > 0 {
+                                        Text("Trailers / Videos")
+                                            .font(.custom("Avenir", size: 22))
+                                            .fontWeight(.bold)
+                                            .padding(.horizontal)
+                                            .padding(.top)
+                                            .padding(.leading)
+                                    }
                                     
-                                    TrailerView(trailerYTLink: viewModel.trailerLink)
-                                        .frame(width: 330, height: 190)
-                                        .cornerRadius(18)
-                                        .padding()
-                                        .padding(.leading)
-                                        .shadow(radius: 10)
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(spacing: -20) {
+                                            ForEach(viewModel.trailers.reversed(), id: \.self) { trailer in
+                                                TrailerButtonView(trailer: trailer)
+                                            }
+                                        }
+                                    }
+//                                    TrailerView(trailerYTLink: viewModel.trailerLink)
+//                                        .frame(width: 330, height: 190)
+//                                        .cornerRadius(18)
+//                                        .padding()
+//                                        .padding(.leading)
+//                                        .shadow(radius: 10)
                                     
                                     Separator()
                                     
@@ -110,7 +123,7 @@ struct MovieDetailView: View {
                                             .padding(.leading)
                                         
                                         if viewModel.similarMovies.count > 0 {
-                                            SimilarMoviesView(similarMovies: viewModel.similarMovies, shuffled: false)
+                                            MovieSimilarView(similarMovies: viewModel.similarMovies, shuffled: false)
                                                 .frame(height: 400)
 
                                         }
@@ -137,10 +150,10 @@ struct MovieDetailView: View {
                             .padding(.horizontal)
                             
                             if viewModel.title != "" {
-                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.title, media_Type: .movie, release_date: viewModel.release_date, canShowCountdown: true).offset(y: -50)
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.title, media_Type: .movie, release_date: viewModel.release_date, canShowCountdown: true, showSaveToast: $showSavedToast).offset(y: -50)
                             }
                         }
-                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.5)
+                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.4)
                 }
                 
                 Button(action: {
@@ -158,7 +171,7 @@ struct MovieDetailView: View {
                 
                 
                 if viewModel.similarMovies.count > 0 {
-                    RatingButtonView(id: id, mediaType: .movie).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
+                    RatingButtonView(id: id, mediaType: .movie, showRatedToast: $showRatedToast).offset(x: (UIScreen.main.bounds.width/2 - 45), y: -(UIScreen.main.bounds.height/2 - 60))
                 }
 
                 if viewModel.isLoading {
@@ -175,6 +188,12 @@ struct MovieDetailView: View {
                 
             }
             .navigationBarHidden(true)
+            .toast(isPresenting: $showSavedToast, duration: 2, tapToDismiss: true) {
+                AlertToast(displayMode: .alert, type: .complete(.green), title: "Saved!", subTitle: "Find \(viewModel.title) in the Saved Tab!", custom: .none)
+            }
+            .toast(isPresenting: $showRatedToast, duration: 2, tapToDismiss: true) {
+                AlertToast(displayMode: .alert, type: .systemImage("star.fill", .yellow), title: "Rated!", subTitle: "", custom: .none)
+            }
             .onAppear {
                 if doneLoading {
                     return
@@ -185,18 +204,19 @@ struct MovieDetailView: View {
                     viewModel.id = id
                     viewModel.poster_path = givingMovie.poster_path ?? ""
                     CountdownDate().findReleaseDate(movieID: givingMovie.id) { dateString in
-                        viewModel.release_date = dateString
+                        DispatchQueue.main.async {
+                            viewModel.release_date = dateString
+                        }
                     }
-                    viewModel.getTrailer()
+                    viewModel.getTrailers()
                     viewModel.getSimilarMovies(type: .recommendation)
                     viewModel.getCast()
                     viewModel.getWatchProviders()
-                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage() ?? SearchModel.EmptyModel.Image
+                    viewModel.backdropImage = givingMovie.backdrop_path?.loadImage(type: .episodes, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? UIImage()
                     viewModel.title = givingMovie.title
                     viewModel.genres = viewModel.returnGenresText(for: givingMovie.genres)
                     viewModel.runtime = "\(givingMovie.runtime ?? 0)"
                     viewModel.overview = givingMovie.overview
-
                     doneLoading = true
 
                     DispatchQueue.main.asyncAfter(deadline: .now()+1) {
@@ -216,7 +236,7 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView(id: 299534, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).preferredColorScheme(.dark)
+        MovieDetailView(id: 299534, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).preferredColorScheme(.light)
     }
 }
 
@@ -240,12 +260,53 @@ struct SimilarMoviesView: View {
             LazyHStack(spacing: 35) {
                 ForEach(shuffled ? similarMovies.uniqued().shuffled() : similarMovies.uniqued(), id: \.self) { movie in
                     NavigationLink(
-                        destination: MovieDetailView(id: movie.id, isGivingData: true, givingMovie: movie).navigationBarHidden(true),
+                        destination: MovieDetailView(id: movie.id, isGivingData: false, givingMovie: movie).navigationBarHidden(true),
                         label: {
                             VStack(alignment: .leading) {
                                 VStack {
-                                    Image(uiImage: movie.poster_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                                        .scaleEffect(0.50)
+                                    Image(uiImage: ((movie.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                        .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.50))
+                                        .frame(width: 250, height: 370)
+                                        .cornerRadius(18)
+                                        .shadow(radius: 10)
+                                }
+                                Text(movie.title)
+                                    .font(.custom("Avenir", size: 20))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
+
+                                    
+                            }
+                    }).frame(width: 250, alignment: .leading)
+
+                }
+            }.padding()
+            .padding(.leading)
+            .frame(minHeight: 450).id(UUID())
+
+        }
+        .padding(.bottom)
+        .frame(height: 400)
+    }
+}
+
+struct MovieSimilarView: View {
+    
+    @State var similarMovies : [SimilarMovies.SimilarMovie]
+    @State var shuffled: Bool
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 35) {
+                ForEach(shuffled ? similarMovies.uniqued().shuffled() : similarMovies.uniqued(), id: \.self) { movie in
+                    NavigationLink(
+                        destination: MovieDetailView(id: movie.id, isGivingData: false, givingMovie: SearchModel.EmptyModel.Movie).navigationBarHidden(true),
+                        label: {
+                            VStack(alignment: .leading) {
+                                VStack {
+                                    Image(uiImage: ((movie.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
+                                        .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.50))
                                         .frame(width: 250, height: 370)
                                         .cornerRadius(18)
                                         .shadow(radius: 10)
@@ -273,6 +334,7 @@ struct SimilarMoviesView: View {
 struct WatchProvidersView: View {
     
     @State var watchProviders: [SearchModel.WatchProviders.Options]?
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -290,7 +352,7 @@ struct WatchProvidersView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(alignment: .top, spacing: 17) {
                                 ForEach(streaming, id: \.self) { provider in
-                                    Image(uiImage: provider.logo_path.loadImage())
+                                    Image(uiImage: provider.logo_path.loadImage(type: .cast, colorScheme: (self.colorScheme == .light ? .light : .dark)))
                                         .resizable()
                                         .frame(width: 70, height: 70)
                                         .cornerRadius(18)
@@ -317,7 +379,7 @@ struct WatchProvidersView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(alignment: .top, spacing: 17) {
                                 ForEach(rentOrBuy, id: \.self) { provider in
-                                    Image(uiImage: provider.logo_path.loadImage())
+                                    Image(uiImage: provider.logo_path.loadImage(type: .cast, colorScheme: (self.colorScheme == .light ? .light : .dark)))
                                         .resizable()
                                         .frame(width: 70, height: 70)
                                         .cornerRadius(18)
@@ -348,13 +410,14 @@ struct CastView: View {
     
     @State var cast: [SearchModel.Credits.Cast]
     @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(alignment: .top) {
                 ForEach(cast, id: \.self) { castmate in
                     VStack(alignment: .center) {
-                        Image(uiImage: castmate.profile_path?.loadImage() ?? SearchModel.EmptyModel.Image)
-                            .scaleEffect(0.3)
+                        Image(uiImage: castmate.profile_path?.loadImage(type: .cast, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SearchLight") : UIImage(named: "SearchDark"))!)
+                            .scaleEffect(((castmate.profile_path ?? "") == "" ? 1 : 0.3))
                             .frame(width: 150, height: 150)
                             .aspectRatio(contentMode: .fit)
                             .shadow(radius: 5)
