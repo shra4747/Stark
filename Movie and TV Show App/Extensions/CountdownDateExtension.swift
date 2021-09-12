@@ -40,7 +40,6 @@ class CountdownDate {
         else {
             return 0
         }
-        
     }
     
     func findReleaseDate(movieID: Int, completion: @escaping (String) -> Void) {
@@ -60,7 +59,7 @@ class CountdownDate {
                     if result.iso_3166_1 == "US" {
                         
                         for date in result.release_dates {
-                            if date.type == 3 {
+                            if date.type != 1 {
                                 completion(date.release_date.stringBefore("T"))
                                 return
                             }
@@ -71,6 +70,43 @@ class CountdownDate {
             }
         }.resume()
     }
+    
+    func findLatestSeasonReleaseDate(showID: Int, completion: @escaping (String) -> Void) {
+        var url = SearchModel.APILinks.TVShow.TVShowInfo
+        url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+        url = url.replacingOccurrences(of: "{TVID}", with: "\(showID)")
+        
+        let request = URLRequest(url: URL(string: url)!)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let response = try! JSONDecoder().decode(TVReleaseDates.self, from: data!)
+                for season in response.seasons {
+                    if season.season_number != 0 {
+                        if let date = season.air_date {
+                            completion(date)
+                            return
+                        }
+                    }
+                }
+                completion("")
+                return
+            }
+        }.resume()
+    }
+    
+    struct TVReleaseDates: Codable, Hashable {
+        let seasons: [Season]
+        
+        struct Season: Codable, Hashable {
+            let air_date: String?
+            let season_number: Int
+        }
+    }
+    
     
     struct ReleaseDates: Codable, Hashable {
         let id: Int

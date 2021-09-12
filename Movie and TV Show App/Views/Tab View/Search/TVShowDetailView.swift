@@ -178,7 +178,7 @@ struct TVShowDetailView: View {
                             .padding(.horizontal)
                             
                             if viewModel.name != "" {
-                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: "", canShowCountdown: false, showSaveToast: $showSavedToast).offset(y: -50)
+                                BookmarkButtonView(id: id, poster_path: viewModel.poster_path, title: viewModel.name, media_Type: .show, release_date: viewModel.latestSeasonReleaseDate, canShowCountdown: true, showSaveToast: $showSavedToast).offset(y: -50)
                             }
                             
                         }
@@ -227,6 +227,13 @@ struct TVShowDetailView: View {
                     // ViewModel.Publishers Data changed
                     viewModel.id = id
                     viewModel.poster_path = givingShow.poster_path ?? ""
+                    
+                    CountdownDate().findLatestSeasonReleaseDate(showID: id) { date in
+                        DispatchQueue.main.async {
+                            viewModel.latestSeasonReleaseDate = date
+                        }
+                    }
+                    
                     viewModel.getTrailers()
                     viewModel.getCast()
                     viewModel.getWatchProviders()

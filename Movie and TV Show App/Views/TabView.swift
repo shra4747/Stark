@@ -79,7 +79,6 @@ struct TempTabView_Previews: PreviewProvider {
     static var previews: some View {
         TabView()
             .previewLayout(.device)
-            .previewDevice("iPhone SE (2nd generation)")
             .preferredColorScheme(.dark)
     }
 }

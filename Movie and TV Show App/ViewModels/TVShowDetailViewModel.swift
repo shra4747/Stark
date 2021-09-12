@@ -18,6 +18,7 @@ class TVShowDetailViewModel: ObservableObject {
     @Published var name = ""
     @Published var genres = ""
     @Published var number_of_seasons = ""
+    @Published var latestSeasonReleaseDate = ""
     @Published var overview = ""
     @Published var trailers: [SearchModel.Video.VideoInfo] = []
     @Published var similarShows: [SimilarShows.SimilarShow] = []
@@ -43,6 +44,13 @@ class TVShowDetailViewModel: ObservableObject {
                     self.backdropImage = response.backdrop_path?.loadImage(type: .episodes, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? UIImage()
                     self.poster_path = response.poster_path ?? ""
                     self.name = response.name
+                    
+                    CountdownDate().findLatestSeasonReleaseDate(showID: self.id) { date in
+                        DispatchQueue.main.async {
+                            self.latestSeasonReleaseDate = date
+                        }
+                    }
+                    
                     self.genres = self.returnGenresText(for: response.genres ?? [])
                     self.number_of_seasons = "\(response.number_of_seasons)"
                     self.overview = response.overview

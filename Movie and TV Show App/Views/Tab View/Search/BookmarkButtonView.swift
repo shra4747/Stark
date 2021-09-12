@@ -35,12 +35,25 @@ struct BookmarkButtonView: View {
             }
         }.onAppear {
             
-            if media_Type == .show {viewModel.id = id
-                viewModel.poster_path = poster_path
-                viewModel.title = title
-                viewModel.media_type = media_Type
-                viewModel.release_Date = release_date
-                viewModel.changeStateOnAppear()}
+            if media_Type == .show {
+                CountdownDate().findLatestSeasonReleaseDate(showID: id) { date in
+                    if CountdownDate().returnIfCountdown(dateString: date) {
+                        canShowCountdown = true
+                    }
+                    else {
+                        canShowCountdown = false
+                    }
+                    viewModel.id = id
+                    viewModel.poster_path = poster_path
+                    viewModel.title = title
+                    viewModel.media_type = media_Type
+                    self.release_date = date
+                    DispatchQueue.main.async {
+                        viewModel.release_Date = date
+                    }
+                    viewModel.changeStateOnAppear()
+                }
+            }
             else {
                 CountdownDate().findReleaseDate(movieID: id) { date in
                     if CountdownDate().returnIfCountdown(dateString: date) {
@@ -60,8 +73,6 @@ struct BookmarkButtonView: View {
                     viewModel.changeStateOnAppear()
                 }
             }
-            
-            
         }.sheet(isPresented: $viewModel.showChooseGroupView) {
             ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: canShowCountdown, save: $showSaveToast, changeFill: $viewModel.hasBeenSaved)
         }
