@@ -73,7 +73,7 @@ struct HomeView: View {
                                                 VStack(alignment: .leading) {
                                                     VStack {
                                                         Image(uiImage: ((movie.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
-                                                            .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.50))
+                                                            .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.580))
                                                             .frame(width: 250, height: 370)
                                                             .cornerRadius(18)
                                                             .shadow(radius: 10)
@@ -120,7 +120,7 @@ struct HomeView: View {
                                                 VStack(alignment: .leading) {
                                                     VStack {
                                                         Image(uiImage: ((show.poster_path?.loadImage(type: .similar, colorScheme: (self.colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SimilarLight") : UIImage(named: "SimilarDark")))!))
-                                                            .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.50))
+                                                            .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.580))
                                                             .frame(width: 250, height: 370)
                                                             .cornerRadius(18)
                                                             .shadow(radius: 10)

@@ -122,8 +122,8 @@ struct SettingsView: View {
                     Section(header: Text("About")) {
                         Link("Privacy Policy", destination: URL(string: "https://www.craft.do/s/Cs2TbOrL5DQuRQ")!)
                         Link("Contact Support", destination: URL(string: "https://www.craft.do/s/s6fBFsB4xByZ3l")!)
-                        Text("Clapboard app icons made by Freepik from https://www.flaticon.com")
-                        Text("Stark - Version 1.0")
+                        Text("Clapboard app icon made by Freepik from https://www.flaticon.com")
+                        Text("Stark - Version 1.1")
                         Text("Copyright © Shravan Prasanth")
                     }
                     

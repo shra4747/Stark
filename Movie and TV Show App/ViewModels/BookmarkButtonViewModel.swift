@@ -67,26 +67,7 @@ class BookmarkButtonViewModel: ObservableObject {
     
     func buttonClick() {
         
-        if hasBeenSaved == true {
-//            guard let data = UserDefaults.standard.data(forKey: "saved-\(groupSavedIn)") else {
-//                return
-//            }
-//
-//            let content = try? JSONDecoder().decode([BookmarkModel].self, from: data)
-//            if var newContent = content {
-//                newContent = newContent.filter({ model in
-//                    model != BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_type, release_date: release_Date)
-//                })
-//                let encoded = try? JSONEncoder().encode(newContent)
-//                UserDefaults.standard.set(encoded, forKey: "saved-\(groupSavedIn)")
-//                UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(encoded, forKey: "countdownsData")
-//                self.hasBeenSaved = false
-//            }
-        }
-        else {
-            self.showChooseGroupView.toggle()
-        }
-        
+        self.showChooseGroupView.toggle()
 
     }
 }

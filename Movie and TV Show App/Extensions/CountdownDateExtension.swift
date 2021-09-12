@@ -84,14 +84,19 @@ class CountdownDate {
             }
             else {
                 let response = try! JSONDecoder().decode(TVReleaseDates.self, from: data!)
-                for season in response.seasons {
-                    if season.season_number != 0 {
-                        if let date = season.air_date {
+                if response.seasons.count > 0 {
+                    let latestSeason = response.seasons.last!
+                    if latestSeason.season_number != 0 {
+                        if let date = latestSeason.air_date {
+                            
                             completion(date)
                             return
                         }
+                        
                     }
+                    
                 }
+                
                 completion("")
                 return
             }

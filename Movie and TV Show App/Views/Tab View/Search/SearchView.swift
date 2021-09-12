@@ -110,7 +110,7 @@ struct SearchView: View {
                                                         label: {
                                                             VStack(alignment: .leading) {
                                                                 Image(uiImage: ((movie.poster_path?.loadImage(type: .search, colorScheme: (colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SearchLight") : UIImage(named: "SearchDark")))!))
-                                                                    .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.5))
+                                                                    .scaleEffect(((movie.poster_path ?? "") == "" ? 1 : 0.58))
                                                                     .frame(width: 220, height: 350)
                                                                     .cornerRadius(18)
                                                                     .shadow(color: Color(hex: colorScheme == .light ? "000000" : "6E6E6E"), radius: 5, x: 0, y: 3)
@@ -166,7 +166,7 @@ struct SearchView: View {
                                                         label: {
                                                             VStack(alignment: .leading) {
                                                                 Image(uiImage: ((show.poster_path?.loadImage(type: .search, colorScheme: (colorScheme == .light ? .light : .dark)) ?? (colorScheme == .light ? UIImage(named: "SearchLight") : UIImage(named: "SearchDark")))!))
-                                                                    .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.5))
+                                                                    .scaleEffect(((show.poster_path ?? "") == "" ? 1 : 0.58))
                                                                     .frame(width: 220, height: 350)
                                                                     .cornerRadius(18)
                                                                     .shadow(color: Color(hex: "000000"), radius: 4, x: 0, y: 3)

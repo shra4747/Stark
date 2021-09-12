@@ -54,7 +54,7 @@ struct BookmarkedDetailView: View {
                                             label: {
                                                 VStack(alignment: .leading) {
                                                     Image(uiImage: mediaContent.poster_path.loadImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)))
-                                                        .scaleEffect(0.5)
+                                                        .scaleEffect(0.58)
                                                         .frame(width: 220, height: 350)
                                                         .cornerRadius(18)
                                                         .shadow(color: Color(hex: "000000"), radius: 3, x: 0, y: 3)
@@ -121,7 +121,7 @@ struct BookmarkedDetailView: View {
                                             label: {
                                                 VStack(alignment: .leading) {
                                                     Image(uiImage: mediaContent.poster_path.loadImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)))
-                                                        .scaleEffect(0.5)
+                                                        .scaleEffect(0.58)
                                                         .frame(width: 220, height: 350)
                                                         .cornerRadius(18)
                                                         .shadow(color: Color(hex: "000000"), radius: 3, x: 0, y: 3)

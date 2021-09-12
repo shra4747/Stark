@@ -27,56 +27,60 @@ struct ChooseGroupView: View {
                 .edgesIgnoringSafeArea(.all).padding(.top, 20)
             VStack(spacing: 25) {
                 if canShowCountDown {
+                    if !checkGroupForId(groupID: countdown.id) {
+                        Button(action: {
+                            viewModel.addMediaToGroup(for: countdown.id)
+                            self.save = true
+                            changeFill = true
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            ZStack {
+                                LinearGradient(gradient: Gradient(colors: countdown.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                    .cornerRadius(18)
+                                    .opacity(0.6)
+                                    .frame(width: UIScreen.main.bounds.width - 60, height: 100)
+                                    .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                VStack(spacing: 10) {
+                                    Text(countdown.icon)
+                                        .font(.system(size: 45))
+                                        .frame(height: 28)
+                                        .foregroundColor(.black)
+                                    Text(countdown.name)
+                                        .font(.custom("Avenir", size: 23))
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(colorScheme == .light ? .black : .white)
+                                    
+                                }.foregroundColor(.black).offset(y: 5)
+                            }
+                        }
+                    }
+                }
+                
+                if !checkGroupForId(groupID: watchLater.id) {
                     Button(action: {
-                        viewModel.addMediaToGroup(for: countdown.id)
+                        viewModel.addMediaToGroup(for: watchLater.id)
                         self.save = true
                         changeFill = true
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         ZStack {
-                            LinearGradient(gradient: Gradient(colors: countdown.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            LinearGradient(gradient: Gradient(colors: watchLater.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
                                 .cornerRadius(18)
                                 .opacity(0.6)
-                                .frame(width: UIScreen.main.bounds.width - 60, height: 100)
+                                .frame(width: UIScreen.main.bounds.width - 60, height: 160)
                                 .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
-                            VStack(spacing: 10) {
-                                Text(countdown.icon)
-                                    .font(.system(size: 45))
+                            VStack(spacing: 20) {
+                                Text(watchLater.icon)
+                                    .font(.system(size: 53))
                                     .frame(height: 28)
                                     .foregroundColor(.black)
-                                Text(countdown.name)
-                                    .font(.custom("Avenir", size: 23))
+                                Text(watchLater.name)
+                                    .font(.custom("Avenir", size: 27))
                                     .fontWeight(.semibold)
                                     .foregroundColor(colorScheme == .light ? .black : .white)
-
-                            }.foregroundColor(.black).offset(y: 5)
+                                
+                            }.foregroundColor(.black).offset(y: 10)
                         }
-                    }
-                }
-                
-                Button(action: {
-                    viewModel.addMediaToGroup(for: watchLater.id)
-                    self.save = true
-                    changeFill = true
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    ZStack {
-                        LinearGradient(gradient: Gradient(colors: watchLater.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .cornerRadius(18)
-                            .opacity(0.6)
-                            .frame(width: UIScreen.main.bounds.width - 60, height: 160)
-                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
-                        VStack(spacing: 20) {
-                            Text(watchLater.icon)
-                                .font(.system(size: 53))
-                                .frame(height: 28)
-                                .foregroundColor(.black)
-                            Text(watchLater.name)
-                                .font(.custom("Avenir", size: 27))
-                                .fontWeight(.semibold)
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-
-                        }.foregroundColor(.black).offset(y: 10)
                     }
                 }
                 
@@ -86,30 +90,32 @@ struct ChooseGroupView: View {
                                 ForEach(viewModel.groups.chunked(into: 2), id: \.self) { chunk in
                                     HStack(spacing: 20) {
                                         ForEach(chunk, id: \.self) { group in
-                                            Button(action: {
-                                                viewModel.addMediaToGroup(for: group.id)
-                                                self.save = true
-                                                changeFill = true
-                                                presentationMode.wrappedValue.dismiss()
-                                                
-                                            }) {
-                                                ZStack {
-                                                    LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
-                                                        .cornerRadius(18)
-                                                        .opacity(0.6)
-                                                        .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
-                                                        .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
-                                                    VStack(spacing: 20) {
-                                                        Text(group.icon)
-                                                            .font(.system(size: 54))
-                                                            .frame(height: 30)
-                                                            .foregroundColor(.black)
-                                                        Text(group.name)
-                                                            .font(.custom("Avenir", size: 22))
-                                                            .foregroundColor(.black)
-                                                            .fontWeight(.medium)
-                                                            .foregroundColor(colorScheme == .light ? .black : .white)
-                                                    }.offset(y: 5)
+                                            if !checkGroupForId(groupID: group.id) {
+                                                Button(action: {
+                                                    viewModel.addMediaToGroup(for: group.id)
+                                                    self.save = true
+                                                    changeFill = true
+                                                    presentationMode.wrappedValue.dismiss()
+                                                    
+                                                }) {
+                                                    ZStack {
+                                                        LinearGradient(gradient: Gradient(colors: group.gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                                            .cornerRadius(18)
+                                                            .opacity(0.6)
+                                                            .frame(width: UIScreen.main.bounds.width/2 - 50, height: UIScreen.main.bounds.width/2 - 50)
+                                                            .shadow(color: colorScheme == .light ? Color(.sRGBLinear, white: 0, opacity: 0.33) : (.init(hex: "FFFFFF")), radius: 6)
+                                                        VStack(spacing: 20) {
+                                                            Text(group.icon)
+                                                                .font(.system(size: 54))
+                                                                .frame(height: 30)
+                                                                .foregroundColor(.black)
+                                                            Text(group.name)
+                                                                .font(.custom("Avenir", size: 22))
+                                                                .foregroundColor(.black)
+                                                                .fontWeight(.medium)
+                                                                .foregroundColor(colorScheme == .light ? .black : .white)
+                                                        }.offset(y: 5)
+                                                    }
                                                 }
                                             }
                                         }
@@ -126,5 +132,24 @@ struct ChooseGroupView: View {
             viewModel.model = model
             viewModel.load()
         }
+    }
+    
+    func checkGroupForId(groupID: String) -> Bool {
+        guard let data = UserDefaults.standard.data(forKey: "saved-\(groupID)") else {
+            return false
+        }
+        
+        let content = try? JSONDecoder().decode([BookmarkModel].self, from: data)
+        
+        
+        if let content = content {
+            for media in content {
+                if media.id == model.id {
+                    return true
+                }
+            }
+        }
+        
+        return false
     }
 }
