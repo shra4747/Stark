@@ -229,6 +229,8 @@ struct MovieDetailView: View {
                     viewModel.getMovieInfo()
                     doneLoading = true
                 }
+                
+                
             }
         }.ignoresSafeArea(.keyboard)
     }

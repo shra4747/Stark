@@ -13,21 +13,47 @@ struct ChooseMoviesView: View {
     @State var movies: [SearchModel.Movie] = []
     @State var selectedMovies: [Int] = []
     @State var continueOnboarding = false
+    @State var query = ""
+    @State var textFieldId = 0
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
             VStack {
-                    
-                    
                     ScrollView(.vertical) {
                         Text("Tap Some Movies You Like!")
                             .font(.custom("Avenir", size: 28))
                             .fontWeight(.heavy)
                             .multilineTextAlignment(.center).padding()
-                        LazyVStack {
+                        HStack {
+                            TextField("Don't like what you see? Search!", text: $query).textFieldStyle(RoundedBorderTextFieldStyle()).disableAutocorrection(true).id(textFieldId)
+                            Button(action: {
+                                textFieldId = 1
+                                movies.removeAll()
+                                var url = SearchModel.APILinks.Movie.MovieSearch
+                                url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+                                url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
+                                url = url.replacingOccurrences(of: "’", with: "%27")
+                                let request = URLRequest(url: URL(string: url)!)
+                                
+                                URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let error = error {
+                                        print(error)
+                                    }
+                                    else {
+                                        let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                                        for movie in searchResult.results {
+                                            getMovieInfo(movie.id)
+                                        }
+                                    }
+                                }.resume()
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                            }
+                        }.padding(.horizontal).padding(.bottom)
+                        VStack {
                             ForEach(movies.uniqued().chunked(into: 2), id: \.self) { chunk in
-                                HStack(spacing: 10) {
+                                LazyHStack(spacing: 10) {
                                     ForEach(chunk, id: \.self) { movie in
                                         ChooseMovieButtonView(selectedMovies: $selectedMovies, movie: movie)
                                     }
@@ -62,25 +88,25 @@ struct ChooseMoviesView: View {
                             url = url.replacingOccurrences(of: "{GENRES}", with: "\(genre)")
                             let request = URLRequest(url: URL(string: url)!)
                             
-                            DispatchQueue.main.async {
-                                URLSession.shared.dataTask(with: request) { data, response, error in
-                                    if let error = error {
-                                        print(error)
-                                    }
-                                    else {
-                                        let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                                        DispatchQueue.main.async {
-                                            for movie in searchResult.results {
-                                                getMovieInfo(movie.id)
+                            URLSession.shared.dataTask(with: request) { data, response, error in
+                                if let error = error {
+                                    print(error)
+                                }
+                                else {
+                                    let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                                    DispatchQueue.main.async {
+                                        var count = 0
+                                        for movie in searchResult.results {
+                                            if count > 4 {
+                                                return
                                             }
+                                            getMovieInfo(movie.id)
+                                            count += 1
                                         }
                                     }
-                                }.resume()
-                            }
+                                }
+                            }.resume()
                         }
-                        
-                        
-                        
                     }
             }.navigationBarHidden(true)
         }
@@ -99,11 +125,13 @@ struct ChooseMoviesView: View {
             }
             else {
                 let response = try? JSONDecoder().decode(SearchModel.Movie.self, from: data!)
-                DispatchQueue.main.async {
+                
                     if let response = response {
-                        self.movies.append(response)
+                        DispatchQueue.main.async {
+                            self.movies.append(response)
+                        }
                     }
-                }
+                
             }
         }.resume()
     }
@@ -128,15 +156,6 @@ struct ChooseMovieButtonView: View {
                     i != movie.id
                 })
             }
-            
-//            if selectedMovies.contains(movie.id) {
-//                if let index = selectedMovies.firstIndex(of: movie.id) {
-//                    selectedMovies.remove(at: index)
-//                }
-//            }
-//            else {
-//                selectedMovies.append(movie.id)
-//            }
         }) {
             VStack {
                 Image(uiImage: movie.poster_path?.loadImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)) ?? getDefaultImage(type: .similar, colorScheme: (colorScheme == .light ? .light : .dark)))

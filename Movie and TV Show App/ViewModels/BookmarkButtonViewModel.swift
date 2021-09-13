@@ -25,7 +25,9 @@ class BookmarkButtonViewModel: ObservableObject {
 
         guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
             if !hasBeenSaved {
-                self.hasBeenSaved = false
+                DispatchQueue.main.async {
+                    self.hasBeenSaved = false
+                }
             }
             return
         }

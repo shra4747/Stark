@@ -12,7 +12,8 @@ struct ChooseTVShowsView: View {
     @State var shows: [SearchModel.TVShow] = []
     @State var selectedShows: [Int] = []
     @State var continueOnboarding = false
-    
+    @State var query = ""
+    @State var textFieldId = 0
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -25,9 +26,36 @@ struct ChooseTVShowsView: View {
                         .font(.custom("Avenir", size: 28))
                         .fontWeight(.heavy)
                         .multilineTextAlignment(.center).padding()
-                    LazyVStack {
+                    
+                    HStack {
+                        TextField("Don't like what you see? Search!", text: $query).textFieldStyle(RoundedBorderTextFieldStyle()).disableAutocorrection(true).id(textFieldId)
+                        Button(action: {
+                            textFieldId = 1
+                            shows.removeAll()
+                            var url = SearchModel.APILinks.TVShow.TVShowSearch
+                            url = url.replacingOccurrences(of: "{APIKEY}", with: "9ca74361766772691be0f40f58010ee4")
+                            url = url.replacingOccurrences(of: "{QUERY}", with: query.replacingOccurrences(of: " ", with: "+"))
+                            url = url.replacingOccurrences(of: "’", with: "%27")
+                            let request = URLRequest(url: URL(string: url)!)
+                            
+                            URLSession.shared.dataTask(with: request) { data, response, error in
+                                if let error = error {
+                                    print(error)
+                                }
+                                else {
+                                    let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                                    for show in searchResult.results {
+                                        getShowInfo(show.id)
+                                    }
+                                }
+                            }.resume()
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }.padding(.horizontal).padding(.bottom)
+                    VStack {
                         ForEach(shows.uniqued().chunked(into: 2), id: \.self) { chunk in
-                            HStack(spacing: 10) {
+                            LazyHStack(spacing: 10) {
                                 ForEach(chunk, id: \.self) { show in
                                     ChooseShowButtonView(selectedShows: $selectedShows, show: show)
                                 }
@@ -62,21 +90,24 @@ struct ChooseTVShowsView: View {
                         url = url.replacingOccurrences(of: "{GENRES}", with: "\(genre)")
                         let request = URLRequest(url: URL(string: url)!)
                         
-                        DispatchQueue.main.async {
-                            URLSession.shared.dataTask(with: request) { data, response, error in
-                                if let error = error {
-                                    print(error)
-                                }
-                                else {
-                                    let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                                    DispatchQueue.main.async {
-                                        for show in searchResult.results {
-                                            getShowInfo(show.id)
+                        URLSession.shared.dataTask(with: request) { data, response, error in
+                            if let error = error {
+                                print(error)
+                            }
+                            else {
+                                let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
+                                DispatchQueue.main.async {
+                                    var count = 0
+                                    for show in searchResult.results {
+                                        if count > 4 {
+                                            return
                                         }
+                                        getShowInfo(show.id)
+                                        count += 1
                                     }
                                 }
-                            }.resume()
-                        }
+                            }
+                        }.resume()
                     }
                 }
             }.navigationBarHidden(true)
@@ -97,8 +128,8 @@ struct ChooseTVShowsView: View {
             }
             else {
                 let response = try? JSONDecoder().decode(SearchModel.TVShow.self, from: data!)
-                DispatchQueue.main.async {
-                    if let response = response {
+                if let response = response {
+                    DispatchQueue.main.async {
                         self.shows.append(response)
                     }
                 }

@@ -74,7 +74,7 @@ struct BookmarkButtonView: View {
                 }
             }
         }.sheet(isPresented: $viewModel.showChooseGroupView) {
-            ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: canShowCountdown, save: $showSaveToast, changeFill: $viewModel.hasBeenSaved)
+            ChooseGroupView(model: BookmarkModel(id: id, poster_path: poster_path, title: title, media_type: media_Type, release_date: release_date), canShowCountDown: (release_date == "" ? false : canShowCountdown), save: $showSaveToast, changeFill: $viewModel.hasBeenSaved)
         }
         
     }

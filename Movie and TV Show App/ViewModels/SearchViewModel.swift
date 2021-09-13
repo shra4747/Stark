@@ -42,12 +42,14 @@ class SearchViewModel: ObservableObject {
             }
             else {
                 let searchResult = try! JSONDecoder().decode(SearchModel.self, from: data!)
-                for result in searchResult.results {
-                    switch self.selectedType {
-                    case .movie:
-                        self.getMovieInfo(result.id)
-                    case .show:
-                        self.getTVShowInfo(result.id)
+                DispatchQueue.main.async {
+                    for result in searchResult.results {
+                        switch self.selectedType {
+                        case .movie:
+                            self.getMovieInfo(result.id)
+                        case .show:
+                            self.getTVShowInfo(result.id)
+                        }
                     }
                 }
                 

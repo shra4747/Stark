@@ -52,6 +52,31 @@ struct SettingsView: View {
                         
                         Button(action: {
                             UserDefaults.standard.set(nil, forKey: "__FINISH__")
+                            let stars = ["Mfive", "Mfour", "Mthree", "Mdislike", "Tfive", "Tfour", "Tthree", "Tdislike"]
+                            for star in stars {
+                                UserDefaults.standard.set(nil, forKey: "\(star)-star")
+                            }
+                            UserDefaults.standard.set(nil, forKey: "groups")
+                            UserDefaults.standard.set(nil, forKey: "saved-001")
+                            UserDefaults.standard.set(nil, forKey: "saved-002")
+                            guard let savedGroupsData = UserDefaults.standard.data(forKey: "groups") else {
+                                UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(nil, forKey: "countdownsData")
+                                UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(nil, forKey: "countdownsData")
+                                dismissPage.wrappedValue.dismiss()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    didResetEverything = true
+                                }
+                                return
+                            }
+                            
+                            let decoded = try? JSONDecoder().decode([BookmarkGroupModel].self, from: savedGroupsData)
+                            
+                            if let decoded = decoded {
+                                for group in decoded {
+                                    UserDefaults.standard.set(nil, forKey: "saved-\(group.id)")
+                                }
+                            }
+                            UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(nil, forKey: "countdownsData")
                             dismissPage.wrappedValue.dismiss()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 didResetEverything = true
@@ -103,7 +128,7 @@ struct SettingsView: View {
                                 }
                             }
                             UserDefaults(suiteName: "group.com.shravanprasanth.movietvwidgetgroup")!.set(nil, forKey: "countdownsData")
-                            
+
                             didTapDeleteSavedContent.toggle()
                         }) {
                             Text("Delete All Saved Content")
@@ -213,3 +238,4 @@ extension Binding {
         )
     }
 }
+

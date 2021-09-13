@@ -16,16 +16,17 @@ struct TabView: View {
         
         ZStack {
             NavigationLink("", destination: WelcomeView().navigationBarHidden(true), isActive: $didResetEverything)
-            switch tabType {
-            case .home :
-                HomeView(didResetEverything: $didResetEverything)
-            case .search:
-                SearchView()
-            case .saved:
-                BookmarkedView()
-            }
+            
             
             if isShowingTabView && didResetEverything == false {
+                switch tabType {
+                case .home :
+                    HomeView(didResetEverything: $didResetEverything)
+                case .search:
+                    SearchView()
+                case .saved:
+                    BookmarkedView()
+                }
                 VStack {
                     Spacer()
                     ZStack {
